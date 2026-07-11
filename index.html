@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
+    <!-- İPHONE TAM EKRAN (UYGULAMA) MODU AYARLARI -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="HereEmu">
@@ -60,6 +61,7 @@
             <span>Not Defteri</span>
         </div>
         
+        <!-- SafTube İkonu -->
         <div class="icon" onclick="openWindow('win-youtube')">
             <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
             <span>SafTube (Reklamsız)</span>
@@ -71,6 +73,7 @@
         </div>
     </div>
 
+    <!-- PENCERELER -->
     <div id="win-uploader" class="window">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>Yükleme İstasyonu</span>
@@ -110,22 +113,25 @@
         </div>
     </div>
 
+    <!-- Geliştirilmiş %100 Reklamsız SafTube Penceresi -->
     <div id="win-youtube" class="window" style="width:400px; height:320px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-            <span>SafTube (Reklamsız YouTube)</span>
+            <span>SafTube (%100 Reklamsız YT)</span>
             <button class="close-btn" onclick="closeWindow('win-youtube')"></button>
         </div>
-        <div class="window-content" style="padding:0; background:#000;">
+        <div class="window-content" style="padding:0; background:#111;">
             <div class="browser-container">
                 <div class="browser-bar" style="padding: 10px; background: #222;">
-                    <input type="text" id="yt-search" class="browser-input" style="background:#333; color:white; border:1px solid #444;" placeholder="Video ID veya Kelime girin...">
-                    <button class="browser-btn" style="background:#cc181e;" onclick="loadYoutubeVideo()">Ara / Oynat</button>
+                    <input type="text" id="yt-search" class="browser-input" style="background:#333; color:white; border:1px solid #444;" placeholder="Video adı veya kelime girin...">
+                    <button class="browser-btn" style="background:#cc181e;" onclick="loadYoutubeVideo()">Ara</button>
                 </div>
-                <iframe id="yt-frame" src="https://www.youtube.com/embed?listType=search&list=Minecraft"></iframe>
+                <!-- Reklamsız Piped Proxy Arayüzü (Ana sayfa trend videolarla açılır) -->
+                <iframe id="yt-frame" src="https://piped.video/trending"></iframe>
             </div>
         </div>
     </div>
 
+    <!-- OsWeb İnternet Tarayıcısı Penceresi -->
     <div id="win-osweb" class="window" style="width:450px; height:350px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>OsWeb Browser</span>
@@ -143,7 +149,7 @@
     </div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('Bulut Bilgisayar v2.5 - OsWeb & SafTube Entegrasyonu 💪')">Başlat</button>
+        <button id="start-button" onclick="alert('Bulut Bilgisayar v3.0 - Reklamsız Altyapı Aktif 💪')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -188,16 +194,13 @@
             document.getElementById('osweb-frame').src = url;
         }
 
-        // Reklamsız YouTube Arama/Oynatma
+        // TAM REKLAMSIZ YOUTUBE ARAMASI
         function loadYoutubeVideo() {
             const query = document.getElementById('yt-search').value;
             const frame = document.getElementById('yt-frame');
             if(query.length > 0) {
-                if(query.length === 11) {
-                    frame.src = `https://www.youtube.com/embed/${query}?autoplay=1`;
-                } else {
-                    frame.src = `https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}`;
-                }
+                // Arama kelimesini direkt reklamsız proxy motoruna gönderir
+                frame.src = `https://piped.video/results?search_query=${encodeURIComponent(query)}`;
             }
         }
 
