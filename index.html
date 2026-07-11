@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Güçlü Bulut Bilgisayarım</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+        body, html { width: 100%; height: 100%; overflow: hidden; font-family: sans-serif; }
+        
+        #desktop {
+            width: 100%; height: calc(100% - 48px);
+            background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920') no-repeat center center;
+            background-size: cover; position: relative; padding: 20px;
+            display: flex; flex-direction: column; gap: 20px; align-content: flex-start; flex-wrap: wrap;
+        }
+
+        .icon { width: 80px; display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); font-size: 12px; }
+        .icon img { width: 45px; height: 45px; margin-bottom: 5px; pointer-events: none; }
+
+        .window { position: absolute; width: 360px; height: 320px; background: #f3f3f3; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: none; flex-direction: column; overflow: hidden; border: 1px solid #ccc; z-index: 10; }
+        .window-header { background: #e1e1e1; padding: 10px; display: flex; justify-content: space-between; align-items: center; cursor: move; font-weight: bold; font-size: 14px; border-bottom: 1px solid #ccc; }
+        .close-btn { background: #ff5f56; border: none; width: 15px; height: 15px; border-radius: 50%; cursor: pointer; }
+        .window-content { padding: 15px; flex: 1; overflow: auto; background: white; }
+
+        textarea { width: 100%; height: 100%; border: none; resize: none; outline: none; font-family: monospace; }
+        #file-list { list-style: none; }
+        #file-list li { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 14px; }
+        #file-list li:hover { background: #f0f0f0; }
+
+        #taskbar { width: 100%; height: 48px; background: rgba(243, 243, 243, 0.85); backdrop-filter: blur(10px); position: absolute; bottom: 0; display: flex; align-items: center; padding: 0 15px; justify-content: space-between; border-top: 1px solid #ccc; z-index: 9999; }
+        #start-button { background: #28a745; color: white; border: none; padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        #clock { font-size: 14px; font-weight: bold; color: #333; }
+    </style>
+</head>
+<body>
+
+    <div id="desktop">
+        <div class="icon" onclick="openWindow('win-uploader')">
+            <img src="https://cdn-icons-png.flaticon.com/512/812/812850.png">
+            <span>Sisteme Yükle</span>
+        </div>
+        <div class="icon" onclick="openWindow('win-files'); refreshFiles();">
+            <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png">
+            <span>Harddisk (Render)</span>
+        </div>
+        <div class="icon" onclick="openWindow('win-notepad')">
+            <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png">
+            <span>Not Defteri</span>
+        </div>
+    </div>
+
+    <div id="win-uploader" class="window">
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
+            <span>Yükleme İstasyonu</span>
+            <button class="close-btn" onclick="closeWindow('win-uploader')"></button>
+        </div>
+        <div class="window-content">
+            <input type="file" id="file-input" style="margin-bottom: 15px;"><br>
+            <button onclick="uploadFileToServer()" style="padding: 10px; background: #0078d4; color:white; border:none; border-radius:4px; width:100%;">Render Sunucusuna Gönder</button>
+        </div>
+    </div>
+
+    <div id="win-files" class="window">
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
+            <span>Render Sunucu Dosyaları</span>
+            <button class="close-btn" onclick="closeWindow('win-files')"></button>
+        </div>
+        <div class="window-content"><ul id="file-list"></ul></div>
+    </div>
+
+    <div id="win-notepad" class="window">
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
+            <span>Not Defteri</span>
+            <button class="close-btn" onclick="closeWindow('win-notepad')"></button>
+        </div>
+        <div class="window-content"><textarea id="txt-area" placeholder="Yazılım notları..."></textarea></div>
+    </div>
+
+    <div id="win-media" class="window" style="width:340px; height:260px;">
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
+            <span>Medya Oynatıcı</span>
+            <button class="close-btn" onclick="closeWindow('win-media')"></button>
+        </div>
+        <div class="window-content" style="display:flex; justify-content:center; align-items:center; background:#000;">
+            <video id="media-video" controls style="max-width:100%; max-height:100%; display:none;"></video>
+            <audio id="media-audio" controls style="width:100%; display:none;"></audio>
+            <img id="media-img" style="max-width:100%; max-height:100%; object-fit:contain; display:none;">
+        </div>
+    </div>
+
+    <div id="taskbar">
+        <button id="start-button" onclick="alert('Bulut Bilgisayar v2.0 - Sunucu Destekli Güçlü Sürüm 💪')">Başlat</button>
+        <div id="clock">00:00</div>
+    </div>
+
+    <script>
+        // Saat mekanizması
+        setInterval(() => {
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }, 1000);
+
+        // Pencere Kontrolleri
+        function openWindow(id) {
+            const w = document.getElementById(id); w.style.display = 'flex';
+            w.style.top = '15%'; w.style.left = '5%';
+        }
+        function closeWindow(id) { document.getElementById(id).style.display = 'none'; }
+
+        // Sürükleme Mekanizması
+        let activeWin = null; let startX, startY, initialX, initialY;
+        function dragStart(e) {
+            activeWin = e.target.closest('.window'); if (!activeWin) return;
+            const cX = e.touches ? e.touches[0].clientX : e.clientX;
+            const cY = e.touches ? e.touches[0].clientY : e.clientY;
+            startX = cX; startY = cY; initialX = activeWin.offsetLeft; initialY = activeWin.offsetTop;
+            document.addEventListener('mousemove', dragMove); document.addEventListener('mouseup', dragEnd);
+            document.addEventListener('touchmove', dragMove, { passive: false }); document.addEventListener('touchend', dragEnd);
+        }
+        function dragMove(e) {
+            if (!activeWin) return; e.preventDefault();
+            const cX = e.touches ? e.touches[0].clientX : e.clientX;
+            const cY = e.touches ? e.touches[0].clientY : e.clientY;
+            activeWin.style.left = (initialX + (cX - startX)) + 'px';
+            activeWin.style.top = (initialY + (cY - startY)) + 'px';
+        }
+        function dragEnd() { activeWin = null; }
+
+        // SUNUCU (BACKEND) BAĞLANTISI
+        const SERVER_URL = window.location.origin; // Render'da otomatik kendi adresini alır
+
+        function uploadFileToServer() {
+            const fileInput = document.getElementById('file-input');
+            const file = fileInput.files[0];
+            if (!file) return alert("Dosya seçmedin!");
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const payload = { name: file.name, type: file.type, content: e.target.result };
+                
+                fetch(`${SERVER_URL}/api/upload`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                    fileInput.value = '';
+                    refreshFiles();
+                })
+                .catch(err => alert("Yükleme hatası: Sunucu meşgul."));
+            };
+            reader.readAsDataURL(file); // Tüm dosyaları Base64 olarak sunucuya aktarır
+        }
+
+        function refreshFiles() {
+            fetch(`${SERVER_URL}/api/files`)
+            .then(res => res.json())
+            .then(files => {
+                const list = document.getElementById('file-list');
+                list.innerHTML = files.length === 0 ? '<li>Hafıza boş.</li>' : '';
+                files.forEach(file => {
+                    const li = document.createElement('li');
+                    let icon = '📁';
+                    if(file.type.startsWith('image/')) icon = '🖼️';
+                    if(file.type.startsWith('audio/')) icon = '🎵';
+                    if(file.type.startsWith('video/')) icon = '🎬';
+                    if(file.type === 'text/plain') icon = '📄';
+                    
+                    li.innerHTML = `${icon} ${file.name}`;
+                    li.onclick = () => openFileFromServer(file.index);
+                    list.appendChild(li);
+                });
+            });
+        }
+
+        function openFileFromServer(index) {
+            fetch(`${SERVER_URL}/api/files/${index}`)
+            .then(res => res.json())
+            .then(file => {
+                // Tüm medya elementlerini gizle
+                const v = document.getElementById('media-video');
+                const a = document.getElementById('media-audio');
+                const img = document.getElementById('media-img');
+                v.style.display = a.style.display = img.style.display = 'none';
+                v.pause(); a.pause();
+
+                if (file.type.startsWith('image/')) {
+                    img.src = file.content; img.style.display = 'block'; openWindow('win-media');
+                } else if (file.type.startsWith('audio/')) {
+                    a.src = file.content; a.style.display = 'block'; openWindow('win-media'); a.play();
+                } else if (file.type.startsWith('video/')) {
+                    v.src = file.content; v.style.display = 'block'; openWindow('win-media'); v.play();
+                } else if (file.type === 'text/plain') {
+                    const base64 = file.content.split(',')[1];
+                    document.getElementById('txt-area').value = decodeURIComponent(escape(atob(base64)));
+                    openWindow('win-notepad');
+                } else {
+                    alert("Bu dosya formatı destekleniyor ama açacak dahili uygulama yok!");
+                }
+            });
+        }
+    </script>
+</body>
+</html>
