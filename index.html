@@ -27,7 +27,6 @@
         .window { position: absolute; width: 360px; height: 320px; background: #f3f3f3; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: none; flex-direction: column; overflow: hidden; border: 1px solid #ccc; z-index: 10; transition: width 0.2s, height 0.2s, top 0.2s, left 0.2s; }
         .window-header { background: #e1e1e1; padding: 10px; display: flex; justify-content: space-between; align-items: center; cursor: move; font-weight: bold; font-size: 14px; border-bottom: 1px solid #ccc; }
         
-        /* Buton Grubu */
         .header-buttons { display: flex; gap: 8px; align-items: center; }
         .close-btn { background: #ff5f56; border: none; width: 15px; height: 15px; border-radius: 50%; cursor: pointer; }
         .maximize-btn { background: #ffbd2e; border: none; width: 15px; height: 15px; border-radius: 50%; cursor: pointer; }
@@ -73,6 +72,11 @@
         <div class="icon" onclick="openWindow('win-notepad')">
             <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png">
             <span>Not Defteri</span>
+        </div>
+
+        <div class="icon" onclick="openWindow('win-youtube')">
+            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+            <span>YouTube</span>
         </div>
 
         <div class="icon" onclick="openWindow('win-osweb')">
@@ -132,6 +136,19 @@
         </div>
     </div>
 
+    <div id="win-youtube" class="window" style="width:400px; height:320px;">
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
+            <span>YouTube</span>
+            <div class="header-buttons">
+                <button class="maximize-btn" onclick="toggleMaximize('win-youtube')"></button>
+                <button class="close-btn" onclick="closeWindow('win-youtube')"></button>
+            </div>
+        </div>
+        <div class="window-content" style="padding:0; background:#000;">
+            <iframe id="yt-frame" src="https://m.youtube.com"></iframe>
+        </div>
+    </div>
+
     <div id="win-osweb" class="window" style="width:450px; height:350px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>OsWeb Browser</span>
@@ -143,16 +160,16 @@
         <div class="window-content" style="padding:10px; display:flex; flex-direction:column;">
             <div class="browser-container">
                 <div class="browser-bar">
-                    <input type="text" id="web-url" class="browser-input" value="https://www.google.com/custom?q=" placeholder="Link yazın veya Google'da aratın...">
+                    <input type="text" id="web-url" class="browser-input" placeholder="Kelime yazın veya link (https://...) girin...">
                     <button class="browser-btn" onclick="navigateOsWeb()">Git</button>
                 </div>
-                <iframe id="osweb-frame" src="https://www.google.com/custom?q="></iframe>
+                <iframe id="osweb-frame" src="https://html.duckduckgo.com/html/"></iframe>
             </div>
         </div>
     </div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('Bulut Bilgisayar v3.5 💪 - Google Arama & Tam Ekran Modu Aktif')">Başlat</button>
+        <button id="start-button" onclick="alert('Bulut Bilgisayar v4.0 💪 - YouTube & Gelişmiş OsWeb Aktif!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -177,7 +194,7 @@
             w.classList.toggle('maximized');
         }
 
-        // Sürükleme Mekanizması (Tam ekranken sürüklenmeyi engeller)
+        // Sürükleme Mekanizması
         let activeWin = null; let startX, startY, initialX, initialY;
         function dragStart(e) {
             activeWin = e.target.closest('.window'); 
@@ -197,20 +214,22 @@
         }
         function dragEnd() { activeWin = null; }
 
-        // OsWeb Gelişmiş Navigasyon (Arama / Link Algılama)
+        // OsWeb Akıllı Arama / Link Yönetimi
         function navigateOsWeb() {
             let query = document.getElementById('web-url').value.trim();
             const frame = document.getElementById('osweb-frame');
             
-            // Eğer bir link yapısı taşıyorsa (.com, .net, http içeriyorsa) direkt siteye git
-            if (query.startsWith('http://') || query.startsWith('https://') || query.includes('.') && !query.includes(' ')) {
+            if (!query) return;
+
+            // Eğer girilen metin net bir linkse direkt siteye yönlendir
+            if (query.startsWith('http://') || query.startsWith('https://') || (query.includes('.') && !query.includes(' '))) {
                 if(!query.startsWith('http://') && !query.startsWith('https://')) {
                     query = 'https://' + query;
                 }
                 frame.src = query;
             } else {
-                // Link değilse arama kelimesidir, Google Arama Motoruna yönlendir
-                frame.src = `https://www.google.com/custom?q=${encodeURIComponent(query)}`;
+                // Sadece kelime yazıldıysa DuckDuckGo üzerinden güvenli aramayı açar (Beyaz ekranı engeller)
+                frame.src = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`;
             }
         }
 
