@@ -28,6 +28,13 @@
         #file-list li { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 14px; }
         #file-list li:hover { background: #f0f0f0; }
 
+        /* Yeni Uygulama Elemanları */
+        .browser-container { display: flex; flex-direction: column; height: 100%; width: 100%; }
+        .browser-bar { display: flex; gap: 5px; margin-bottom: 10px; }
+        .browser-input { flex: 1; padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; outline: none; }
+        .browser-btn { padding: 5px 10px; background: #0078d4; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        iframe { width: 100%; height: 100%; border: none; background: white; }
+
         #taskbar { width: 100%; height: 48px; background: rgba(243, 243, 243, 0.85); backdrop-filter: blur(10px); position: absolute; bottom: 0; display: flex; align-items: center; padding: 0 15px; justify-content: space-between; border-top: 1px solid #ccc; z-index: 9999; }
         #start-button { background: #28a745; color: white; border: none; padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; }
         #clock { font-size: 14px; font-weight: bold; color: #333; }
@@ -47,6 +54,16 @@
         <div class="icon" onclick="openWindow('win-notepad')">
             <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png">
             <span>Not Defteri</span>
+        </div>
+        
+        <div class="icon" onclick="openWindow('win-youtube')">
+            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+            <span>SafTube (Reklamsız)</span>
+        </div>
+
+        <div class="icon" onclick="openWindow('win-osweb')">
+            <img src="https://cdn-icons-png.flaticon.com/512/841/841364.png">
+            <span>OsWeb</span>
         </div>
     </div>
 
@@ -89,8 +106,40 @@
         </div>
     </div>
 
+    <div id="win-youtube" class="window" style="width:400px; height:320px;">
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
+            <span>SafTube (Reklamsız YouTube)</span>
+            <button class="close-btn" onclick="closeWindow('win-youtube')"></button>
+        </div>
+        <div class="window-content" style="padding:0; background:#000;">
+            <div class="browser-container">
+                <div class="browser-bar" style="padding: 10px; background: #222;">
+                    <input type="text" id="yt-search" class="browser-input" style="background:#333; color:white; border:1px solid #444;" placeholder="Video ID veya Kelime girin...">
+                    <button class="browser-btn" style="background:#cc181e;" onclick="loadYoutubeVideo()">Ara / Oynat</button>
+                </div>
+                <iframe id="yt-frame" src="https://www.youtube.com/embed?listType=search&list=Minecraft"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div id="win-osweb" class="window" style="width:450px; height:350px;">
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
+            <span>OsWeb Browser</span>
+            <button class="close-btn" onclick="closeWindow('win-osweb')"></button>
+        </div>
+        <div class="window-content" style="padding:10px; display:flex; flex-direction:column;">
+            <div class="browser-container">
+                <div class="browser-bar">
+                    <input type="text" id="web-url" class="browser-input" value="https://bing.com" placeholder="https:// ile site adresi yazın...">
+                    <button class="browser-btn" onclick="navigateOsWeb()">Git</button>
+                </div>
+                <iframe id="osweb-frame" src="https://bing.com"></iframe>
+            </div>
+        </div>
+    </div>
+
     <div id="taskbar">
-        <button id="start-button" onclick="alert('Bulut Bilgisayar v2.0 - Sunucu Destekli Güçlü Sürüm 💪')">Başlat</button>
+        <button id="start-button" onclick="alert('Bulut Bilgisayar v2.5 - OsWeb & SafTube Entegrasyonu 💪')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -126,8 +175,31 @@
         }
         function dragEnd() { activeWin = null; }
 
+        // OsWeb Navigasyon Fonksiyonu
+        function navigateOsWeb() {
+            let url = document.getElementById('web-url').value;
+            if(!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url;
+            }
+            document.getElementById('osweb-frame').src = url;
+        }
+
+        // Reklamsız YouTube Arama/Oynatma Fonksiyonu
+        function loadYoutubeVideo() {
+            const query = document.getElementById('yt-search').value;
+            const frame = document.getElementById('yt-frame');
+            if(query.length > 0) {
+                // Eğer direkt video ID girilirse veya arama kelimesi girilirse oynatır
+                if(query.length === 11) {
+                    frame.src = `https://www.youtube.com/embed/${query}?autoplay=1`;
+                } else {
+                    frame.src = `https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}`;
+                }
+            }
+        }
+
         // SUNUCU (BACKEND) BAĞLANTISI
-        const SERVER_URL = window.location.origin; // Render'da otomatik kendi adresini alır
+        const SERVER_URL = window.location.origin;
 
         function uploadFileToServer() {
             const fileInput = document.getElementById('file-input');
@@ -149,9 +221,9 @@
                     fileInput.value = '';
                     refreshFiles();
                 })
-                .catch(err => alert("Yükleme hatası: Sunucu meşgul."));
+                .catch(err => alert("Yükleme hatası."));
             };
-            reader.readAsDataURL(file); // Tüm dosyaları Base64 olarak sunucuya aktarır
+            reader.readAsDataURL(file);
         }
 
         function refreshFiles() {
@@ -179,7 +251,6 @@
             fetch(`${SERVER_URL}/api/files/${index}`)
             .then(res => res.json())
             .then(file => {
-                // Tüm medya elementlerini gizle
                 const v = document.getElementById('media-video');
                 const a = document.getElementById('media-audio');
                 const img = document.getElementById('media-img');
@@ -196,8 +267,6 @@
                     const base64 = file.content.split(',')[1];
                     document.getElementById('txt-area').value = decodeURIComponent(escape(atob(base64)));
                     openWindow('win-notepad');
-                } else {
-                    alert("Bu dosya formatı destekleniyor ama açacak dahili uygulama yok!");
                 }
             });
         }
