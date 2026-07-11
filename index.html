@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <!-- İPHONE TAM EKRAN (UYGULAMA) MODU AYARLARI -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="HereEmu">
@@ -24,10 +23,25 @@
         .icon { width: 80px; display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); font-size: 12px; }
         .icon img { width: 45px; height: 45px; margin-bottom: 5px; pointer-events: none; }
 
-        .window { position: absolute; width: 360px; height: 320px; background: #f3f3f3; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: none; flex-direction: column; overflow: hidden; border: 1px solid #ccc; z-index: 10; }
+        /* Pencereler */
+        .window { position: absolute; width: 360px; height: 320px; background: #f3f3f3; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: none; flex-direction: column; overflow: hidden; border: 1px solid #ccc; z-index: 10; transition: width 0.2s, height 0.2s, top 0.2s, left 0.2s; }
         .window-header { background: #e1e1e1; padding: 10px; display: flex; justify-content: space-between; align-items: center; cursor: move; font-weight: bold; font-size: 14px; border-bottom: 1px solid #ccc; }
+        
+        /* Buton Grubu */
+        .header-buttons { display: flex; gap: 8px; align-items: center; }
         .close-btn { background: #ff5f56; border: none; width: 15px; height: 15px; border-radius: 50%; cursor: pointer; }
+        .maximize-btn { background: #ffbd2e; border: none; width: 15px; height: 15px; border-radius: 50%; cursor: pointer; }
+        
         .window-content { padding: 15px; flex: 1; overflow: auto; background: white; }
+
+        /* Tam Ekran Klası */
+        .window.maximized {
+            width: 100% !important;
+            height: calc(100% - 48px) !important;
+            top: 0 !important;
+            left: 0 !important;
+            border-radius: 0;
+        }
 
         textarea { width: 100%; height: 100%; border: none; resize: none; outline: none; font-family: monospace; }
         #file-list { list-style: none; }
@@ -60,12 +74,6 @@
             <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png">
             <span>Not Defteri</span>
         </div>
-        
-        <!-- SafTube İkonu -->
-        <div class="icon" onclick="openWindow('win-youtube')">
-            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
-            <span>SafTube (Reklamsız)</span>
-        </div>
 
         <div class="icon" onclick="openWindow('win-osweb')">
             <img src="https://cdn-icons-png.flaticon.com/512/841/841364.png">
@@ -73,11 +81,13 @@
         </div>
     </div>
 
-    <!-- PENCERELER -->
     <div id="win-uploader" class="window">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>Yükleme İstasyonu</span>
-            <button class="close-btn" onclick="closeWindow('win-uploader')"></button>
+            <div class="header-buttons">
+                <button class="maximize-btn" onclick="toggleMaximize('win-uploader')"></button>
+                <button class="close-btn" onclick="closeWindow('win-uploader')"></button>
+            </div>
         </div>
         <div class="window-content">
             <input type="file" id="file-input" style="margin-bottom: 15px;"><br>
@@ -88,7 +98,10 @@
     <div id="win-files" class="window">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>Render Sunucu Dosyaları</span>
-            <button class="close-btn" onclick="closeWindow('win-files')"></button>
+            <div class="header-buttons">
+                <button class="maximize-btn" onclick="toggleMaximize('win-files')"></button>
+                <button class="close-btn" onclick="closeWindow('win-files')"></button>
+            </div>
         </div>
         <div class="window-content"><ul id="file-list"></ul></div>
     </div>
@@ -96,7 +109,10 @@
     <div id="win-notepad" class="window">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>Not Defteri</span>
-            <button class="close-btn" onclick="closeWindow('win-notepad')"></button>
+            <div class="header-buttons">
+                <button class="maximize-btn" onclick="toggleMaximize('win-notepad')"></button>
+                <button class="close-btn" onclick="closeWindow('win-notepad')"></button>
+            </div>
         </div>
         <div class="window-content"><textarea id="txt-area" placeholder="Yazılım notları..."></textarea></div>
     </div>
@@ -104,7 +120,10 @@
     <div id="win-media" class="window" style="width:340px; height:260px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>Medya Oynatıcı</span>
-            <button class="close-btn" onclick="closeWindow('win-media')"></button>
+            <div class="header-buttons">
+                <button class="maximize-btn" onclick="toggleMaximize('win-media')"></button>
+                <button class="close-btn" onclick="closeWindow('win-media')"></button>
+            </div>
         </div>
         <div class="window-content" style="display:flex; justify-content:center; align-items:center; background:#000;">
             <video id="media-video" controls style="max-width:100%; max-height:100%; display:none;"></video>
@@ -113,43 +132,27 @@
         </div>
     </div>
 
-    <!-- Geliştirilmiş %100 Reklamsız SafTube Penceresi -->
-    <div id="win-youtube" class="window" style="width:400px; height:320px;">
-        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-            <span>SafTube (%100 Reklamsız YT)</span>
-            <button class="close-btn" onclick="closeWindow('win-youtube')"></button>
-        </div>
-        <div class="window-content" style="padding:0; background:#111;">
-            <div class="browser-container">
-                <div class="browser-bar" style="padding: 10px; background: #222;">
-                    <input type="text" id="yt-search" class="browser-input" style="background:#333; color:white; border:1px solid #444;" placeholder="Video adı veya kelime girin...">
-                    <button class="browser-btn" style="background:#cc181e;" onclick="loadYoutubeVideo()">Ara</button>
-                </div>
-                <!-- Reklamsız Piped Proxy Arayüzü (Ana sayfa trend videolarla açılır) -->
-                <iframe id="yt-frame" src="https://piped.video/trending"></iframe>
-            </div>
-        </div>
-    </div>
-
-    <!-- OsWeb İnternet Tarayıcısı Penceresi -->
     <div id="win-osweb" class="window" style="width:450px; height:350px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>OsWeb Browser</span>
-            <button class="close-btn" onclick="closeWindow('win-osweb')"></button>
+            <div class="header-buttons">
+                <button class="maximize-btn" onclick="toggleMaximize('win-osweb')"></button>
+                <button class="close-btn" onclick="closeWindow('win-osweb')"></button>
+            </div>
         </div>
         <div class="window-content" style="padding:10px; display:flex; flex-direction:column;">
             <div class="browser-container">
                 <div class="browser-bar">
-                    <input type="text" id="web-url" class="browser-input" value="https://bing.com" placeholder="https:// ile site adresi yazın...">
+                    <input type="text" id="web-url" class="browser-input" value="https://www.google.com/custom?q=" placeholder="Link yazın veya Google'da aratın...">
                     <button class="browser-btn" onclick="navigateOsWeb()">Git</button>
                 </div>
-                <iframe id="osweb-frame" src="https://bing.com"></iframe>
+                <iframe id="osweb-frame" src="https://www.google.com/custom?q="></iframe>
             </div>
         </div>
     </div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('Bulut Bilgisayar v3.0 - Reklamsız Altyapı Aktif 💪')">Başlat</button>
+        <button id="start-button" onclick="alert('Bulut Bilgisayar v3.5 💪 - Google Arama & Tam Ekran Modu Aktif')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -162,14 +165,23 @@
         // Pencere Kontrolleri
         function openWindow(id) {
             const w = document.getElementById(id); w.style.display = 'flex';
-            w.style.top = '15%'; w.style.left = '5%';
+            if(!w.classList.contains('maximized')) {
+                w.style.top = '15%'; w.style.left = '5%';
+            }
         }
         function closeWindow(id) { document.getElementById(id).style.display = 'none'; }
 
-        // Sürükleme Mekanizması
+        // TAM EKRAN (MAXIMIZE) FONKSİYONU
+        function toggleMaximize(id) {
+            const w = document.getElementById(id);
+            w.classList.toggle('maximized');
+        }
+
+        // Sürükleme Mekanizması (Tam ekranken sürüklenmeyi engeller)
         let activeWin = null; let startX, startY, initialX, initialY;
         function dragStart(e) {
-            activeWin = e.target.closest('.window'); if (!activeWin) return;
+            activeWin = e.target.closest('.window'); 
+            if (!activeWin || activeWin.classList.contains('maximized')) { activeWin = null; return; }
             const cX = e.touches ? e.touches[0].clientX : e.clientX;
             const cY = e.touches ? e.touches[0].clientY : e.clientY;
             startX = cX; startY = cY; initialX = activeWin.offsetLeft; initialY = activeWin.offsetTop;
@@ -185,22 +197,20 @@
         }
         function dragEnd() { activeWin = null; }
 
-        // OsWeb Navigasyon
+        // OsWeb Gelişmiş Navigasyon (Arama / Link Algılama)
         function navigateOsWeb() {
-            let url = document.getElementById('web-url').value;
-            if(!url.startsWith('http://') && !url.startsWith('https://')) {
-                url = 'https://' + url;
-            }
-            document.getElementById('osweb-frame').src = url;
-        }
-
-        // TAM REKLAMSIZ YOUTUBE ARAMASI
-        function loadYoutubeVideo() {
-            const query = document.getElementById('yt-search').value;
-            const frame = document.getElementById('yt-frame');
-            if(query.length > 0) {
-                // Arama kelimesini direkt reklamsız proxy motoruna gönderir
-                frame.src = `https://piped.video/results?search_query=${encodeURIComponent(query)}`;
+            let query = document.getElementById('web-url').value.trim();
+            const frame = document.getElementById('osweb-frame');
+            
+            // Eğer bir link yapısı taşıyorsa (.com, .net, http içeriyorsa) direkt siteye git
+            if (query.startsWith('http://') || query.startsWith('https://') || query.includes('.') && !query.includes(' ')) {
+                if(!query.startsWith('http://') && !query.startsWith('https://')) {
+                    query = 'https://' + query;
+                }
+                frame.src = query;
+            } else {
+                // Link değilse arama kelimesidir, Google Arama Motoruna yönlendir
+                frame.src = `https://www.google.com/custom?q=${encodeURIComponent(query)}`;
             }
         }
 
