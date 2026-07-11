@@ -1,0 +1,13 @@
+{
+  "name": "bulut-bilgisayar",
+  "version": "1.0.0",
+  "description": "Güçlü Web OS Sunucusu",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
