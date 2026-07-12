@@ -138,7 +138,7 @@
 
     <div id="win-youtube" class="window" style="width:400px; height:320px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-            <span>YouTube Player</span>
+            <span>YouTube Emu</span>
             <div class="header-buttons">
                 <button class="maximize-btn" onclick="toggleMaximize('win-youtube')"></button>
                 <button class="close-btn" onclick="closeWindow('win-youtube')"></button>
@@ -147,17 +147,17 @@
         <div class="window-content" style="padding:0; background:#000;">
             <div class="browser-container">
                 <div class="browser-bar" style="padding: 10px; background: #222;">
-                    <input type="text" id="yt-search" class="browser-input" style="background:#333; color:white; border:1px solid #444;" placeholder="Video adı veya arama kelimesi girin...">
+                    <input type="text" id="yt-search" class="browser-input" style="background:#333; color:white; border:1px solid #444;" placeholder="Video adı yazın ve Ara'ya basın...">
                     <button class="browser-btn" style="background:#cc181e;" onclick="loadYoutubeVideo()">Ara</button>
                 </div>
-                <iframe id="yt-frame" src="https://www.youtube.com/embed?listType=search&list=Minecraft"></iframe>
+                <iframe id="yt-frame" src="https://www.youtube.com/embed?listType=search&list=trend" allowfullscreen></iframe>
             </div>
         </div>
     </div>
 
     <div id="win-osweb" class="window" style="width:450px; height:350px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-            <span>OsWeb Browser</span>
+            <span>OsWeb Tarayıcı</span>
             <div class="header-buttons">
                 <button class="maximize-btn" onclick="toggleMaximize('win-osweb')"></button>
                 <button class="close-btn" onclick="closeWindow('win-osweb')"></button>
@@ -166,16 +166,16 @@
         <div class="window-content" style="padding:10px; display:flex; flex-direction:column;">
             <div class="browser-container">
                 <div class="browser-bar">
-                    <input type="text" id="web-url" class="browser-input" placeholder="İnternette aratın veya link girin...">
+                    <input type="text" id="web-url" class="browser-input" placeholder="Kelime yazıp Git'e basın...">
                     <button class="browser-btn" onclick="navigateOsWeb()">Git</button>
                 </div>
-                <iframe id="osweb-frame" src="https://searx.space"></iframe>
+                <iframe id="osweb-frame" src="https://search.twko.ro/"></iframe>
             </div>
         </div>
     </div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('Bulut Bilgisayar v5.0 💪 - İç İçe Koruma Engelleri Kırıldı!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v5.5 💪 - Güvenli Kapsül Modu Aktif!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -220,32 +220,32 @@
         }
         function dragEnd() { activeWin = null; }
 
-        // OsWeb Özgür Arama Sistemi
+        // OsWeb Iframe Uyumlu Özgür Arama Motoru Navigasyonu
         function navigateOsWeb() {
             let query = document.getElementById('web-url').value.trim();
             const frame = document.getElementById('osweb-frame');
             
             if (!query) return;
 
-            // Link ise doğrudan açmayı dene
+            // Girilen şey doğrudan bir link yapısıysa gitmeyi dene
             if (query.startsWith('http://') || query.startsWith('https://') || (query.includes('.') && !query.includes(' '))) {
                 if(!query.startsWith('http://') && !query.startsWith('https://')) {
                     query = 'https://' + query;
                 }
                 frame.src = query;
             } else {
-                // Kelime girildiyse asla beyaz ekranda kalmayan iframe dostu arama motoru tetiklenir
-                frame.src = `https://search.privacy.com.de/search?q=${encodeURIComponent(query)}`;
+                // Sadece kelime yazıldıysa iframe engeli barındırmayan arama motoruna yönlendirir
+                frame.src = `https://search.twko.ro/search?q=${encodeURIComponent(query)}&categories=general`;
             }
         }
 
-        // YouTube Uygulamaya Atmayan Arama Yapısı
+        // YouTube'un Dışarı Kaçmasını Engelleyen Arama Fonksiyonu
         function loadYoutubeVideo() {
             const query = document.getElementById('yt-search').value.trim();
             const frame = document.getElementById('yt-frame');
             if(query.length > 0) {
-                // Güvenli embed parametreleri ile arama tetikleme (Uygulama açılmasını bloke eder)
-                frame.src = `https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}&origin=${window.location.origin}`;
+                // Embed modunda list oluşturarak arama yapmak cihazın kendi YT uygulamasını tetiklemez!
+                frame.src = `https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}`;
             }
         }
 
