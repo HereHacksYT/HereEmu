@@ -144,13 +144,13 @@
                 <button class="close-btn" onclick="closeWindow('win-youtube')"></button>
             </div>
         </div>
-        <div class="window-content" style="padding:0; background:#000;">
+        <div class="window-content" style="padding:0; background:#111;">
             <div class="browser-container">
                 <div class="browser-bar" style="padding: 10px; background: #222;">
                     <input type="text" id="yt-search" class="browser-input" style="background:#333; color:white; border:1px solid #444;" placeholder="Video adı yazın ve Ara'ya basın...">
                     <button class="browser-btn" style="background:#cc181e;" onclick="loadYoutubeVideo()">Ara</button>
                 </div>
-                <iframe id="yt-frame" src="https://www.youtube.com/embed?listType=search&list=trend" allowfullscreen></iframe>
+                <iframe id="yt-frame" src="https://inv.tux.pizza/search?q=Minecraft" allowfullscreen></iframe>
             </div>
         </div>
     </div>
@@ -166,16 +166,16 @@
         <div class="window-content" style="padding:10px; display:flex; flex-direction:column;">
             <div class="browser-container">
                 <div class="browser-bar">
-                    <input type="text" id="web-url" class="browser-input" placeholder="Kelime yazıp Git'e basın...">
+                    <input type="text" id="web-url" class="browser-input" placeholder="Kelime yazın veya link girin...">
                     <button class="browser-btn" onclick="navigateOsWeb()">Git</button>
                 </div>
-                <iframe id="osweb-frame" src="https://search.twko.ro/"></iframe>
+                <iframe id="osweb-frame" src="https://www.bing.com"></iframe>
             </div>
         </div>
     </div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v5.5 💪 - Güvenli Kapsül Modu Aktif!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v6.0 💪 - Tüm Altyapılar Sıfırlandı!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -220,32 +220,32 @@
         }
         function dragEnd() { activeWin = null; }
 
-        // OsWeb Iframe Uyumlu Özgür Arama Motoru Navigasyonu
+        // OsWeb Tarayıcı Arama Mekanizması
         function navigateOsWeb() {
             let query = document.getElementById('web-url').value.trim();
             const frame = document.getElementById('osweb-frame');
             
             if (!query) return;
 
-            // Girilen şey doğrudan bir link yapısıysa gitmeyi dene
+            // Eğer tam bir link ise linke gider
             if (query.startsWith('http://') || query.startsWith('https://') || (query.includes('.') && !query.includes(' '))) {
                 if(!query.startsWith('http://') && !query.startsWith('https://')) {
                     query = 'https://' + query;
                 }
                 frame.src = query;
             } else {
-                // Sadece kelime yazıldıysa iframe engeli barındırmayan arama motoruna yönlendirir
-                frame.src = `https://search.twko.ro/search?q=${encodeURIComponent(query)}&categories=general`;
+                // Sadece kelime yazıldıysa iframe kilitleri koymayan Bing üzerinden kelime aratır
+                frame.src = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
             }
         }
 
-        // YouTube'un Dışarı Kaçmasını Engelleyen Arama Fonksiyonu
+        // YouTube İçeride Video Arama Mekanizması
         function loadYoutubeVideo() {
             const query = document.getElementById('yt-search').value.trim();
             const frame = document.getElementById('yt-frame');
             if(query.length > 0) {
-                // Embed modunda list oluşturarak arama yapmak cihazın kendi YT uygulamasını tetiklemez!
-                frame.src = `https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}`;
+                // Invidious api arama motoru üzerinden aratarak uygulamaya kaçışı ve hataları engeller
+                frame.src = `https://inv.tux.pizza/search?q=${encodeURIComponent(query)}`;
             }
         }
 
