@@ -21,7 +21,7 @@
         }
 
         .icon { width: 80px; display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); font-size: 12px; }
-        .icon img { width: 45px; height: 45px; margin-bottom: 5px; pointer-events: none; }
+        .icon img { width: 45px; height: 45px; margin-bottom: 5px; pointer-events: none; object-fit: contain; }
 
         /* Pencereler */
         .window { position: absolute; width: 360px; height: 320px; background: #f3f3f3; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: none; flex-direction: column; overflow: hidden; border: 1px solid #ccc; z-index: 10; transition: width 0.2s, height 0.2s, top 0.2s, left 0.2s; }
@@ -33,7 +33,6 @@
         
         .window-content { padding: 15px; flex: 1; overflow: auto; background: white; }
 
-        /* Tam Ekran Klası */
         .window.maximized {
             width: 100% !important;
             height: calc(100% - 48px) !important;
@@ -42,11 +41,10 @@
             border-radius: 0;
         }
 
-        /* Input alanlarına tıklanınca iOS odaklanmasını ve kaymaları engelleme */
         input[type="text"], textarea { 
             user-select: text !important; 
             -webkit-user-select: text !important; 
-            font-size: 16px !important; /* iOS otomatik zoom yapmasın diye minimum 16px */
+            font-size: 16px !important; 
         }
 
         textarea { width: 100%; height: 100%; border: none; resize: none; outline: none; font-family: monospace; }
@@ -74,7 +72,7 @@
         </div>
         <div class="icon" onclick="openWindow('win-files'); refreshFiles();">
             <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png">
-            <span>Harddisk (Render)</span>
+            <span>Harddisk</span>
         </div>
         <div class="icon" onclick="openWindow('win-notepad')">
             <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png">
@@ -84,8 +82,9 @@
             <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
             <span>YouTube</span>
         </div>
+        
         <div class="icon" onclick="openWindow('win-osweb')">
-            <img src="https://cdn-icons-png.flaticon.com/512/841/841364.png">
+            <img src="icons/OsWeb.png">
             <span>OsWeb</span>
         </div>
     </div>
@@ -180,17 +179,15 @@
     </div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v6.5 💪 - Klavye ve Ekran Düzeni Optimize Edildi!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v7.5 💪 - Özel OsWeb Logosu Aktif!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
     <script>
-        // Saat mekanizması
         setInterval(() => {
             document.getElementById('clock').innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
         }, 1000);
 
-        // Pencere Kontrolleri
         function openWindow(id) {
             const w = document.getElementById(id); w.style.display = 'flex';
             if(!w.classList.contains('maximized')) {
@@ -204,7 +201,6 @@
             w.classList.toggle('maximized');
         }
 
-        // Sürükleme Mekanizması
         let activeWin = null; let startX, startY, initialX, initialY;
         function dragStart(e) {
             activeWin = e.target.closest('.window'); 
@@ -224,7 +220,6 @@
         }
         function dragEnd() { activeWin = null; }
 
-        // OsWeb Arama Mekanizması
         function navigateOsWeb() {
             let query = document.getElementById('web-url').value.trim();
             const frame = document.getElementById('osweb-frame');
@@ -240,7 +235,6 @@
             }
         }
 
-        // YouTube Video Arama Mekanizması
         function loadYoutubeVideo() {
             const query = document.getElementById('yt-search').value.trim();
             const frame = document.getElementById('yt-frame');
@@ -249,7 +243,6 @@
             }
         }
 
-        // SUNUCU (BACKEND) BAĞLANTISI
         const SERVER_URL = window.location.origin;
 
         function uploadFileToServer() {
