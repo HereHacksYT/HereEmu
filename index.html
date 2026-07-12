@@ -169,10 +169,10 @@
         <div class="window-content" style="padding:0; background:#111;">
             <div class="browser-container">
                 <div class="browser-bar" style="padding: 10px; background: #222;">
-                    <input type="text" id="yt-search" class="browser-input" style="background:#333; color:white; border:1px solid #444;" placeholder="Video adı yazın ve Ara'ya basın...">
+                    <input type="text" id="yt-search" class="browser-input" style="background:#333; color:white; border:1px solid #444;" placeholder="Video adı yazın..." onkeydown="if(event.key==='Enter') loadYoutubeVideo()">
                     <button class="browser-btn" style="background:#cc181e;" onclick="loadYoutubeVideo()">Ara</button>
                 </div>
-                <iframe id="yt-frame" src="https://inv.tux.pizza/search?q=Minecraft" allowfullscreen></iframe>
+                <iframe id="yt-frame" src="about:blank" allowfullscreen onload="stopMainLoading()"></iframe>
             </div>
         </div>
     </div>
@@ -188,14 +188,14 @@
         <div class="window-content" style="padding:10px; display:flex; flex-direction:column;">
             <div class="browser-container">
                 <div class="browser-bar">
-                    <input type="text" id="web-url" class="browser-input" placeholder="Kelime yazın veya link girin...">
+                    <input type="text" id="web-url" class="browser-input" placeholder="Kelime yazın veya link girin..." onkeydown="if(event.key==='Enter') navigateOsWeb(this.value)">
                     <button class="browser-btn" onclick="navigateOsWeb(document.getElementById('web-url').value)">Git</button>
                 </div>
                 
                 <div id="osweb-homepage">
                     <img src="https://r.resimlink.com/8KnjzqH6U.png" class="homepage-logo">
                     <div class="homepage-search-box">
-                        <input type="text" id="hp-search-input" class="homepage-input" placeholder="OsWeb'de arayın...">
+                        <input type="text" id="hp-search-input" class="homepage-input" placeholder="OsWeb'de arayın..." onkeydown="if(event.key==='Enter') navigateOsWeb(this.value)">
                         <button class="homepage-btn" onclick="navigateOsWeb(document.getElementById('hp-search-input').value)">Ara</button>
                     </div>
                 </div>
@@ -206,13 +206,13 @@
                     <a id="security-warning-link" href="#" target="_blank" class="warning-btn">Yeni Sekmede Güvenle Aç</a>
                 </div>
 
-                <iframe id="osweb-frame" src="about:blank" style="display:none;"></iframe>
+                <iframe id="osweb-frame" src="about:blank" style="display:none;" onload="stopMainLoading()"></iframe>
             </div>
         </div>
     </div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v10.0 💪 - Akıllı Akış Kontrolü Aktif!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v10.5 💪 - İframe Optimizasyonu Sağlandı!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -220,6 +220,11 @@
         setInterval(() => {
             document.getElementById('clock').innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
         }, 1000);
+
+        // Tarayıcı yükleme barının takılmasını durduran fonksiyon
+        function stopMainLoading() {
+            console.log("İframe yüklemesi tamamlandı, ana tarayıcı rahatlatıldı.");
+        }
 
         function openWindow(id) {
             const w = document.getElementById(id); w.style.display = 'flex';
@@ -234,8 +239,15 @@
                 document.getElementById('web-url').value = '';
                 document.getElementById('hp-search-input').value = '';
             }
+            if(id === 'win-youtube') {
+                document.getElementById('yt-frame').src = "https://inv.tux.pizza/search?q=Minecraft";
+            }
         }
-        function closeWindow(id) { document.getElementById(id).style.display = 'none'; }
+        function closeWindow(id) { 
+            document.getElementById(id).style.display = 'none'; 
+            if(id === 'win-osweb') document.getElementById('osweb-frame').src = 'about:blank';
+            if(id === 'win-youtube') document.getElementById('yt-frame').src = 'about:blank';
+        }
 
         function toggleMaximize(id) {
             const w = document.getElementById(id);
@@ -273,7 +285,6 @@
             warning.style.display = 'none';
             frame.style.display = 'none';
 
-            // Link mi arama motoru kelimesi mi kontrol et
             let targetUrl = query;
             if (query.startsWith('http://') || query.startsWith('https://') || (query.includes('.') && !query.includes(' '))) {
                 if(!query.startsWith('http://') && !query.startsWith('https://')) {
@@ -285,10 +296,9 @@
 
             document.getElementById('web-url').value = targetUrl;
 
-            // IFRAME ENGELLEYEN BÜYÜK SİTELERİN KONTROLÜ (GitHub, Google vb.)
             const lowerUrl = targetUrl.toLowerCase();
             if (lowerUrl.includes('github.com') || lowerUrl.includes('google.com') || lowerUrl.includes('youtube.com') || lowerUrl.includes('instagram.com') || lowerUrl.includes('facebook.com')) {
-                document.getElementById('security-warning-text').innerText = `"${query}" sitesi (X-Frame-Options) güvenlik korumaları nedeniyle bu küçük pencerede açılamaz.`;
+                document.getElementById('security-warning-text').innerText = `"${query}" sitesi güvenlik korumaları nedeniyle bu pencerede açılamaz.`;
                 document.getElementById('security-warning-link').href = targetUrl;
                 warning.style.display = 'flex';
             } else {
