@@ -89,9 +89,10 @@
             <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png">
             <span>Not Defteri</span>
         </div>
-        <div class="icon" onclick="openWindow('win-youtube')">
-            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
-            <span>YouTube</span>
+        
+        <div class="icon" onclick="openWindow('win-ostube')">
+            <img src="https://r.resimlink.com/0AfaQN3LgC.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/1384/1384060.png';">
+            <span>OsTube</span>
         </div>
         
         <div class="icon" onclick="openWindow('win-osweb')">
@@ -151,21 +152,21 @@
         </div>
     </div>
 
-    <div id="win-youtube" class="window" style="width:400px; height:320px;">
+    <div id="win-ostube" class="window" style="width:400px; height:320px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-            <span>YouTube Emu</span>
+            <span>OsTube</span>
             <div class="header-buttons">
-                <button class="maximize-btn" onclick="toggleMaximize('win-youtube')"></button>
-                <button class="close-btn" onclick="closeWindow('win-youtube')"></button>
+                <button class="maximize-btn" onclick="toggleMaximize('win-ostube')"></button>
+                <button class="close-btn" onclick="closeWindow('win-ostube')"></button>
             </div>
         </div>
         <div class="window-content" style="padding:0; background:#111;">
             <div class="browser-container">
                 <div class="browser-bar" style="padding: 10px; background: #222;">
-                    <input type="text" id="yt-search" class="browser-input" style="background:#333; color:white; border:1px solid #444;" placeholder="Video adı yazın..." onkeydown="if(event.key==='Enter') loadYoutubeVideo()">
-                    <button class="browser-btn" style="background:#cc181e;" onclick="loadYoutubeVideo()">Ara</button>
+                    <input type="text" id="yt-search" class="browser-input" style="background:#333; color:white; border:1px solid #444;" placeholder="OsTube'da video ara..." onkeydown="if(event.key==='Enter') loadOsTubeVideo()">
+                    <button class="browser-btn" style="background:#cc181e;" onclick="loadOsTubeVideo()">Ara</button>
                 </div>
-                <iframe id="yt-frame" src="https://inv.tux.pizza/search?q=Minecraft" allowfullscreen></iframe>
+                <iframe id="yt-frame" src="about:blank" allowfullscreen></iframe>
             </div>
         </div>
     </div>
@@ -199,7 +200,7 @@
     </div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v9.5 💪 - Arama Sistemi Tamamen Düzeltildi!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v10.0 💪 - OsTube Entegre Edildi!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -220,8 +221,15 @@
                 document.getElementById('web-url').value = '';
                 document.getElementById('hp-search-input').value = '';
             }
+            if(id === 'win-ostube') {
+                document.getElementById('yt-frame').src = "https://ostube.onrender.com";
+                document.getElementById('yt-search').value = "";
+            }
         }
-        function closeWindow(id) { document.getElementById(id).style.display = 'none'; }
+        function closeWindow(id) { 
+            document.getElementById(id).style.display = 'none'; 
+            if(id === 'win-ostube') document.getElementById('yt-frame').src = 'about:blank';
+        }
 
         function toggleMaximize(id) {
             const w = document.getElementById(id);
@@ -268,11 +276,14 @@
             document.getElementById('web-url').value = targetUrl;
         }
 
-        function loadYoutubeVideo() {
+        // GÜNCELLENEN OSTUBE ARAMA FONKSİYONU
+        function loadOsTubeVideo() {
             const query = document.getElementById('yt-search').value.trim();
             const frame = document.getElementById('yt-frame');
             if(query.length > 0) {
-                frame.src = `https://inv.tux.pizza/search?q=${encodeURIComponent(query)}`;
+                frame.src = `https://ostube.onrender.com/search?q=${encodeURIComponent(query)}`;
+            } else {
+                frame.src = "https://ostube.onrender.com";
             }
         }
 
