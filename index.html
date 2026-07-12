@@ -162,10 +162,6 @@
         </div>
         <div class="window-content" style="padding:0; background:#111;">
             <div class="browser-container">
-                <div class="browser-bar" style="padding: 10px; background: #222;">
-                    <input type="text" id="yt-search" class="browser-input" style="background:#333; color:white; border:1px solid #444;" placeholder="OsTube'da video ara..." onkeydown="if(event.key==='Enter') loadOsTubeVideo()">
-                    <button class="browser-btn" style="background:#cc181e;" onclick="loadOsTubeVideo()">Ara</button>
-                </div>
                 <iframe id="yt-frame" src="about:blank" allowfullscreen></iframe>
             </div>
         </div>
@@ -200,7 +196,7 @@
     </div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v10.0 💪 - OsTube Entegre Edildi!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v10.1 💪 - OsTube Saf Sürüm!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -223,7 +219,6 @@
             }
             if(id === 'win-ostube') {
                 document.getElementById('yt-frame').src = "https://ostube.onrender.com";
-                document.getElementById('yt-search').value = "";
             }
         }
         function closeWindow(id) { 
@@ -274,17 +269,6 @@
                 frame.src = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
             }
             document.getElementById('web-url').value = targetUrl;
-        }
-
-        // GÜNCELLENEN OSTUBE ARAMA FONKSİYONU
-        function loadOsTubeVideo() {
-            const query = document.getElementById('yt-search').value.trim();
-            const frame = document.getElementById('yt-frame');
-            if(query.length > 0) {
-                frame.src = `https://ostube.onrender.com/search?q=${encodeURIComponent(query)}`;
-            } else {
-                frame.src = "https://ostube.onrender.com";
-            }
         }
 
         const SERVER_URL = window.location.origin;
