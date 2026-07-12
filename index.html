@@ -69,6 +69,13 @@
         .homepage-input { flex: 1; border: none; background: transparent; padding: 5px 15px; outline: none; font-size: 14px; }
         .homepage-btn { background: #0078d4; color: white; border: none; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; }
 
+        /* Güvenlikli Uyarı Ekranı */
+        #browser-security-warning {
+            display: none; position: absolute; top: 45px; left: 0; width: 100%; height: calc(100% - 45px);
+            background: #fff; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; z-index: 4;
+        }
+        .warning-btn { margin-top: 15px; padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 14px; text-decoration: none; }
+
         #taskbar { width: 100%; height: 48px; background: rgba(243, 243, 243, 0.85); backdrop-filter: blur(10px); position: absolute; bottom: 0; display: flex; align-items: center; padding: 0 15px; justify-content: space-between; border-top: 1px solid #ccc; z-index: 9999; }
         #start-button { background: #28a745; color: white; border: none; padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; }
         #clock { font-size: 14px; font-weight: bold; color: #333; }
@@ -193,13 +200,19 @@
                     </div>
                 </div>
 
+                <div id="browser-security-warning">
+                    <h3 style="color:#d9534f; margin-bottom:10px;">⚠️ Güvenlik Koruması</h3>
+                    <p id="security-warning-text" style="font-size:14px; color:#555;"></p>
+                    <a id="security-warning-link" href="#" target="_blank" class="warning-btn">Yeni Sekmede Güvenle Aç</a>
+                </div>
+
                 <iframe id="osweb-frame" src="about:blank" style="display:none;"></iframe>
             </div>
         </div>
     </div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v9.5 💪 - Arama Sistemi Tamamen Düzeltildi!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v10.0 💪 - Akıllı Akış Kontrolü Aktif!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -216,6 +229,7 @@
             if(id === 'win-osweb') {
                 document.getElementById('osweb-homepage').style.display = 'flex';
                 document.getElementById('osweb-frame').style.display = 'none';
+                document.getElementById('browser-security-warning').style.display = 'none';
                 document.getElementById('osweb-frame').src = 'about:blank';
                 document.getElementById('web-url').value = '';
                 document.getElementById('hp-search-input').value = '';
@@ -251,21 +265,36 @@
             query = query.trim();
             const frame = document.getElementById('osweb-frame');
             const homepage = document.getElementById('osweb-homepage');
+            const warning = document.getElementById('browser-security-warning');
+            
             if (!query) return;
 
             homepage.style.display = 'none';
-            frame.style.display = 'block';
+            warning.style.display = 'none';
+            frame.style.display = 'none';
 
+            // Link mi arama motoru kelimesi mi kontrol et
+            let targetUrl = query;
             if (query.startsWith('http://') || query.startsWith('https://') || (query.includes('.') && !query.includes(' '))) {
                 if(!query.startsWith('http://') && !query.startsWith('https://')) {
-                    query = 'https://' + query;
+                    targetUrl = 'https://' + query;
                 }
-                frame.src = query;
             } else {
-                // Bing Mobil Arama Linki (Sorunsuz çalışır)
-                frame.src = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
+                targetUrl = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
             }
-            document.getElementById('web-url').value = query;
+
+            document.getElementById('web-url').value = targetUrl;
+
+            // IFRAME ENGELLEYEN BÜYÜK SİTELERİN KONTROLÜ (GitHub, Google vb.)
+            const lowerUrl = targetUrl.toLowerCase();
+            if (lowerUrl.includes('github.com') || lowerUrl.includes('google.com') || lowerUrl.includes('youtube.com') || lowerUrl.includes('instagram.com') || lowerUrl.includes('facebook.com')) {
+                document.getElementById('security-warning-text').innerText = `"${query}" sitesi (X-Frame-Options) güvenlik korumaları nedeniyle bu küçük pencerede açılamaz.`;
+                document.getElementById('security-warning-link').href = targetUrl;
+                warning.style.display = 'flex';
+            } else {
+                frame.style.display = 'block';
+                frame.src = targetUrl;
+            }
         }
 
         function loadYoutubeVideo() {
