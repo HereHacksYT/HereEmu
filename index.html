@@ -162,7 +162,7 @@
         <div class="window-content" style="padding:0; background:#111;">
             <div class="browser-container">
                 <div class="browser-bar" style="padding: 10px; background: #222;">
-                    <input type="text" id="yt-search" class="browser-input" style="background:#333; color:white; border:1px solid #444;" placeholder="Video adı yazın..." onkeydown="if(event.key==='Enter') loadYoutubeVideo()">
+                    <input type="text" id="yt-search" class="browser-input" style="background:#333; color:white; border:1px solid #444;" placeholder="Video adı yazın ve Ara'ya basın...">
                     <button class="browser-btn" style="background:#cc181e;" onclick="loadYoutubeVideo()">Ara</button>
                 </div>
                 <iframe id="yt-frame" src="https://inv.tux.pizza/search?q=Minecraft" allowfullscreen></iframe>
@@ -181,14 +181,14 @@
         <div class="window-content" style="padding:10px; display:flex; flex-direction:column;">
             <div class="browser-container">
                 <div class="browser-bar">
-                    <input type="text" id="web-url" class="browser-input" placeholder="Kelime yazın veya link girin..." onkeydown="if(event.key==='Enter') navigateOsWeb(this.value)">
+                    <input type="text" id="web-url" class="browser-input" placeholder="Kelime yazın veya link girin...">
                     <button class="browser-btn" onclick="navigateOsWeb(document.getElementById('web-url').value)">Git</button>
                 </div>
                 
                 <div id="osweb-homepage">
                     <img src="https://r.resimlink.com/8KnjzqH6U.png" class="homepage-logo">
                     <div class="homepage-search-box">
-                        <input type="text" id="hp-search-input" class="homepage-input" placeholder="OsWeb'de arayın..." onkeydown="if(event.key==='Enter') navigateOsWeb(this.value)">
+                        <input type="text" id="hp-search-input" class="homepage-input" placeholder="OsWeb'de arayın...">
                         <button class="homepage-btn" onclick="navigateOsWeb(document.getElementById('hp-search-input').value)">Ara</button>
                     </div>
                 </div>
@@ -228,7 +228,7 @@
             w.classList.toggle('maximized');
         }
 
-        let activeWin = null; let startX, startY; let initialX, initialY;
+        let activeWin = null; let startX, startY, initialX, initialY;
         function dragStart(e) {
             activeWin = e.target.closest('.window'); 
             if (!activeWin || activeWin.classList.contains('maximized')) { activeWin = null; return; }
@@ -256,16 +256,16 @@
             homepage.style.display = 'none';
             frame.style.display = 'block';
 
-            let targetUrl = query;
             if (query.startsWith('http://') || query.startsWith('https://') || (query.includes('.') && !query.includes(' '))) {
                 if(!query.startsWith('http://') && !query.startsWith('https://')) {
-                    targetUrl = 'https://' + query;
+                    query = 'https://' + query;
                 }
-                frame.src = targetUrl;
+                frame.src = query;
             } else {
+                // Bing Mobil Arama Linki (Sorunsuz çalışır)
                 frame.src = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
             }
-            document.getElementById('web-url').value = targetUrl;
+            document.getElementById('web-url').value = query;
         }
 
         function loadYoutubeVideo() {
