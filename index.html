@@ -7,6 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="HereEmu">
+    <meta name="mobile-web-app-capable" content="yes">
     
     <title>Güçlü Bulut Bilgisayarım</title>
     <style>
@@ -61,11 +62,12 @@
         /* Tarayıcı İçi Özel Başlangıç Sayfası Tasarımı */
         #osweb-homepage {
             position: absolute; top: 45px; left: 0; width: 100%; height: calc(100% - 45px);
-            background: url('https://r.resimlink.com/tBnlAo2Xs.png') no-repeat center center;
-            background-size: cover; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; z-index: 5;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; z-index: 5;
         }
-        .homepage-logo { width: 90px; height: 90px; object-fit: contain; filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.5)); }
-        .homepage-search-box { display: flex; width: 80%; max-width: 400px; gap: 5px; background: rgba(255,255,255,0.9); padding: 6px; border-radius: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .homepage-logo { width: 75px; height: 75px; object-fit: contain; filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.3)); }
+        .homepage-title { color: white; font-weight: bold; font-size: 20px; text-shadow: 1px 1px 4px rgba(0,0,0,0.4); margin-bottom: 5px; }
+        .homepage-search-box { display: flex; width: 85%; max-width: 400px; gap: 5px; background: rgba(255,255,255,0.95); padding: 6px; border-radius: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         .homepage-input { flex: 1; border: none; background: transparent; padding: 5px 15px; outline: none; font-size: 14px; }
         .homepage-btn { background: #0078d4; color: white; border: none; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; }
 
@@ -102,7 +104,7 @@
         </div>
         
         <div class="icon" onclick="openWindow('win-osweb')">
-            <img src="https://r.resimlink.com/8KnjzqH6U.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/841/841364.png';">
+            <img src="https://cdn-icons-png.flaticon.com/512/4603/4603843.png">
             <span>OsWeb</span>
         </div>
     </div>
@@ -172,7 +174,7 @@
                     <input type="text" id="yt-search" class="browser-input" style="background:#333; color:white; border:1px solid #444;" placeholder="Video adı yazın..." onkeydown="if(event.key==='Enter') loadYoutubeVideo()">
                     <button class="browser-btn" style="background:#cc181e;" onclick="loadYoutubeVideo()">Ara</button>
                 </div>
-                <iframe id="yt-frame" src="about:blank" allowfullscreen onload="stopMainLoading()"></iframe>
+                <iframe id="yt-frame" src="about:blank" allowfullscreen></iframe>
             </div>
         </div>
     </div>
@@ -193,9 +195,10 @@
                 </div>
                 
                 <div id="osweb-homepage">
-                    <img src="https://r.resimlink.com/8KnjzqH6U.png" class="homepage-logo">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4603/4603843.png" class="homepage-logo">
+                    <div class="homepage-title">OsWeb Gezgini</div>
                     <div class="homepage-search-box">
-                        <input type="text" id="hp-search-input" class="homepage-input" placeholder="OsWeb'de arayın..." onkeydown="if(event.key==='Enter') navigateOsWeb(this.value)">
+                        <input type="text" id="hp-search-input" class="homepage-input" placeholder="İnternette güvenle arayın..." onkeydown="if(event.key==='Enter') navigateOsWeb(this.value)">
                         <button class="homepage-btn" onclick="navigateOsWeb(document.getElementById('hp-search-input').value)">Ara</button>
                     </div>
                 </div>
@@ -206,13 +209,13 @@
                     <a id="security-warning-link" href="#" target="_blank" class="warning-btn">Yeni Sekmede Güvenle Aç</a>
                 </div>
 
-                <iframe id="osweb-frame" src="about:blank" style="display:none;" onload="stopMainLoading()"></iframe>
+                <iframe id="osweb-frame" src="about:blank" style="display:none;"></iframe>
             </div>
         </div>
     </div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v10.5 💪 - İframe Optimizasyonu Sağlandı!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v11.5 💪 - Sistem Kusursuzlaştırıldı!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -220,11 +223,6 @@
         setInterval(() => {
             document.getElementById('clock').innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
         }, 1000);
-
-        // Tarayıcı yükleme barının takılmasını durduran fonksiyon
-        function stopMainLoading() {
-            console.log("İframe yüklemesi tamamlandı, ana tarayıcı rahatlatıldı.");
-        }
 
         function openWindow(id) {
             const w = document.getElementById(id); w.style.display = 'flex';
@@ -240,7 +238,7 @@
                 document.getElementById('hp-search-input').value = '';
             }
             if(id === 'win-youtube') {
-                document.getElementById('yt-frame').src = "https://inv.tux.pizza/search?q=Minecraft";
+                document.getElementById('yt-frame').src = "https://invidious.nerdvpn.de/search?q=Minecraft";
             }
         }
         function closeWindow(id) { 
@@ -291,7 +289,7 @@
                     targetUrl = 'https://' + query;
                 }
             } else {
-                targetUrl = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
+                targetUrl = `https://www.bing.com/search?q=${encodeURIComponent(query)}&html=1`;
             }
 
             document.getElementById('web-url').value = targetUrl;
@@ -311,7 +309,7 @@
             const query = document.getElementById('yt-search').value.trim();
             const frame = document.getElementById('yt-frame');
             if(query.length > 0) {
-                frame.src = `https://inv.tux.pizza/search?q=${encodeURIComponent(query)}`;
+                frame.src = `https://invidious.nerdvpn.de/search?q=${encodeURIComponent(query)}`;
             }
         }
 
