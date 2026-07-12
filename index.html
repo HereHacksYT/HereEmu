@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -10,8 +10,8 @@
     
     <title>Güçlü Bulut Bilgisayarım</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
-        body, html { width: 100%; height: 100%; overflow: hidden; font-family: sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
+        body, html { width: 100%; height: 100%; overflow: hidden; font-family: sans-serif; background-color: #000; }
         
         #desktop {
             width: 100%; height: calc(100% - 48px);
@@ -40,6 +40,13 @@
             top: 0 !important;
             left: 0 !important;
             border-radius: 0;
+        }
+
+        /* Input alanlarına tıklanınca iOS odaklanmasını ve kaymaları engelleme */
+        input[type="text"], textarea { 
+            user-select: text !important; 
+            -webkit-user-select: text !important; 
+            font-size: 16px !important; /* iOS otomatik zoom yapmasın diye minimum 16px */
         }
 
         textarea { width: 100%; height: 100%; border: none; resize: none; outline: none; font-family: monospace; }
@@ -73,12 +80,10 @@
             <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png">
             <span>Not Defteri</span>
         </div>
-
         <div class="icon" onclick="openWindow('win-youtube')">
             <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
             <span>YouTube</span>
         </div>
-
         <div class="icon" onclick="openWindow('win-osweb')">
             <img src="https://cdn-icons-png.flaticon.com/512/841/841364.png">
             <span>OsWeb</span>
@@ -175,7 +180,7 @@
     </div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v6.0 💪 - Tüm Altyapılar Sıfırlandı!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v6.5 💪 - Klavye ve Ekran Düzeni Optimize Edildi!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -194,7 +199,6 @@
         }
         function closeWindow(id) { document.getElementById(id).style.display = 'none'; }
 
-        // TAM EKRAN (MAXIMIZE) FONKSİYONU
         function toggleMaximize(id) {
             const w = document.getElementById(id);
             w.classList.toggle('maximized');
@@ -220,31 +224,27 @@
         }
         function dragEnd() { activeWin = null; }
 
-        // OsWeb Tarayıcı Arama Mekanizması
+        // OsWeb Arama Mekanizması
         function navigateOsWeb() {
             let query = document.getElementById('web-url').value.trim();
             const frame = document.getElementById('osweb-frame');
-            
             if (!query) return;
 
-            // Eğer tam bir link ise linke gider
             if (query.startsWith('http://') || query.startsWith('https://') || (query.includes('.') && !query.includes(' '))) {
                 if(!query.startsWith('http://') && !query.startsWith('https://')) {
                     query = 'https://' + query;
                 }
                 frame.src = query;
             } else {
-                // Sadece kelime yazıldıysa iframe kilitleri koymayan Bing üzerinden kelime aratır
                 frame.src = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
             }
         }
 
-        // YouTube İçeride Video Arama Mekanizması
+        // YouTube Video Arama Mekanizması
         function loadYoutubeVideo() {
             const query = document.getElementById('yt-search').value.trim();
             const frame = document.getElementById('yt-frame');
             if(query.length > 0) {
-                // Invidious api arama motoru üzerinden aratarak uygulamaya kaçışı ve hataları engeller
                 frame.src = `https://inv.tux.pizza/search?q=${encodeURIComponent(query)}`;
             }
         }
@@ -260,7 +260,6 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 const payload = { name: file.name, type: file.type, content: e.target.result };
-                
                 fetch(`${SERVER_URL}/api/upload`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
