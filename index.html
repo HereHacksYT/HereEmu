@@ -53,14 +53,10 @@
         .browser-btn { padding: 5px 10px; background: #0078d4; color: white; border: none; border-radius: 4px; cursor: pointer; }
         iframe { width: 100%; height: 100%; border: none; background: white; }
 
-        /* Google Özel Arama Kutusu Stili */
-        .gcse-searchresults-only { width: 100%; height: 100%; }
-
         #taskbar { width: 100%; height: 48px; background: rgba(243, 243, 243, 0.85); backdrop-filter: blur(10px); position: absolute; bottom: 0; display: flex; align-items: center; padding: 0 15px; justify-content: space-between; border-top: 1px solid #ccc; z-index: 9999; }
         #start-button { background: #28a745; color: white; border: none; padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; }
         #clock { font-size: 14px; font-weight: bold; color: #333; }
     </style>
-    <script async src="https://cse.google.com/cse.js?cx=partner-pub-2698861478625135:3054523115"></script>
 </head>
 <body>
 
@@ -78,7 +74,7 @@
             <span>Not Defteri</span>
         </div>
 
-        <div class="icon" onclick="window.open('https://m.youtube.com', '_blank')">
+        <div class="icon" onclick="openWindow('win-youtube')">
             <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
             <span>YouTube</span>
         </div>
@@ -140,6 +136,25 @@
         </div>
     </div>
 
+    <div id="win-youtube" class="window" style="width:400px; height:320px;">
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
+            <span>YouTube Player</span>
+            <div class="header-buttons">
+                <button class="maximize-btn" onclick="toggleMaximize('win-youtube')"></button>
+                <button class="close-btn" onclick="closeWindow('win-youtube')"></button>
+            </div>
+        </div>
+        <div class="window-content" style="padding:0; background:#000;">
+            <div class="browser-container">
+                <div class="browser-bar" style="padding: 10px; background: #222;">
+                    <input type="text" id="yt-search" class="browser-input" style="background:#333; color:white; border:1px solid #444;" placeholder="Video adı veya arama kelimesi girin...">
+                    <button class="browser-btn" style="background:#cc181e;" onclick="loadYoutubeVideo()">Ara</button>
+                </div>
+                <iframe id="yt-frame" src="https://www.youtube.com/embed?listType=search&list=Minecraft"></iframe>
+            </div>
+        </div>
+    </div>
+
     <div id="win-osweb" class="window" style="width:450px; height:350px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>OsWeb Browser</span>
@@ -151,19 +166,16 @@
         <div class="window-content" style="padding:10px; display:flex; flex-direction:column;">
             <div class="browser-container">
                 <div class="browser-bar">
-                    <input type="text" id="web-url" class="browser-input" placeholder="Google'da aranacak kelime veya link girin...">
+                    <input type="text" id="web-url" class="browser-input" placeholder="İnternette aratın veya link girin...">
                     <button class="browser-btn" onclick="navigateOsWeb()">Git</button>
                 </div>
-                <div id="search-results-area" style="width:100%; height:100%; overflow:auto; display:none;">
-                    <div class="gcse-searchresults-only"></div>
-                </div>
-                <iframe id="osweb-frame" src="about:blank"></iframe>
+                <iframe id="osweb-frame" src="https://searx.space"></iframe>
             </div>
         </div>
     </div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('Bulut Bilgisayar v4.5 💪 - Tamamen Sorunsuz Sürüm!')">Başlat</button>
+        <button id="start-button" onclick="alert('Bulut Bilgisayar v5.0 💪 - İç İçe Koruma Engelleri Kırıldı!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -208,32 +220,32 @@
         }
         function dragEnd() { activeWin = null; }
 
-        // OsWeb Akıllı Arama / Link Yönetimi
+        // OsWeb Özgür Arama Sistemi
         function navigateOsWeb() {
             let query = document.getElementById('web-url').value.trim();
             const frame = document.getElementById('osweb-frame');
-            const searchArea = document.getElementById('search-results-area');
             
             if (!query) return;
 
-            // Eğer tam bir linkse direkt iframe içinde açmayı dene (Engellemeyen siteler için)
+            // Link ise doğrudan açmayı dene
             if (query.startsWith('http://') || query.startsWith('https://') || (query.includes('.') && !query.includes(' '))) {
                 if(!query.startsWith('http://') && !query.startsWith('https://')) {
                     query = 'https://' + query;
                 }
-                searchArea.style.display = 'none';
-                frame.style.display = 'block';
                 frame.src = query;
             } else {
-                // Kelime yazıldıysa Google Özel Arama çalıştırılır (Asla beyaz ekran kalmaz!)
-                frame.style.display = 'none';
-                searchArea.style.display = 'block';
-                if (window.google && window.google.search) {
-                    google.search.cse.element.getElement('searchresults-only').execute(query);
-                } else {
-                    // Google scripti henüz yüklenmediyse yedekleme tetikle
-                    window.location.hash = 'gsc.q=' + encodeURIComponent(query);
-                }
+                // Kelime girildiyse asla beyaz ekranda kalmayan iframe dostu arama motoru tetiklenir
+                frame.src = `https://search.privacy.com.de/search?q=${encodeURIComponent(query)}`;
+            }
+        }
+
+        // YouTube Uygulamaya Atmayan Arama Yapısı
+        function loadYoutubeVideo() {
+            const query = document.getElementById('yt-search').value.trim();
+            const frame = document.getElementById('yt-frame');
+            if(query.length > 0) {
+                // Güvenli embed parametreleri ile arama tetikleme (Uygulama açılmasını bloke eder)
+                frame.src = `https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}&origin=${window.location.origin}`;
             }
         }
 
