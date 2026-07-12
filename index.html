@@ -52,11 +52,22 @@
         #file-list li { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 14px; }
         #file-list li:hover { background: #f0f0f0; }
 
-        .browser-container { display: flex; flex-direction: column; height: 100%; width: 100%; }
+        .browser-container { display: flex; flex-direction: column; height: 100%; width: 100%; position: relative; }
         .browser-bar { display: flex; gap: 5px; margin-bottom: 10px; }
         .browser-input { flex: 1; padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; outline: none; }
         .browser-btn { padding: 5px 10px; background: #0078d4; color: white; border: none; border-radius: 4px; cursor: pointer; }
         iframe { width: 100%; height: 100%; border: none; background: white; }
+
+        /* Tarayıcı İçi Özel Başlangıç Sayfası Tasarımı */
+        #osweb-homepage {
+            position: absolute; top: 45px; left: 0; width: 100%; height: calc(100% - 45px);
+            background: url('https://r.resimlink.com/tBnlAo2Xs.png') no-repeat center center;
+            background-size: cover; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; z-index: 5;
+        }
+        .homepage-logo { width: 90px; height: 90px; object-fit: contain; filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.5)); }
+        .homepage-search-box { display: flex; width: 80%; max-width: 400px; gap: 5px; background: rgba(255,255,255,0.9); padding: 6px; border-radius: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .homepage-input { flex: 1; border: none; background: transparent; padding: 5px 15px; outline: none; font-size: 14px; }
+        .homepage-btn { background: #0078d4; color: white; border: none; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; }
 
         #taskbar { width: 100%; height: 48px; background: rgba(243, 243, 243, 0.85); backdrop-filter: blur(10px); position: absolute; bottom: 0; display: flex; align-items: center; padding: 0 15px; justify-content: space-between; border-top: 1px solid #ccc; z-index: 9999; }
         #start-button { background: #28a745; color: white; border: none; padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; }
@@ -171,15 +182,24 @@
             <div class="browser-container">
                 <div class="browser-bar">
                     <input type="text" id="web-url" class="browser-input" placeholder="Kelime yazın veya link girin...">
-                    <button class="browser-btn" onclick="navigateOsWeb()">Git</button>
+                    <button class="browser-btn" onclick="navigateOsWeb(document.getElementById('web-url').value)">Git</button>
                 </div>
-                <iframe id="osweb-frame" src="https://www.bing.com"></iframe>
+                
+                <div id="osweb-homepage">
+                    <img src="https://r.resimlink.com/8KnjzqH6U.png" class="homepage-logo">
+                    <div class="homepage-search-box">
+                        <input type="text" id="hp-search-input" class="homepage-input" placeholder="OsWeb'de arayın...">
+                        <button class="homepage-btn" onclick="navigateOsWeb(document.getElementById('hp-search-input').value)">Ara</button>
+                    </div>
+                </div>
+
+                <iframe id="osweb-frame" src="about:blank" style="display:none;"></iframe>
             </div>
         </div>
     </div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v8.0 💪 - Kendi Logomuz Tamamen Aktif!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v9.0 💪 - Tarayıcı Başlangıç Ekranı Aktif!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -192,6 +212,14 @@
             const w = document.getElementById(id); w.style.display = 'flex';
             if(!w.classList.contains('maximized')) {
                 w.style.top = '15%'; w.style.left = '5%';
+            }
+            // Tarayıcı her açıldığında başlangıç ekranını göster
+            if(id === 'win-osweb') {
+                document.getElementById('osweb-homepage').style.display = 'flex';
+                document.getElementById('osweb-frame').style.display = 'none';
+                document.getElementById('osweb-frame').src = 'about:blank';
+                document.getElementById('web-url').value = '';
+                document.getElementById('hp-search-input').value = '';
             }
         }
         function closeWindow(id) { document.getElementById(id).style.display = 'none'; }
@@ -220,10 +248,14 @@
         }
         function dragEnd() { activeWin = null; }
 
-        function navigateOsWeb() {
-            let query = document.getElementById('web-url').value.trim();
+        function navigateOsWeb(query) {
+            query = query.trim();
             const frame = document.getElementById('osweb-frame');
+            const homepage = document.getElementById('osweb-homepage');
             if (!query) return;
+
+            homepage.style.display = 'none';
+            frame.style.display = 'block';
 
             if (query.startsWith('http://') || query.startsWith('https://') || (query.includes('.') && !query.includes(' '))) {
                 if(!query.startsWith('http://') && !query.startsWith('https://')) {
@@ -231,8 +263,10 @@
                 }
                 frame.src = query;
             } else {
-                frame.src = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
+                // DuckDuckGo iframe içinde açılmayı destekler, rahatça arama yapabilirsin
+                frame.src = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`;
             }
+            document.getElementById('web-url').value = query;
         }
 
         function loadYoutubeVideo() {
