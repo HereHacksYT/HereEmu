@@ -18,6 +18,16 @@
             background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920') no-repeat center center;
             background-size: cover; position: relative; padding: 20px;
             display: flex; flex-direction: column; gap: 20px; align-content: flex-start; flex-wrap: wrap;
+            transition: height 0.2s ease;
+        }
+
+        /* Alt bar gizlendiğinde masaüstü alanının tam boy olması için class */
+        body.hide-taskbar #desktop {
+            height: 100% !important;
+        }
+
+        body.hide-taskbar #taskbar {
+            display: none !important;
         }
 
         .icon { width: 80px; display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); font-size: 12px; }
@@ -33,12 +43,23 @@
         
         .window-content { padding: 15px; flex: 1; overflow: auto; background: white; }
 
+        /* Normal Tam Ekran (Alt Bar Duruyor) */
         .window.maximized {
             width: 100% !important;
             height: calc(100% - 48px) !important;
             top: 0 !important;
             left: 0 !important;
             border-radius: 0;
+        }
+
+        /* ULTRA Tam Ekran (Alt Bar Yok, %100 Kaplama) */
+        .window.ultra-maximized {
+            width: 100% !important;
+            height: 100% !important;
+            top: 0 !important;
+            left: 0 !important;
+            border-radius: 0;
+            z-index: 99999 !important; /* Her şeyin en üstünde */
         }
 
         input[type="text"], textarea { 
@@ -94,6 +115,23 @@
         .progress-container { width: 100%; height: 5px; background: #e0e0e0; border-radius: 3px; overflow: hidden; display: none; margin-top: 2px; }
         .progress-bar { width: 0%; height: 100%; background: #28a745; transition: width 0.2s linear; }
 
+        /* SORU KUTUSU (DIALOG) */
+        .fullscreen-dialog-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); display: none; justify-content: center;
+            align-items: center; z-index: 999999; backdrop-filter: blur(4px);
+        }
+        .fullscreen-dialog {
+            background: white; padding: 20px; border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4); text-align: center;
+            width: 300px; font-family: sans-serif;
+        }
+        .fullscreen-dialog p { font-size: 15px; font-weight: bold; margin-bottom: 20px; color: #222; }
+        .dialog-buttons { display: flex; gap: 10px; justify-content: center; }
+        .dialog-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; }
+        .dialog-btn-no { background: #ea4335; color: white; }
+        .dialog-btn-yes { background: #34a853; color: white; }
+
         #taskbar { width: 100%; height: 48px; background: rgba(243, 243, 243, 0.85); backdrop-filter: blur(10px); position: absolute; bottom: 0; display: flex; align-items: center; padding: 0 15px; justify-content: space-between; border-top: 1px solid #ccc; z-index: 9999; }
         #start-button { background: #28a745; color: white; border: none; padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; }
         #clock { font-size: 14px; font-weight: bold; color: #333; }
@@ -115,14 +153,28 @@
             <span>Not Defteri</span>
         </div>
         
+        <!-- OSSTORE MASAÜSTÜ İKONU -->
         <div class="icon" onclick="openWindow('win-osstore')">
             <img src="https://r.resimlink.com/21hZl.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3081/3081648.png';">
             <span>OsStore</span>
         </div>
 
+        <!-- Dinamik yüklenen uygulamalar -->
         <div id="dynamic-apps" style="display: contents;"></div>
     </div>
 
+    <!-- TAM EKRAN SORU KUTUSU (DIALOG) -->
+    <div id="fullscreen-dialog-overlay" class="fullscreen-dialog-overlay">
+        <div class="fullscreen-dialog">
+            <p>Alt yerleri de gizlemek istiyor musun?</p>
+            <div class="dialog-buttons">
+                <button class="dialog-btn dialog-btn-no" onclick="handleFullscreenResponse(false)">Hayır</button>
+                <button class="dialog-btn dialog-btn-yes" onclick="handleFullscreenResponse(true)">Evet</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- OSSTORE PENCERESİ -->
     <div id="win-osstore" class="window" style="width:480px; height:380px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>OsStore</span>
@@ -138,7 +190,9 @@
                     <button id="menu-games" class="store-menu-btn" onclick="switchStoreTab('games')">Oyunlar</button>
                 </div>
                 <div class="store-main">
+                    <!-- Uygulamalar Sayfası -->
                     <div id="page-apps" class="store-page active">
+                        <!-- OsTube -->
                         <div class="store-item">
                             <div class="store-item-info">
                                 <img src="https://r.resimlink.com/0AfaQN3LgC.png">
@@ -153,6 +207,7 @@
                                 <div id="progress-container-ostube" class="progress-container"><div id="progress-bar-ostube" class="progress-bar"></div></div>
                             </div>
                         </div>
+                        <!-- OsGram -->
                         <div class="store-item">
                             <div class="store-item-info">
                                 <img src="https://r.resimlink.com/vfRoQ.png">
@@ -167,6 +222,7 @@
                                 <div id="progress-container-osgram" class="progress-container"><div id="progress-bar-osgram" class="progress-bar"></div></div>
                             </div>
                         </div>
+                        <!-- OsWeb -->
                         <div class="store-item">
                             <div class="store-item-info">
                                 <img src="https://r.resimlink.com/8KnjzqH6U.png">
@@ -183,7 +239,9 @@
                         </div>
                     </div>
                     
+                    <!-- Oyunlar Sayfası -->
                     <div id="page-games" class="store-page">
+                        <!-- OsBlast -->
                         <div class="store-item">
                             <div class="store-item-info">
                                 <img src="https://r.resimlink.com/F_Ekx5Uwd.png">
@@ -198,6 +256,7 @@
                                 <div id="progress-container-osblast" class="progress-container"><div id="progress-bar-osblast" class="progress-bar"></div></div>
                             </div>
                         </div>
+                        <!-- OsDuelist Stickman -->
                         <div class="store-item">
                             <div class="store-item-info">
                                 <img src="https://r.resimlink.com/coqFrZWl9OIk.png">
@@ -218,6 +277,7 @@
         </div>
     </div>
 
+    <!-- SİSTEM GİZLİ PENCERELERI -->
     <div id="win-uploader" class="window">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>Yükleme İstasyonu</span>
@@ -269,6 +329,7 @@
         </div>
     </div>
 
+    <!-- OSTUBE -->
     <div id="win-ostube" class="window" style="width:400px; height:320px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>OsTube</span>
@@ -284,6 +345,7 @@
         </div>
     </div>
 
+    <!-- OSGRAM -->
     <div id="win-osgram" class="window" style="width:380px; height:340px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>OsGram</span>
@@ -299,6 +361,7 @@
         </div>
     </div>
 
+    <!-- OSWEB -->
     <div id="win-osweb" class="window" style="width:450px; height:350px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>OsWeb Tarayıcı</span>
@@ -327,6 +390,7 @@
         </div>
     </div>
 
+    <!-- OSBLAST -->
     <div id="win-osblast" class="window" style="width:480px; height:360px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>OsBlast</span>
@@ -342,6 +406,7 @@
         </div>
     </div>
 
+    <!-- OSDUELIST STICKMAN -->
     <div id="win-osduelist" class="window" style="width:480px; height:360px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>OsDuelist Stickman</span>
@@ -358,7 +423,7 @@
     </div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v14.0 💪 - Yükleme Barlı Sistem Aktif!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v15.0 💪 - Gelişmiş Tam Ekran Aktif!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -371,6 +436,8 @@
             osduelist: { name: 'OsDuelist', logo: 'https://r.resimlink.com/coqFrZWl9OIk.png', winId: 'win-osduelist', url: 'https://osduelist-stickman.onrender.com', frameId: 'duelist-frame', installed: false, isInstalling: false }
         };
 
+        let currentDialogWindowId = null; // Şu an tam ekran yapılmak istenen pencere
+
         function switchStoreTab(tab) {
             document.querySelectorAll('.store-menu-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.store-page').forEach(p => p.classList.remove('active'));
@@ -379,7 +446,6 @@
             document.getElementById(`page-${tab}`).classList.add('active');
         }
 
-        // DOLAN LOADING BAR SİSTEMİ
         function toggleAppInstallation(appKey) {
             const app = appDatabase[appKey];
             const actionBtn = document.getElementById(`btn-action-${appKey}`);
@@ -397,7 +463,7 @@
                 
                 let progress = 0;
                 const interval = setInterval(() => {
-                    progress += 4; // Barların pürüzsüz dolması için her 200ms'de bir artıyor
+                    progress += 4;
                     actionBtn.innerText = `%${Math.floor(progress)} ..`;
                     progressBar.style.width = `${progress}%`;
                     
@@ -413,7 +479,7 @@
                         
                         renderDesktopIcons();
                     }
-                }, 200); // 5 Saniyede tam dolum sağlar (25 * 200ms = 5000ms)
+                }, 200);
 
             } else {
                 app.installed = false;
@@ -449,7 +515,7 @@
 
         function openWindow(id) {
             const w = document.getElementById(id); w.style.display = 'flex';
-            if(!w.classList.contains('maximized')) {
+            if(!w.classList.contains('maximized') && !w.classList.contains('ultra-maximized')) {
                 w.style.top = '15%'; w.style.left = '5%';
             }
             if(id === 'win-osweb') {
@@ -469,7 +535,16 @@
         }
         
         function closeWindow(id) { 
-            document.getElementById(id).style.display = 'none'; 
+            const w = document.getElementById(id);
+            w.style.display = 'none'; 
+            
+            // Eğer ultra tam ekrandaysa, kapatıldığında alt barı geri getiriyoruz
+            if (w.classList.contains('ultra-maximized')) {
+                w.classList.remove('ultra-maximized');
+                document.body.classList.remove('hide-taskbar');
+            }
+            w.classList.remove('maximized');
+
             for (const key in appDatabase) {
                 const app = appDatabase[key];
                 if (app.winId === id && app.frameId) {
@@ -478,15 +553,45 @@
             }
         }
 
+        // GELİŞMİŞ TAM EKRAN TETİKLEYİCİSİ
         function toggleMaximize(id) {
             const w = document.getElementById(id);
-            w.classList.toggle('maximized');
+            
+            // Eğer zaten tam ekrandaysa (normal veya ultra), direkt küçült ve barı geri getir
+            if (w.classList.contains('maximized') || w.classList.contains('ultra-maximized')) {
+                w.classList.remove('maximized');
+                w.classList.remove('ultra-maximized');
+                document.body.classList.remove('hide-taskbar');
+            } else {
+                // İlk kez tam ekran yapılıyorsa soru kutusunu aç
+                currentDialogWindowId = id;
+                document.getElementById('fullscreen-dialog-overlay').style.display = 'flex';
+            }
+        }
+
+        // SORU KUTUSU CEVAP FONKSİYONU
+        function handleFullscreenResponse(hideBottom) {
+            document.getElementById('fullscreen-dialog-overlay').style.display = 'none';
+            if (!currentDialogWindowId) return;
+
+            const w = document.getElementById(currentDialogWindowId);
+
+            if (hideBottom) {
+                // EVET: Alt barı yok et ve tam ekrana oturt
+                document.body.classList.add('hide-taskbar');
+                w.classList.add('ultra-maximized');
+            } else {
+                // HAYIR: Normal tam ekran yap (alt bar kalır)
+                w.classList.add('maximized');
+            }
+            
+            currentDialogWindowId = null;
         }
 
         let activeWin = null; let startX, startY; let initialX, initialY;
         function dragStart(e) {
             activeWin = e.target.closest('.window'); 
-            if (!activeWin || activeWin.classList.contains('maximized')) { activeWin = null; return; }
+            if (!activeWin || activeWin.classList.contains('maximized') || activeWin.classList.contains('ultra-maximized')) { activeWin = null; return; }
             const cX = e.touches ? e.touches[0].clientX : e.clientX;
             const cY = e.touches ? e.touches[0].clientY : e.clientY;
             startX = cX; startY = cY; initialX = activeWin.offsetLeft; initialY = activeWin.offsetTop;
