@@ -58,7 +58,7 @@
         .browser-btn { padding: 5px 10px; background: #0078d4; color: white; border: none; border-radius: 4px; cursor: pointer; }
         iframe { width: 100%; height: 100%; border: none; background: white; }
 
-        /* Tarayıcı İçi Özel Başlangıç Sayfası Tasarımı */
+        /* Tarayıcı Tasarımı */
         #osweb-homepage {
             position: absolute; top: 45px; left: 0; width: 100%; height: calc(100% - 45px);
             background: url('https://r.resimlink.com/tBnlAo2Xs.png') no-repeat center center;
@@ -68,6 +68,26 @@
         .homepage-search-box { display: flex; width: 80%; max-width: 400px; gap: 5px; background: rgba(255,255,255,0.9); padding: 6px; border-radius: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .homepage-input { flex: 1; border: none; background: transparent; padding: 5px 15px; outline: none; font-size: 14px; }
         .homepage-btn { background: #0078d4; color: white; border: none; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; }
+
+        /* OSSTORE ÖZEL TASARIMI */
+        .store-layout { display: flex; height: 100%; width: 100%; }
+        .store-sidebar { width: 120px; background: #f0f0f0; border-right: 1px solid #ddd; display: flex; flex-direction: column; gap: 5px; padding: 10px 5px; }
+        .store-menu-btn { padding: 10px; background: transparent; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; text-align: left; color: #333; }
+        .store-menu-btn.active { background: #0078d4; color: white; }
+        .store-main { flex: 1; padding: 15px; overflow-y: auto; background: #fff; }
+        .store-page { display: none; flex-direction: column; gap: 15px; }
+        .store-page.active { display: flex; }
+        
+        .store-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #f9f9f9; border: 1px solid #eee; border-radius: 8px; }
+        .store-item-info { display: flex; align-items: center; gap: 12px; }
+        .store-item-info img { width: 45px; height: 45px; object-fit: contain; }
+        .store-item-title { font-weight: bold; font-size: 14px; color: #222; }
+        .store-item-desc { font-size: 11px; color: #666; margin-top: 2px; }
+        .store-item-actions { display: flex; gap: 6px; }
+        .store-btn { padding: 6px 12px; border: none; border-radius: 20px; font-weight: bold; font-size: 12px; cursor: pointer; }
+        .store-btn-install { background: #0078d4; color: white; }
+        .store-btn-uninstall { background: #dc3545; color: white; }
+        .store-btn-open { background: #28a745; color: white; }
 
         #taskbar { width: 100%; height: 48px; background: rgba(243, 243, 243, 0.85); backdrop-filter: blur(10px); position: absolute; bottom: 0; display: flex; align-items: center; padding: 0 15px; justify-content: space-between; border-top: 1px solid #ccc; z-index: 9999; }
         #start-button { background: #28a745; color: white; border: none; padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; }
@@ -90,19 +110,79 @@
             <span>Not Defteri</span>
         </div>
         
-        <div class="icon" onclick="openWindow('win-ostube')">
-            <img src="https://r.resimlink.com/0AfaQN3LgC.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/1384/1384060.png';">
-            <span>OsTube</span>
+        <div class="icon" onclick="openWindow('win-osstore')">
+            <img src="https://r.resimlink.com/21hZl.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3081/3081648.png';">
+            <span>OsStore</span>
         </div>
 
-        <div class="icon" onclick="openWindow('win-osgram')">
-            <img src="https://r.resimlink.com/vfRoQ.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/733/733577.png';">
-            <span>OsGram</span>
+        <div id="dynamic-apps" style="display: contents;"></div>
+    </div>
+
+    <div id="win-osstore" class="window" style="width:460px; height:360px;">
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
+            <span>OsStore</span>
+            <div class="header-buttons">
+                <button class="maximize-btn" onclick="toggleMaximize('win-osstore')"></button>
+                <button class="close-btn" onclick="closeWindow('win-osstore')"></button>
+            </div>
         </div>
-        
-        <div class="icon" onclick="openWindow('win-osweb')">
-            <img src="https://r.resimlink.com/8KnjzqH6U.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/841/841364.png';">
-            <span>OsWeb</span>
+        <div class="window-content" style="padding:0;">
+            <div class="store-layout">
+                <div class="store-sidebar">
+                    <button id="menu-apps" class="store-menu-btn active" onclick="switchStoreTab('apps')">Uygulamalar</button>
+                    <button id="menu-games" class="store-menu-btn" onclick="switchStoreTab('games')">Oyunlar</button>
+                </div>
+                <div class="store-main">
+                    <div id="page-apps" class="store-page active">
+                        <div class="store-item">
+                            <div class="store-item-info">
+                                <img src="https://r.resimlink.com/0AfaQN3LgC.png">
+                                <div>
+                                    <div class="store-item-title">OsTube</div>
+                                    <div class="store-item-desc">Özgür video izleme platformu.</div>
+                                </div>
+                            </div>
+                            <div class="store-item-actions">
+                                <button id="btn-open-ostube" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-ostube')">Aç</button>
+                                <button id="btn-action-ostube" class="store-btn store-btn-install" onclick="toggleAppInstallation('ostube')">Yükle</button>
+                            </div>
+                        </div>
+                        <div class="store-item">
+                            <div class="store-item-info">
+                                <img src="https://r.resimlink.com/vfRoQ.png">
+                                <div>
+                                    <div class="store-item-title">OsGram</div>
+                                    <div class="store-item-desc">Yeni nesil sosyal mesajlaşma ağı.</div>
+                                </div>
+                            </div>
+                            <div class="store-item-actions">
+                                <button id="btn-open-osgram" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osgram')">Aç</button>
+                                <button id="btn-action-osgram" class="store-btn store-btn-install" onclick="toggleAppInstallation('osgram')">Yükle</button>
+                            </div>
+                        </div>
+                        <div class="store-item">
+                            <div class="store-item-info">
+                                <img src="https://r.resimlink.com/8KnjzqH6U.png">
+                                <div>
+                                    <div class="store-item-title">OsWeb</div>
+                                    <div class="store-item-desc">Hızlı ve güvenli internet tarayıcısı.</div>
+                                </div>
+                            </div>
+                            <div class="store-item-actions">
+                                <button id="btn-open-osweb" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osweb')">Aç</button>
+                                <button id="btn-action-osweb" class="store-btn store-btn-install" onclick="toggleAppInstallation('osweb')">Yükle</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="page-games" class="store-page">
+                        <div style="text-align: center; color: #888; margin-top: 50px; font-weight: bold;">
+                            🎮 Oyunlar Bölümü Çok Yakında!<br>
+                            <span style="font-size: 11px; font-weight: normal; display:block; margin-top:5px;">Henüz bir oyun yapmadık.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -216,11 +296,65 @@
     </div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v11.0 💪 - OsGram Platformu Devrede!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v12.0 💪 - OsStore Mağazası Kuruldu!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
     <script>
+        // YÜKLENEN UYGULAMALARI HAFIZADA TUTMA VE YÖNETME SİSTEMİ
+        const appDatabase = {
+            ostube: { name: 'OsTube', logo: 'https://r.resimlink.com/0AfaQN3LgC.png', winId: 'win-ostube', installed: false },
+            osgram: { name: 'OsGram', logo: 'https://r.resimlink.com/vfRoQ.png', winId: 'win-osgram', installed: false },
+            osweb: { name: 'OsWeb', logo: 'https://r.resimlink.com/8KnjzqH6U.png', winId: 'win-osweb', installed: false }
+        };
+
+        function switchStoreTab(tab) {
+            document.querySelectorAll('.store-menu-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.store-page').forEach(p => p.classList.remove('active'));
+            
+            document.getElementById(`menu-${tab}`).classList.add('active');
+            document.getElementById(`page-${tab}`).classList.add('active');
+        }
+
+        function toggleAppInstallation(appKey) {
+            const app = appDatabase[appKey];
+            const actionBtn = document.getElementById(`btn-action-${appKey}`);
+            const openBtn = document.getElementById(`btn-open-${appKey}`);
+
+            if (!app.installed) {
+                // Yükleme İşlemi
+                app.installed = true;
+                actionBtn.innerText = 'Kaldır';
+                actionBtn.className = 'store-btn store-btn-uninstall';
+                openBtn.style.display = 'inline-block';
+            } else {
+                // Kaldırma İşlemi
+                app.installed = false;
+                actionBtn.innerText = 'Yükle';
+                actionBtn.className = 'store-btn store-btn-install';
+                openBtn.style.display = 'none';
+                closeWindow(app.winId);
+            }
+            renderDesktopIcons();
+        }
+
+        function renderDesktopIcons() {
+            const container = document.getElementById('dynamic-apps');
+            container.innerHTML = '';
+            
+            for (const key in appDatabase) {
+                const app = appDatabase[key];
+                if (app.installed) {
+                    container.innerHTML += `
+                        <div class="icon" onclick="openWindow('${app.winId}')">
+                            <img src="${app.logo}">
+                            <span>${app.name}</span>
+                        </div>
+                    `;
+                }
+            }
+        }
+
         setInterval(() => {
             document.getElementById('clock').innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
         }, 1000);
@@ -240,11 +374,11 @@
             if(id === 'win-ostube') {
                 document.getElementById('yt-frame').src = "https://ostube.onrender.com";
             }
-            // OsGram tetikleyicisi
             if(id === 'win-osgram') {
                 document.getElementById('gram-frame').src = "https://osgram.onrender.com";
             }
         }
+        
         function closeWindow(id) { 
             document.getElementById(id).style.display = 'none'; 
             if(id === 'win-ostube') document.getElementById('yt-frame').src = 'about:blank';
