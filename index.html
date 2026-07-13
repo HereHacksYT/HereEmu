@@ -94,6 +94,11 @@
             <img src="https://r.resimlink.com/0AfaQN3LgC.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/1384/1384060.png';">
             <span>OsTube</span>
         </div>
+
+        <div class="icon" onclick="openWindow('win-osgram')">
+            <img src="https://r.resimlink.com/vfRoQ.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/733/733577.png';">
+            <span>OsGram</span>
+        </div>
         
         <div class="icon" onclick="openWindow('win-osweb')">
             <img src="https://r.resimlink.com/8KnjzqH6U.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/841/841364.png';">
@@ -167,6 +172,21 @@
         </div>
     </div>
 
+    <div id="win-osgram" class="window" style="width:380px; height:340px;">
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
+            <span>OsGram</span>
+            <div class="header-buttons">
+                <button class="maximize-btn" onclick="toggleMaximize('win-osgram')"></button>
+                <button class="close-btn" onclick="closeWindow('win-osgram')"></button>
+            </div>
+        </div>
+        <div class="window-content" style="padding:0; background:#fff;">
+            <div class="browser-container">
+                <iframe id="gram-frame" src="about:blank"></iframe>
+            </div>
+        </div>
+    </div>
+
     <div id="win-osweb" class="window" style="width:450px; height:350px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>OsWeb Tarayıcı</span>
@@ -196,7 +216,7 @@
     </div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v10.1 💪 - OsTube Saf Sürüm!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v11.0 💪 - OsGram Platformu Devrede!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -220,10 +240,15 @@
             if(id === 'win-ostube') {
                 document.getElementById('yt-frame').src = "https://ostube.onrender.com";
             }
+            // OsGram tetikleyicisi
+            if(id === 'win-osgram') {
+                document.getElementById('gram-frame').src = "https://osgram.onrender.com";
+            }
         }
         function closeWindow(id) { 
             document.getElementById(id).style.display = 'none'; 
             if(id === 'win-ostube') document.getElementById('yt-frame').src = 'about:blank';
+            if(id === 'win-osgram') document.getElementById('gram-frame').src = 'about:blank';
         }
 
         function toggleMaximize(id) {
