@@ -83,12 +83,16 @@
         .store-item-info img { width: 45px; height: 45px; object-fit: contain; border-radius: 6px; }
         .store-item-title { font-weight: bold; font-size: 14px; color: #222; }
         .store-item-desc { font-size: 11px; color: #666; margin-top: 2px; }
-        .store-item-actions { display: flex; gap: 6px; align-items: center; }
-        .store-btn { padding: 6px 12px; border: none; border-radius: 20px; font-weight: bold; font-size: 12px; cursor: pointer; min-width: 75px; text-align: center; }
+        .store-item-actions { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; min-width: 90px; }
+        .store-btn { padding: 6px 12px; border: none; border-radius: 20px; font-weight: bold; font-size: 12px; cursor: pointer; width: 100%; text-align: center; }
         .store-btn-install { background: #0078d4; color: white; }
         .store-btn-uninstall { background: #dc3545; color: white; }
         .store-btn-open { background: #28a745; color: white; }
         .store-btn-loading { background: #6c757d; color: white; cursor: not-allowed; font-size: 11px; }
+
+        /* YÜKLEME BAR ALANI */
+        .progress-container { width: 100%; height: 5px; background: #e0e0e0; border-radius: 3px; overflow: hidden; display: none; margin-top: 2px; }
+        .progress-bar { width: 0%; height: 100%; background: #28a745; transition: width 0.2s linear; }
 
         #taskbar { width: 100%; height: 48px; background: rgba(243, 243, 243, 0.85); backdrop-filter: blur(10px); position: absolute; bottom: 0; display: flex; align-items: center; padding: 0 15px; justify-content: space-between; border-top: 1px solid #ccc; z-index: 9999; }
         #start-button { background: #28a745; color: white; border: none; padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; }
@@ -119,7 +123,7 @@
         <div id="dynamic-apps" style="display: contents;"></div>
     </div>
 
-    <div id="win-osstore" class="window" style="width:460px; height:360px;">
+    <div id="win-osstore" class="window" style="width:480px; height:380px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>OsStore</span>
             <div class="header-buttons">
@@ -146,6 +150,7 @@
                             <div class="store-item-actions">
                                 <button id="btn-open-ostube" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-ostube')">Aç</button>
                                 <button id="btn-action-ostube" class="store-btn store-btn-install" onclick="toggleAppInstallation('ostube')">Yükle</button>
+                                <div id="progress-container-ostube" class="progress-container"><div id="progress-bar-ostube" class="progress-bar"></div></div>
                             </div>
                         </div>
                         <div class="store-item">
@@ -153,12 +158,13 @@
                                 <img src="https://r.resimlink.com/vfRoQ.png">
                                 <div>
                                     <div class="store-item-title">OsGram</div>
-                                    <div class="store-item-desc">Yeni nesil sosyal mesajlaşma ağı.</div>
+                                    <div class="store-item-desc">Kısa videoları özgürce izle</div>
                                 </div>
                             </div>
                             <div class="store-item-actions">
                                 <button id="btn-open-osgram" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osgram')">Aç</button>
                                 <button id="btn-action-osgram" class="store-btn store-btn-install" onclick="toggleAppInstallation('osgram')">Yükle</button>
+                                <div id="progress-container-osgram" class="progress-container"><div id="progress-bar-osgram" class="progress-bar"></div></div>
                             </div>
                         </div>
                         <div class="store-item">
@@ -172,6 +178,7 @@
                             <div class="store-item-actions">
                                 <button id="btn-open-osweb" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osweb')">Aç</button>
                                 <button id="btn-action-osweb" class="store-btn store-btn-install" onclick="toggleAppInstallation('osweb')">Yükle</button>
+                                <div id="progress-container-osweb" class="progress-container"><div id="progress-bar-osweb" class="progress-bar"></div></div>
                             </div>
                         </div>
                     </div>
@@ -188,6 +195,21 @@
                             <div class="store-item-actions">
                                 <button id="btn-open-osblast" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osblast')">Aç</button>
                                 <button id="btn-action-osblast" class="store-btn store-btn-install" onclick="toggleAppInstallation('osblast')">Yükle</button>
+                                <div id="progress-container-osblast" class="progress-container"><div id="progress-bar-osblast" class="progress-bar"></div></div>
+                            </div>
+                        </div>
+                        <div class="store-item">
+                            <div class="store-item-info">
+                                <img src="https://r.resimlink.com/coqFrZWl9OIk.png">
+                                <div>
+                                    <div class="store-item-title">OsDuelist Stickman</div>
+                                    <div class="store-item-desc">Çöp adamların efsanevi düello savaşı!</div>
+                                </div>
+                            </div>
+                            <div class="store-item-actions">
+                                <button id="btn-open-osduelist" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osduelist')">Aç</button>
+                                <button id="btn-action-osduelist" class="store-btn store-btn-install" onclick="toggleAppInstallation('osduelist')">Yükle</button>
+                                <div id="progress-container-osduelist" class="progress-container"><div id="progress-bar-osduelist" class="progress-bar"></div></div>
                             </div>
                         </div>
                     </div>
@@ -320,8 +342,23 @@
         </div>
     </div>
 
+    <div id="win-osduelist" class="window" style="width:480px; height:360px;">
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
+            <span>OsDuelist Stickman</span>
+            <div class="header-buttons">
+                <button class="maximize-btn" onclick="toggleMaximize('win-osduelist')"></button>
+                <button class="close-btn" onclick="closeWindow('win-osduelist')"></button>
+            </div>
+        </div>
+        <div class="window-content" style="padding:0; background:#000;">
+            <div class="browser-container">
+                <iframe id="duelist-frame" src="about:blank" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v13.0 💪 - Animasyonlu OsStore Mağazası Sürümü!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v14.0 💪 - Yükleme Barlı Sistem Aktif!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -330,7 +367,8 @@
             ostube: { name: 'OsTube', logo: 'https://r.resimlink.com/0AfaQN3LgC.png', winId: 'win-ostube', url: 'https://ostube.onrender.com', frameId: 'yt-frame', installed: false, isInstalling: false },
             osgram: { name: 'OsGram', logo: 'https://r.resimlink.com/vfRoQ.png', winId: 'win-osgram', url: 'https://osgram.onrender.com', frameId: 'gram-frame', installed: false, isInstalling: false },
             osweb: { name: 'OsWeb', logo: 'https://r.resimlink.com/8KnjzqH6U.png', winId: 'win-osweb', url: '', frameId: '', installed: false, isInstalling: false },
-            osblast: { name: 'OsBlast', logo: 'https://r.resimlink.com/F_Ekx5Uwd.png', winId: 'win-osblast', url: 'https://osblast.onrender.com', frameId: 'blast-frame', installed: false, isInstalling: false }
+            osblast: { name: 'OsBlast', logo: 'https://r.resimlink.com/F_Ekx5Uwd.png', winId: 'win-osblast', url: 'https://osblast.onrender.com', frameId: 'blast-frame', installed: false, isInstalling: false },
+            osduelist: { name: 'OsDuelist', logo: 'https://r.resimlink.com/coqFrZWl9OIk.png', winId: 'win-osduelist', url: 'https://osduelist-stickman.onrender.com', frameId: 'duelist-frame', installed: false, isInstalling: false }
         };
 
         function switchStoreTab(tab) {
@@ -341,23 +379,27 @@
             document.getElementById(`page-${tab}`).classList.add('active');
         }
 
-        // ŞOV AMAÇLI 5 SANİYELİK YÜKLEME SİSTEMİ
+        // DOLAN LOADING BAR SİSTEMİ
         function toggleAppInstallation(appKey) {
             const app = appDatabase[appKey];
             const actionBtn = document.getElementById(`btn-action-${appKey}`);
             const openBtn = document.getElementById(`btn-open-${appKey}`);
+            const progressContainer = document.getElementById(`progress-container-${appKey}`);
+            const progressBar = document.getElementById(`progress-bar-${appKey}`);
 
-            if (app.isInstalling) return; // Zaten yükleniyorsa basılmasın
+            if (app.isInstalling) return;
 
             if (!app.installed) {
-                // Şov başlasın: 5 Saniyelik Yükleme Efekti
                 app.isInstalling = true;
                 actionBtn.className = 'store-btn store-btn-loading';
+                progressContainer.style.display = 'block';
+                progressBar.style.width = '0%';
                 
                 let progress = 0;
                 const interval = setInterval(() => {
-                    progress += 20; // Her saniye %20 artar (Toplam 5 saniye)
-                    actionBtn.innerText = `%${progress} ..`;
+                    progress += 4; // Barların pürüzsüz dolması için her 200ms'de bir artıyor
+                    actionBtn.innerText = `%${Math.floor(progress)} ..`;
+                    progressBar.style.width = `${progress}%`;
                     
                     if (progress >= 100) {
                         clearInterval(interval);
@@ -367,17 +409,18 @@
                         actionBtn.innerText = 'Kaldır';
                         actionBtn.className = 'store-btn store-btn-uninstall';
                         openBtn.style.display = 'inline-block';
+                        progressContainer.style.display = 'none';
                         
                         renderDesktopIcons();
                     }
-                }, 1000);
+                }, 200); // 5 Saniyede tam dolum sağlar (25 * 200ms = 5000ms)
 
             } else {
-                // Direkt Kaldırma İşlemi (Animasyonsuz)
                 app.installed = false;
                 actionBtn.innerText = 'Yükle';
                 actionBtn.className = 'store-btn store-btn-install';
                 openBtn.style.display = 'none';
+                if(progressContainer) progressContainer.style.display = 'none';
                 closeWindow(app.winId);
                 renderDesktopIcons();
             }
@@ -417,7 +460,6 @@
                 document.getElementById('hp-search-input').value = '';
             }
             
-            // Dinamik frame yükleyicileri
             for (const key in appDatabase) {
                 const app = appDatabase[key];
                 if (app.winId === id && app.frameId) {
