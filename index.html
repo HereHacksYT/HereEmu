@@ -69,7 +69,7 @@
         .homepage-input { flex: 1; border: none; background: transparent; padding: 5px 15px; outline: none; font-size: 14px; }
         .homepage-btn { background: #0078d4; color: white; border: none; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; }
 
-        /* OSSTORE ÖZEL TASARIMI */
+        /* OSSTORE TASARIMI */
         .store-layout { display: flex; height: 100%; width: 100%; }
         .store-sidebar { width: 120px; background: #f0f0f0; border-right: 1px solid #ddd; display: flex; flex-direction: column; gap: 5px; padding: 10px 5px; }
         .store-menu-btn { padding: 10px; background: transparent; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; text-align: left; color: #333; }
@@ -80,14 +80,15 @@
         
         .store-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #f9f9f9; border: 1px solid #eee; border-radius: 8px; }
         .store-item-info { display: flex; align-items: center; gap: 12px; }
-        .store-item-info img { width: 45px; height: 45px; object-fit: contain; }
+        .store-item-info img { width: 45px; height: 45px; object-fit: contain; border-radius: 6px; }
         .store-item-title { font-weight: bold; font-size: 14px; color: #222; }
         .store-item-desc { font-size: 11px; color: #666; margin-top: 2px; }
-        .store-item-actions { display: flex; gap: 6px; }
-        .store-btn { padding: 6px 12px; border: none; border-radius: 20px; font-weight: bold; font-size: 12px; cursor: pointer; }
+        .store-item-actions { display: flex; gap: 6px; align-items: center; }
+        .store-btn { padding: 6px 12px; border: none; border-radius: 20px; font-weight: bold; font-size: 12px; cursor: pointer; min-width: 75px; text-align: center; }
         .store-btn-install { background: #0078d4; color: white; }
         .store-btn-uninstall { background: #dc3545; color: white; }
         .store-btn-open { background: #28a745; color: white; }
+        .store-btn-loading { background: #6c757d; color: white; cursor: not-allowed; font-size: 11px; }
 
         #taskbar { width: 100%; height: 48px; background: rgba(243, 243, 243, 0.85); backdrop-filter: blur(10px); position: absolute; bottom: 0; display: flex; align-items: center; padding: 0 15px; justify-content: space-between; border-top: 1px solid #ccc; z-index: 9999; }
         #start-button { background: #28a745; color: white; border: none; padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; }
@@ -176,9 +177,18 @@
                     </div>
                     
                     <div id="page-games" class="store-page">
-                        <div style="text-align: center; color: #888; margin-top: 50px; font-weight: bold;">
-                            🎮 Oyunlar Bölümü Çok Yakında!<br>
-                            <span style="font-size: 11px; font-weight: normal; display:block; margin-top:5px;">Henüz bir oyun yapmadık.</span>
+                        <div class="store-item">
+                            <div class="store-item-info">
+                                <img src="https://r.resimlink.com/F_Ekx5Uwd.png">
+                                <div>
+                                    <div class="store-item-title">OsBlast</div>
+                                    <div class="store-item-desc">Aksiyon dolu yeni nesil web oyunu!</div>
+                                </div>
+                            </div>
+                            <div class="store-item-actions">
+                                <button id="btn-open-osblast" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osblast')">Aç</button>
+                                <button id="btn-action-osblast" class="store-btn store-btn-install" onclick="toggleAppInstallation('osblast')">Yükle</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -295,17 +305,32 @@
         </div>
     </div>
 
+    <div id="win-osblast" class="window" style="width:480px; height:360px;">
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
+            <span>OsBlast</span>
+            <div class="header-buttons">
+                <button class="maximize-btn" onclick="toggleMaximize('win-osblast')"></button>
+                <button class="close-btn" onclick="closeWindow('win-osblast')"></button>
+            </div>
+        </div>
+        <div class="window-content" style="padding:0; background:#000;">
+            <div class="browser-container">
+                <iframe id="blast-frame" src="about:blank" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v12.0 💪 - OsStore Mağazası Kuruldu!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v13.0 💪 - Animasyonlu OsStore Mağazası Sürümü!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
     <script>
-        // YÜKLENEN UYGULAMALARI HAFIZADA TUTMA VE YÖNETME SİSTEMİ
         const appDatabase = {
-            ostube: { name: 'OsTube', logo: 'https://r.resimlink.com/0AfaQN3LgC.png', winId: 'win-ostube', installed: false },
-            osgram: { name: 'OsGram', logo: 'https://r.resimlink.com/vfRoQ.png', winId: 'win-osgram', installed: false },
-            osweb: { name: 'OsWeb', logo: 'https://r.resimlink.com/8KnjzqH6U.png', winId: 'win-osweb', installed: false }
+            ostube: { name: 'OsTube', logo: 'https://r.resimlink.com/0AfaQN3LgC.png', winId: 'win-ostube', url: 'https://ostube.onrender.com', frameId: 'yt-frame', installed: false, isInstalling: false },
+            osgram: { name: 'OsGram', logo: 'https://r.resimlink.com/vfRoQ.png', winId: 'win-osgram', url: 'https://osgram.onrender.com', frameId: 'gram-frame', installed: false, isInstalling: false },
+            osweb: { name: 'OsWeb', logo: 'https://r.resimlink.com/8KnjzqH6U.png', winId: 'win-osweb', url: '', frameId: '', installed: false, isInstalling: false },
+            osblast: { name: 'OsBlast', logo: 'https://r.resimlink.com/F_Ekx5Uwd.png', winId: 'win-osblast', url: 'https://osblast.onrender.com', frameId: 'blast-frame', installed: false, isInstalling: false }
         };
 
         function switchStoreTab(tab) {
@@ -316,26 +341,46 @@
             document.getElementById(`page-${tab}`).classList.add('active');
         }
 
+        // ŞOV AMAÇLI 5 SANİYELİK YÜKLEME SİSTEMİ
         function toggleAppInstallation(appKey) {
             const app = appDatabase[appKey];
             const actionBtn = document.getElementById(`btn-action-${appKey}`);
             const openBtn = document.getElementById(`btn-open-${appKey}`);
 
+            if (app.isInstalling) return; // Zaten yükleniyorsa basılmasın
+
             if (!app.installed) {
-                // Yükleme İşlemi
-                app.installed = true;
-                actionBtn.innerText = 'Kaldır';
-                actionBtn.className = 'store-btn store-btn-uninstall';
-                openBtn.style.display = 'inline-block';
+                // Şov başlasın: 5 Saniyelik Yükleme Efekti
+                app.isInstalling = true;
+                actionBtn.className = 'store-btn store-btn-loading';
+                
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 20; // Her saniye %20 artar (Toplam 5 saniye)
+                    actionBtn.innerText = `%${progress} ..`;
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        app.installed = true;
+                        app.isInstalling = false;
+                        
+                        actionBtn.innerText = 'Kaldır';
+                        actionBtn.className = 'store-btn store-btn-uninstall';
+                        openBtn.style.display = 'inline-block';
+                        
+                        renderDesktopIcons();
+                    }
+                }, 1000);
+
             } else {
-                // Kaldırma İşlemi
+                // Direkt Kaldırma İşlemi (Animasyonsuz)
                 app.installed = false;
                 actionBtn.innerText = 'Yükle';
                 actionBtn.className = 'store-btn store-btn-install';
                 openBtn.style.display = 'none';
                 closeWindow(app.winId);
+                renderDesktopIcons();
             }
-            renderDesktopIcons();
         }
 
         function renderDesktopIcons() {
@@ -371,18 +416,24 @@
                 document.getElementById('web-url').value = '';
                 document.getElementById('hp-search-input').value = '';
             }
-            if(id === 'win-ostube') {
-                document.getElementById('yt-frame').src = "https://ostube.onrender.com";
-            }
-            if(id === 'win-osgram') {
-                document.getElementById('gram-frame').src = "https://osgram.onrender.com";
+            
+            // Dinamik frame yükleyicileri
+            for (const key in appDatabase) {
+                const app = appDatabase[key];
+                if (app.winId === id && app.frameId) {
+                    document.getElementById(app.frameId).src = app.url;
+                }
             }
         }
         
         function closeWindow(id) { 
             document.getElementById(id).style.display = 'none'; 
-            if(id === 'win-ostube') document.getElementById('yt-frame').src = 'about:blank';
-            if(id === 'win-osgram') document.getElementById('gram-frame').src = 'about:blank';
+            for (const key in appDatabase) {
+                const app = appDatabase[key];
+                if (app.winId === id && app.frameId) {
+                    document.getElementById(app.frameId).src = 'about:blank';
+                }
+            }
         }
 
         function toggleMaximize(id) {
