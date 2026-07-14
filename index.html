@@ -99,12 +99,13 @@
         .autoclicker-panel {
             position: fixed; top: 60px; right: 20px; width: 140px; background: rgba(20, 20, 20, 0.95);
             border: 2px solid #0078d4; border-radius: 10px; padding: 8px; 
-            z-index: 100000000 !important; /* Oyun tam ekran olsa bile en üstte durur */
+            z-index: 100000000 !important; /* Oyun tam ekran olsa bile her zaman en üstte */
             box-shadow: 0 6px 20px rgba(0,0,0,0.7); color: white; font-family: sans-serif; 
             display: none; flex-direction: column; gap: 6px;
         }
         .autoclicker-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #444; padding-bottom: 4px; cursor: move; font-size: 11px; font-weight: bold; color: #0078d4; }
-        .autoclicker-header span.drag-handle { background: #0078d4; color: white; padding: 1px 4px; border-radius: 3px; font-size: 9px; }
+        .autoclicker-header span.drag-handle { background: #0078d4; color: white; padding: 1px 4px; border-radius: 3px; font-size: 9px; cursor: grab; }
+        .autoclicker-close { background: #ff5f56; border: none; width: 14px; height: 14px; border-radius: 50%; cursor: pointer; color: white; font-size: 8px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
         .autoclicker-panel label { font-size: 10px; color: #bbb; }
         .autoclicker-panel input { width: 100%; background: #333; border: 1px solid #555; color: white; padding: 3px; border-radius: 4px; text-align: center; font-size: 12px; }
         
@@ -120,6 +121,13 @@
             position: fixed; width: 22px; height: 22px; border: 2px solid red; background: rgba(255,0,0,0.4);
             border-radius: 50%; pointer-events: none; z-index: 100000001 !important; transform: translate(-50%, -50%);
             display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 10px;
+        }
+
+        /* Diğer pencerelerdeki tıklamaları engellemek ve tık noktasını yakalamak için geçici koruma katmanı */
+        #clicker-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.05); z-index: 999999999 !important;
+            display: none; cursor: crosshair;
         }
 
         #taskbar { width: 100%; height: 48px; background: rgba(243, 243, 243, 0.85); backdrop-filter: blur(10px); position: absolute; bottom: 0; display: flex; align-items: center; padding: 0 15px; justify-content: space-between; border-top: 1px solid #ccc; z-index: 9999; }
@@ -149,10 +157,11 @@
         <div id="dynamic-apps" style="display: contents;"></div>
     </div>
 
-    <!-- EN ÜST KATMAN SÜPER AUTO CLICKER PANELDEN OLUŞAN YAPI -->
+    <div id="clicker-overlay"></div>
+
     <div id="autoclicker" class="autoclicker-panel">
         <div class="autoclicker-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-            <span>Auto Clicker ⚡</span>
+            <button class="autoclicker-close" onclick="toggleAutoClickerWindow(false)">X</button>
             <span class="drag-handle">TUT</span>
         </div>
         <label>Aralık (ms):</label>
@@ -167,7 +176,6 @@
         <button id="clicker-stop" class="clicker-btn btn-stop" onclick="stopAutoClicker()">⏸ Durdur</button>
     </div>
 
-    <!-- ALT BAR GİZLEME SORU KUTUSU -->
     <div id="fullscreen-dialog-overlay" class="fullscreen-dialog-overlay">
         <div class="fullscreen-dialog">
             <p>Alt yerleri de gizlemek istiyor musun?</p>
@@ -178,7 +186,6 @@
         </div>
     </div>
 
-    <!-- GİZEMLİ VİRÜS UYGULAMASI SORU KUTUSU -->
     <div id="virus-dialog-overlay" class="fullscreen-dialog-overlay">
         <div class="fullscreen-dialog">
             <p>Uygulamayı açmak istiyor musun???</p>
@@ -189,13 +196,11 @@
         </div>
     </div>
 
-    <!-- ŞAKA SARI EKRANI -->
     <div id="virus-screen">
         <h1>Bilgisayara Virüs Bulaştı! 🦠</h1>
         <p>Sistem dosyaları temizleniyor, lütfen bekleyin...</p>
     </div>
 
-    <!-- OSSTORE PENCERESİ -->
     <div id="win-osstore" class="window" style="width:480px; height:380px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>OsStore</span>
@@ -212,9 +217,7 @@
                     <button id="menu-mystery" class="store-menu-btn" onclick="switchStoreTab('mystery')">???</button>
                 </div>
                 <div class="store-main">
-                    <!-- Uygulamalar Sayfası -->
                     <div id="page-apps" class="store-page active">
-                        <!-- AUTO CLICKER BURAYA TAŞINDI! -->
                         <div class="store-item">
                             <div class="store-item-info"><img src="https://cdn-icons-png.flaticon.com/512/2888/2888656.png"><div><div class="store-item-title">Auto Clicker</div><div class="store-item-desc">Çok noktalı otomatik hızlı tıklama hilesi!</div></div></div>
                             <div class="store-item-actions">
@@ -249,7 +252,6 @@
                         </div>
                     </div>
                     
-                    <!-- Oyunlar Sayfası -->
                     <div id="page-games" class="store-page">
                         <div class="store-item">
                             <div class="store-item-info"><img src="https://r.resimlink.com/F_Ekx5Uwd.png"><div><div class="store-item-title">OsBlast</div><div class="store-item-desc">Aksiyon dolu yeni nesil web oyunu!</div></div></div>
@@ -277,7 +279,6 @@
                         </div>
                     </div>
 
-                    <!-- Gizemli ??? Sekmesi -->
                     <div id="page-mystery" class="store-page">
                         <div class="store-item">
                             <div class="store-item-info"><img src="https://cdn-icons-png.flaticon.com/512/751/751381.png"><div><div class="store-item-title">???</div><div class="store-item-desc">Bunu açmaman tavsiye edilir...</div></div></div>
@@ -293,7 +294,6 @@
         </div>
     </div>
 
-    <!-- PENCERELER -->
     <div id="win-uploader" class="window"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>Yükleme İstasyonu</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-uploader')"></button><button class="close-btn" onclick="closeWindow('win-uploader')"></button></div></div><div class="window-content"><input type="file" id="file-input" style="margin-bottom:15px;"><br><button onclick="uploadFileToServer()" style="padding:10px; background:#0078d4; color:white; border:none; border-radius:4px; width:100%;">Render Sunucusuna Gönder</button></div></div>
     <div id="win-files" class="window"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>Render Sunucu Dosyaları</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-files')"></button><button class="close-btn" onclick="closeWindow('win-files')"></button></div></div><div class="window-content"><ul id="file-list"></ul></div></div>
     <div id="win-notepad" class="window"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>Not Defteri</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-notepad')"></button><button class="close-btn" onclick="closeWindow('win-notepad')"></button></div></div><div class="window-content"><textarea id="txt-area" placeholder="Yazılım notları..."></textarea></div></div>
@@ -314,13 +314,12 @@
         </div>
     </div>
 
-    <!-- SÜRÜKLENEBİLİR OYUNLAR -->
     <div id="win-osblast" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsBlast</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osblast')"></button><button class="close-btn" onclick="closeWindow('win-osblast')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="blast-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
     <div id="win-osduelist" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsDuelist Stickman</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osduelist')"></button><button class="close-btn" onclick="closeWindow('win-osduelist')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="duelist-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
     <div id="win-oswaysurfers" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsWay Surfers</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-oswaysurfers')"></button><button class="close-btn" onclick="closeWindow('win-oswaysurfers')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="waysurfers-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v18.0 💪 - Auto Clicker Uygulaması Aktif!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v19.0 💪 - Kararlı Sürüm!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -341,7 +340,7 @@
         // MULTI AUTO CLICKER DEĞİŞKENLERİ
         let clickInterval = null;
         let isPickingTarget = false;
-        let targetPoints = []; // [{x, y, element}] şeklinde koordinat listesi
+        let targetPoints = [];
 
         function toggleAutoClickerWindow(show) {
             const panel = document.getElementById('autoclicker');
@@ -349,6 +348,7 @@
                 panel.style.display = 'flex';
                 panel.style.top = '80px';
                 panel.style.right = '40px';
+                checkBounds(panel);
             } else {
                 panel.style.display = 'none';
                 stopAutoClicker();
@@ -356,31 +356,53 @@
             }
         }
 
+        // Ekran döndüğünde veya panel taşındığında sınırları zorla koru
+        function checkBounds(el) {
+            if (!el) return;
+            const rect = el.getBoundingClientRect();
+            let top = el.offsetTop;
+            let left = el.offsetLeft;
+            
+            if (top < 0) top = 10;
+            if (left < 0) left = 10;
+            if (top + rect.height > window.innerHeight) top = window.innerHeight - rect.height - 60;
+            if (left + rect.width > window.innerWidth) left = window.innerWidth - rect.width - 20;
+            
+            el.style.top = top + 'px';
+            el.style.left = left + 'px';
+        }
+
+        window.addEventListener('resize', () => {
+            const panel = document.getElementById('autoclicker');
+            if (panel && panel.style.display === 'flex') {
+                checkBounds(panel);
+            }
+        });
+
         function startPickingTarget() {
             isPickingTarget = true;
-            alert("Ekranda sırayla tıklanmasını istediğin bir noktaya dokun!");
+            const overlay = document.getElementById('clicker-overlay');
+            overlay.style.display = 'block'; // Şeffaf katman tüm ekranın üstüne gelir (iframe'leri de kaplar!)
             
             const grabClick = (e) => {
                 if (!isPickingTarget) return;
                 
-                // Event engelleme (tıklanan asıl butona hemen basmasın)
                 e.preventDefault();
                 e.stopPropagation();
 
                 const cX = e.touches ? e.touches[0].clientX : e.clientX;
                 const cY = e.touches ? e.touches[0].clientY : e.clientY;
                 
-                // Panel içi tıklamaları yok say
-                if (e.target.closest('#autoclicker')) {
-                    isPickingTarget = false;
-                    cleanEvents();
+                // Panel içi tıklamaları filtrele
+                const panel = document.getElementById('autoclicker');
+                const panelRect = panel.getBoundingClientRect();
+                if (cX >= panelRect.left && cX <= panelRect.right && cY >= panelRect.top && cY <= panelRect.bottom) {
+                    cleanup();
                     return;
                 }
 
-                // Yeni hedefi listeye kaydet
                 targetPoints.push({ x: cX, y: cY });
                 
-                // Görsel kırmızı daireyi ve numarasını oluştur
                 const index = targetPoints.length;
                 const dot = document.createElement('div');
                 dot.className = 'clicker-target-dot';
@@ -390,22 +412,21 @@
                 dot.innerText = index;
                 document.body.appendChild(dot);
                 
-                isPickingTarget = false;
-                cleanEvents();
+                cleanup();
             };
 
-            function cleanEvents() {
-                window.removeEventListener('click', grabClick, true);
-                window.removeEventListener('touchstart', grabClick, true);
+            function cleanup() {
+                isPickingTarget = false;
+                overlay.style.display = 'none';
+                overlay.removeEventListener('click', grabClick);
+                overlay.removeEventListener('touchstart', grabClick);
             }
             
-            // True parametresi (capturing phase) ile en üstteki tıklamayı hemen yakalıyoruz
-            window.addEventListener('click', grabClick, true);
-            window.addEventListener('touchstart', grabClick, true);
+            overlay.addEventListener('click', grabClick);
+            overlay.addEventListener('touchstart', grabClick);
         }
 
         function clearTargets() {
-            // Görsel hedefleri sil
             document.querySelectorAll('.clicker-target-dot').forEach(dot => dot.remove());
             targetPoints = [];
             if(clickInterval) stopAutoClicker();
@@ -424,7 +445,7 @@
                 if(targetPoints.length === 0) return;
                 const target = targetPoints[currentTargetIndex];
                 
-                // Hedef noktadaki elementi bul ve tıkla
+                // 1. Yol: Standart element tespiti ve tıklatma
                 let elem = document.elementFromPoint(target.x, target.y);
                 if (elem) {
                     elem.click();
@@ -432,7 +453,15 @@
                     elem.dispatchEvent(touchEvent);
                 }
 
-                // Bir sonraki hedefe geç (döngüsel)
+                // 2. Yol (Sanal Pointer Tıklaması - iframe'ler ve oyunlar için daha güçlü simülasyon)
+                const clickEvent = new MouseEvent('click', {
+                    clientX: target.x,
+                    clientY: target.y,
+                    bubbles: true,
+                    cancelable: true
+                });
+                document.dispatchEvent(clickEvent);
+
                 currentTargetIndex = (currentTargetIndex + 1) % targetPoints.length;
             }, ms);
         }
@@ -611,7 +640,12 @@
             activeWin.style.left = (initialX + (cX - startX)) + 'px';
             activeWin.style.top = (initialY + (cY - startY)) + 'px';
         }
-        function dragEnd() { activeWin = null; }
+        function dragEnd() { 
+            if(activeWin) {
+                checkBounds(activeWin);
+            }
+            activeWin = null; 
+        }
 
         function navigateOsWeb(query) {
             query = query.trim();
