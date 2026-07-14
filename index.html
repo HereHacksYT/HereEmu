@@ -21,14 +21,8 @@
             transition: height 0.2s ease;
         }
 
-        /* Alt bar gizlendiğinde masaüstü alanının tam boy olması için class */
-        body.hide-taskbar #desktop {
-            height: 100% !important;
-        }
-
-        body.hide-taskbar #taskbar {
-            display: none !important;
-        }
+        body.hide-taskbar #desktop { height: 100% !important; }
+        body.hide-taskbar #taskbar { display: none !important; }
 
         .icon { width: 80px; display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); font-size: 12px; }
         .icon img { width: 45px; height: 45px; margin-bottom: 5px; pointer-events: none; object-fit: contain; }
@@ -43,31 +37,10 @@
         
         .window-content { padding: 15px; flex: 1; overflow: auto; background: white; }
 
-        /* Normal Tam Ekran (Alt Bar Duruyor) */
-        .window.maximized {
-            width: 100% !important;
-            height: calc(100% - 48px) !important;
-            top: 0 !important;
-            left: 0 !important;
-            border-radius: 0;
-        }
+        .window.maximized { width: 100% !important; height: calc(100% - 48px) !important; top: 0 !important; left: 0 !important; border-radius: 0; }
+        .window.ultra-maximized { width: 100% !important; height: 100% !important; top: 0 !important; left: 0 !important; border-radius: 0; z-index: 99999 !important; }
 
-        /* ULTRA Tam Ekran (Alt Bar Yok, %100 Kaplama) */
-        .window.ultra-maximized {
-            width: 100% !important;
-            height: 100% !important;
-            top: 0 !important;
-            left: 0 !important;
-            border-radius: 0;
-            z-index: 99999 !important; /* Her şeyin en üstünde */
-        }
-
-        input[type="text"], textarea { 
-            user-select: text !important; 
-            -webkit-user-select: text !important; 
-            font-size: 16px !important; 
-        }
-
+        input[type="text"], textarea { user-select: text !important; -webkit-user-select: text !important; font-size: 16px !important; }
         textarea { width: 100%; height: 100%; border: none; resize: none; outline: none; font-family: monospace; }
         #file-list { list-style: none; }
         #file-list li { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 14px; }
@@ -78,17 +51,6 @@
         .browser-input { flex: 1; padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; outline: none; }
         .browser-btn { padding: 5px 10px; background: #0078d4; color: white; border: none; border-radius: 4px; cursor: pointer; }
         iframe { width: 100%; height: 100%; border: none; background: white; }
-
-        /* Tarayıcı Tasarımı */
-        #osweb-homepage {
-            position: absolute; top: 45px; left: 0; width: 100%; height: calc(100% - 45px);
-            background: url('https://r.resimlink.com/tBnlAo2Xs.png') no-repeat center center;
-            background-size: cover; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; z-index: 5;
-        }
-        .homepage-logo { width: 90px; height: 90px; object-fit: contain; filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.5)); }
-        .homepage-search-box { display: flex; width: 80%; max-width: 400px; gap: 5px; background: rgba(255,255,255,0.9); padding: 6px; border-radius: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .homepage-input { flex: 1; border: none; background: transparent; padding: 5px 15px; outline: none; font-size: 14px; }
-        .homepage-btn { background: #0078d4; color: white; border: none; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; }
 
         /* OSSTORE TASARIMI */
         .store-layout { display: flex; height: 100%; width: 100%; }
@@ -111,26 +73,27 @@
         .store-btn-open { background: #28a745; color: white; }
         .store-btn-loading { background: #6c757d; color: white; cursor: not-allowed; font-size: 11px; }
 
-        /* YÜKLEME BAR ALANI */
         .progress-container { width: 100%; height: 5px; background: #e0e0e0; border-radius: 3px; overflow: hidden; display: none; margin-top: 2px; }
         .progress-bar { width: 0%; height: 100%; background: #28a745; transition: width 0.2s linear; }
 
-        /* SORU KUTUSU (DIALOG) */
-        .fullscreen-dialog-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); display: none; justify-content: center;
-            align-items: center; z-index: 999999; backdrop-filter: blur(4px);
-        }
-        .fullscreen-dialog {
-            background: white; padding: 20px; border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4); text-align: center;
-            width: 300px; font-family: sans-serif;
-        }
+        /* MODALLAR VE DIALOGLAR */
+        .fullscreen-dialog-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 999999; backdrop-filter: blur(4px); }
+        .fullscreen-dialog { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); text-align: center; width: 300px; font-family: sans-serif; }
         .fullscreen-dialog p { font-size: 15px; font-weight: bold; margin-bottom: 20px; color: #222; }
         .dialog-buttons { display: flex; gap: 10px; justify-content: center; }
         .dialog-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; }
         .dialog-btn-no { background: #ea4335; color: white; }
         .dialog-btn-yes { background: #34a853; color: white; }
+
+        /* VİRÜS EKRANI */
+        #virus-screen {
+            position: fixed; top:0; left:0; width:100%; height:100%; background: #ffcc00;
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 99999999; color: black; font-family: 'Courier New', Courier, monospace; text-align: center; padding: 20px;
+        }
+        #virus-screen h1 { font-size: 32px; font-weight: bold; margin-bottom: 20px; animation: blink 0.8s infinite; }
+        #virus-screen p { font-size: 18px; font-weight: bold; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         #taskbar { width: 100%; height: 48px; background: rgba(243, 243, 243, 0.85); backdrop-filter: blur(10px); position: absolute; bottom: 0; display: flex; align-items: center; padding: 0 15px; justify-content: space-between; border-top: 1px solid #ccc; z-index: 9999; }
         #start-button { background: #28a745; color: white; border: none; padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; }
@@ -152,18 +115,13 @@
             <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png">
             <span>Not Defteri</span>
         </div>
-        
-        <!-- OSSTORE MASAÜSTÜ İKONU -->
         <div class="icon" onclick="openWindow('win-osstore')">
             <img src="https://r.resimlink.com/21hZl.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3081/3081648.png';">
             <span>OsStore</span>
         </div>
-
-        <!-- Dinamik yüklenen uygulamalar -->
         <div id="dynamic-apps" style="display: contents;"></div>
     </div>
 
-    <!-- TAM EKRAN SORU KUTUSU (DIALOG) -->
     <div id="fullscreen-dialog-overlay" class="fullscreen-dialog-overlay">
         <div class="fullscreen-dialog">
             <p>Alt yerleri de gizlemek istiyor musun?</p>
@@ -174,7 +132,21 @@
         </div>
     </div>
 
-    <!-- OSSTORE PENCERESİ -->
+    <div id="virus-dialog-overlay" class="fullscreen-dialog-overlay">
+        <div class="fullscreen-dialog">
+            <p>Uygulamayı açmak istiyor musun???</p>
+            <div class="dialog-buttons">
+                <button class="dialog-btn dialog-btn-no" onclick="closeVirusDialog()">Vazgeçtim</button>
+                <button class="dialog-btn dialog-btn-yes" onclick="triggerVirusPrank()">Evet</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="virus-screen">
+        <h1>Bilgisayara Virüs Bulaştı! 🦠</h1>
+        <p>Sistem dosyaları temizleniyor, lütfen bekleyin...</p>
+    </div>
+
     <div id="win-osstore" class="window" style="width:480px; height:380px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>OsStore</span>
@@ -188,49 +160,28 @@
                 <div class="store-sidebar">
                     <button id="menu-apps" class="store-menu-btn active" onclick="switchStoreTab('apps')">Uygulamalar</button>
                     <button id="menu-games" class="store-menu-btn" onclick="switchStoreTab('games')">Oyunlar</button>
+                    <button id="menu-mystery" class="store-menu-btn" onclick="switchStoreTab('mystery')">???</button>
                 </div>
                 <div class="store-main">
-                    <!-- Uygulamalar Sayfası -->
                     <div id="page-apps" class="store-page active">
-                        <!-- OsTube -->
                         <div class="store-item">
-                            <div class="store-item-info">
-                                <img src="https://r.resimlink.com/0AfaQN3LgC.png">
-                                <div>
-                                    <div class="store-item-title">OsTube</div>
-                                    <div class="store-item-desc">Özgür video izleme platformu.</div>
-                                </div>
-                            </div>
+                            <div class="store-item-info"><img src="https://r.resimlink.com/0AfaQN3LgC.png"><div><div class="store-item-title">OsTube</div><div class="store-item-desc">Özgür video izleme platformu.</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-ostube" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-ostube')">Aç</button>
                                 <button id="btn-action-ostube" class="store-btn store-btn-install" onclick="toggleAppInstallation('ostube')">Yükle</button>
                                 <div id="progress-container-ostube" class="progress-container"><div id="progress-bar-ostube" class="progress-bar"></div></div>
                             </div>
                         </div>
-                        <!-- OsGram -->
                         <div class="store-item">
-                            <div class="store-item-info">
-                                <img src="https://r.resimlink.com/vfRoQ.png">
-                                <div>
-                                    <div class="store-item-title">OsGram</div>
-                                    <div class="store-item-desc">Kısa videoları özgürce izle</div>
-                                </div>
-                            </div>
+                            <div class="store-item-info"><img src="https://r.resimlink.com/vfRoQ.png"><div><div class="store-item-title">OsGram</div><div class="store-item-desc">Kısa videoları özgürce izle</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-osgram" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osgram')">Aç</button>
                                 <button id="btn-action-osgram" class="store-btn store-btn-install" onclick="toggleAppInstallation('osgram')">Yükle</button>
                                 <div id="progress-container-osgram" class="progress-container"><div id="progress-bar-osgram" class="progress-bar"></div></div>
                             </div>
                         </div>
-                        <!-- OsWeb -->
                         <div class="store-item">
-                            <div class="store-item-info">
-                                <img src="https://r.resimlink.com/8KnjzqH6U.png">
-                                <div>
-                                    <div class="store-item-title">OsWeb</div>
-                                    <div class="store-item-desc">Hızlı ve güvenli internet tarayıcısı.</div>
-                                </div>
-                            </div>
+                            <div class="store-item-info"><img src="https://r.resimlink.com/8KnjzqH6U.png"><div><div class="store-item-title">OsWeb</div><div class="store-item-desc">Hızlı ve güvenli internet tarayıcısı.</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-osweb" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osweb')">Aç</button>
                                 <button id="btn-action-osweb" class="store-btn store-btn-install" onclick="toggleAppInstallation('osweb')">Yükle</button>
@@ -239,36 +190,40 @@
                         </div>
                     </div>
                     
-                    <!-- Oyunlar Sayfası -->
                     <div id="page-games" class="store-page">
-                        <!-- OsBlast -->
                         <div class="store-item">
-                            <div class="store-item-info">
-                                <img src="https://r.resimlink.com/F_Ekx5Uwd.png">
-                                <div>
-                                    <div class="store-item-title">OsBlast</div>
-                                    <div class="store-item-desc">Aksiyon dolu yeni nesil web oyunu!</div>
-                                </div>
-                            </div>
+                            <div class="store-item-info"><img src="https://r.resimlink.com/F_Ekx5Uwd.png"><div><div class="store-item-title">OsBlast</div><div class="store-item-desc">Aksiyon dolu yeni nesil web oyunu!</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-osblast" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osblast')">Aç</button>
                                 <button id="btn-action-osblast" class="store-btn store-btn-install" onclick="toggleAppInstallation('osblast')">Yükle</button>
                                 <div id="progress-container-osblast" class="progress-container"><div id="progress-bar-osblast" class="progress-bar"></div></div>
                             </div>
                         </div>
-                        <!-- OsDuelist Stickman -->
                         <div class="store-item">
-                            <div class="store-item-info">
-                                <img src="https://r.resimlink.com/coqFrZWl9OIk.png">
-                                <div>
-                                    <div class="store-item-title">OsDuelist Stickman</div>
-                                    <div class="store-item-desc">Çöp adamların efsanevi düello savaşı!</div>
-                                </div>
-                            </div>
+                            <div class="store-item-info"><img src="https://r.resimlink.com/coqFrZWl9OIk.png"><div><div class="store-item-title">OsDuelist Stickman</div><div class="store-item-desc">Çöp adamların efsanevi düello savaşı!</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-osduelist" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osduelist')">Aç</button>
                                 <button id="btn-action-osduelist" class="store-btn store-btn-install" onclick="toggleAppInstallation('osduelist')">Yükle</button>
                                 <div id="progress-container-osduelist" class="progress-container"><div id="progress-bar-osduelist" class="progress-bar"></div></div>
+                            </div>
+                        </div>
+                        <div class="store-item">
+                            <div class="store-item-info"><img src="https://i.ibb.co/nW8xS28/Os-Way-Surfers.png"><div><div class="store-item-title">OsWay Surfers</div><div class="store-item-desc">Rayların üzerinde sonsuz koşu macerası!</div></div></div>
+                            <div class="store-item-actions">
+                                <button id="btn-open-oswaysurfers" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-oswaysurfers')">Aç</button>
+                                <button id="btn-action-oswaysurfers" class="store-btn store-btn-install" onclick="toggleAppInstallation('oswaysurfers')">Yükle</button>
+                                <div id="progress-container-oswaysurfers" class="progress-container"><div id="progress-bar-oswaysurfers" class="progress-bar"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="page-mystery" class="store-page">
+                        <div class="store-item">
+                            <div class="store-item-info"><img src="https://cdn-icons-png.flaticon.com/512/751/751381.png"><div><div class="store-item-title">???</div><div class="store-item-desc">Bunu açmaman tavsiye edilir...</div></div></div>
+                            <div class="store-item-actions">
+                                <button id="btn-open-mysteryapp" class="store-btn store-btn-open" style="display:none;" onclick="openVirusPrompt()">Aç</button>
+                                <button id="btn-action-mysteryapp" class="store-btn store-btn-install" onclick="toggleAppInstallation('mysteryapp')">Yükle</button>
+                                <div id="progress-container-mysteryapp" class="progress-container"><div id="progress-bar-mysteryapp" class="progress-bar"></div></div>
                             </div>
                         </div>
                     </div>
@@ -277,153 +232,32 @@
         </div>
     </div>
 
-    <!-- SİSTEM GİZLİ PENCERELERI -->
-    <div id="win-uploader" class="window">
-        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-            <span>Yükleme İstasyonu</span>
-            <div class="header-buttons">
-                <button class="maximize-btn" onclick="toggleMaximize('win-uploader')"></button>
-                <button class="close-btn" onclick="closeWindow('win-uploader')"></button>
-            </div>
-        </div>
-        <div class="window-content">
-            <input type="file" id="file-input" style="margin-bottom: 15px;"><br>
-            <button onclick="uploadFileToServer()" style="padding: 10px; background: #0078d4; color:white; border:none; border-radius:4px; width:100%;">Render Sunucusuna Gönder</button>
-        </div>
-    </div>
-
-    <div id="win-files" class="window">
-        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-            <span>Render Sunucu Dosyaları</span>
-            <div class="header-buttons">
-                <button class="maximize-btn" onclick="toggleMaximize('win-files')"></button>
-                <button class="close-btn" onclick="closeWindow('win-files')"></button>
-            </div>
-        </div>
-        <div class="window-content"><ul id="file-list"></ul></div>
-    </div>
-
-    <div id="win-notepad" class="window">
-        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-            <span>Not Defteri</span>
-            <div class="header-buttons">
-                <button class="maximize-btn" onclick="toggleMaximize('win-notepad')"></button>
-                <button class="close-btn" onclick="closeWindow('win-notepad')"></button>
-            </div>
-        </div>
-        <div class="window-content"><textarea id="txt-area" placeholder="Yazılım notları..."></textarea></div>
-    </div>
-
-    <div id="win-media" class="window" style="width:340px; height:260px;">
-        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-            <span>Medya Oynatıcı</span>
-            <div class="header-buttons">
-                <button class="maximize-btn" onclick="toggleMaximize('win-media')"></button>
-                <button class="close-btn" onclick="closeWindow('win-media')"></button>
-            </div>
-        </div>
-        <div class="window-content" style="display:flex; justify-content:center; align-items:center; background:#000;">
-            <video id="media-video" controls style="max-width:100%; max-height:100%; display:none;"></video>
-            <audio id="media-audio" controls style="width:100%; display:none;"></audio>
-            <img id="media-img" style="max-width:100%; max-height:100%; object-fit:contain; display:none;">
-        </div>
-    </div>
-
-    <!-- OSTUBE -->
-    <div id="win-ostube" class="window" style="width:400px; height:320px;">
-        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-            <span>OsTube</span>
-            <div class="header-buttons">
-                <button class="maximize-btn" onclick="toggleMaximize('win-ostube')"></button>
-                <button class="close-btn" onclick="closeWindow('win-ostube')"></button>
-            </div>
-        </div>
-        <div class="window-content" style="padding:0; background:#111;">
-            <div class="browser-container">
-                <iframe id="yt-frame" src="about:blank" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-
-    <!-- OSGRAM -->
-    <div id="win-osgram" class="window" style="width:380px; height:340px;">
-        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-            <span>OsGram</span>
-            <div class="header-buttons">
-                <button class="maximize-btn" onclick="toggleMaximize('win-osgram')"></button>
-                <button class="close-btn" onclick="closeWindow('win-osgram')"></button>
-            </div>
-        </div>
-        <div class="window-content" style="padding:0; background:#fff;">
-            <div class="browser-container">
-                <iframe id="gram-frame" src="about:blank"></iframe>
-            </div>
-        </div>
-    </div>
-
-    <!-- OSWEB -->
+    <div id="win-uploader" class="window"><div class="window-header" onmousedown="dragStart(event)"><span>Yükleme İstasyonu</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-uploader')"></button><button class="close-btn" onclick="closeWindow('win-uploader')"></button></div></div><div class="window-content"><input type="file" id="file-input" style="margin-bottom:15px;"><br><button onclick="uploadFileToServer()" style="padding:10px; background:#0078d4; color:white; border:none; border-radius:4px; width:100%;">Render Sunucusuna Gönder</button></div></div>
+    <div id="win-files" class="window"><div class="window-header" onmousedown="dragStart(event)"><span>Render Sunucu Dosyaları</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-files')"></button><button class="close-btn" onclick="closeWindow('win-files')"></button></div></div><div class="window-content"><ul id="file-list"></ul></div></div>
+    <div id="win-notepad" class="window"><div class="window-header" onmousedown="dragStart(event)"><span>Not Defteri</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-notepad')"></button><button class="close-btn" onclick="closeWindow('win-notepad')"></button></div></div><div class="window-content"><textarea id="txt-area" placeholder="Yazılım notları..."></textarea></div></div>
+    <div id="win-media" class="window" style="width:340px; height:260px;"><div class="window-header" onmousedown="dragStart(event)"><span>Medya Oynatıcı</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-media')"></button><button class="close-btn" onclick="closeWindow('win-media')"></button></div></div><div class="window-content" style="display:flex; justify-content:center; align-items:center; background:#000;"><video id="media-video" controls style="max-width:100%; max-height:100%; display:none;"></video><audio id="media-audio" controls style="width:100%; display:none;"></audio><img id="media-img" style="max-width:100%; max-height:100%; object-fit:contain; display:none;"></div></div>
+    <div id="win-ostube" class="window" style="width:400px; height:320px;"><div class="window-header" onmousedown="dragStart(event)"><span>OsTube</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-ostube')"></button><button class="close-btn" onclick="closeWindow('win-ostube')"></button></div></div><div class="window-content" style="padding:0; background:#111;"><div class="browser-container"><iframe id="yt-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
+    <div id="win-osgram" class="window" style="width:380px; height:340px;"><div class="window-header" onmousedown="dragStart(event)"><span>OsGram</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osgram')"></button><button class="close-btn" onclick="closeWindow('win-osgram')"></button></div></div><div class="window-content" style="padding:0; background:#fff;"><div class="browser-container"><iframe id="gram-frame" src="about:blank"></iframe></div></div></div>
+    
     <div id="win-osweb" class="window" style="width:450px; height:350px;">
-        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-            <span>OsWeb Tarayıcı</span>
-            <div class="header-buttons">
-                <button class="maximize-btn" onclick="toggleMaximize('win-osweb')"></button>
-                <button class="close-btn" onclick="closeWindow('win-osweb')"></button>
-            </div>
-        </div>
+        <div class="window-header" onmousedown="dragStart(event)"><span>OsWeb Tarayıcı</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osweb')"></button><button class="close-btn" onclick="closeWindow('win-osweb')"></button></div></div>
         <div class="window-content" style="padding:10px; display:flex; flex-direction:column;">
             <div class="browser-container">
                 <div class="browser-bar">
-                    <input type="text" id="web-url" class="browser-input" placeholder="Kelime yazın veya link girin..." onkeydown="if(event.key==='Enter') navigateOsWeb(this.value)">
+                    <input type="text" id="web-url" class="browser-input" placeholder="Kelime yazın..." onkeydown="if(event.key==='Enter') navigateOsWeb(this.value)">
                     <button class="browser-btn" onclick="navigateOsWeb(document.getElementById('web-url').value)">Git</button>
                 </div>
-                
-                <div id="osweb-homepage">
-                    <img src="https://r.resimlink.com/8KnjzqH6U.png" class="homepage-logo">
-                    <div class="homepage-search-box">
-                        <input type="text" id="hp-search-input" class="homepage-input" placeholder="OsWeb'de arayın..." onkeydown="if(event.key==='Enter') navigateOsWeb(this.value)">
-                        <button class="homepage-btn" onclick="navigateOsWeb(document.getElementById('hp-search-input').value)">Ara</button>
-                    </div>
-                </div>
-
                 <iframe id="osweb-frame" src="about:blank" style="display:none;"></iframe>
             </div>
         </div>
     </div>
 
-    <!-- OSBLAST -->
-    <div id="win-osblast" class="window" style="width:480px; height:360px;">
-        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-            <span>OsBlast</span>
-            <div class="header-buttons">
-                <button class="maximize-btn" onclick="toggleMaximize('win-osblast')"></button>
-                <button class="close-btn" onclick="closeWindow('win-osblast')"></button>
-            </div>
-        </div>
-        <div class="window-content" style="padding:0; background:#000;">
-            <div class="browser-container">
-                <iframe id="blast-frame" src="about:blank" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-
-    <!-- OSDUELIST STICKMAN -->
-    <div id="win-osduelist" class="window" style="width:480px; height:360px;">
-        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-            <span>OsDuelist Stickman</span>
-            <div class="header-buttons">
-                <button class="maximize-btn" onclick="toggleMaximize('win-osduelist')"></button>
-                <button class="close-btn" onclick="closeWindow('win-osduelist')"></button>
-            </div>
-        </div>
-        <div class="window-content" style="padding:0; background:#000;">
-            <div class="browser-container">
-                <iframe id="duelist-frame" src="about:blank" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
+    <div id="win-osblast" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)"><span>OsBlast</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osblast')"></button><button class="close-btn" onclick="closeWindow('win-osblast')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="blast-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
+    <div id="win-osduelist" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)"><span>OsDuelist Stickman</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osduelist')"></button><button class="close-btn" onclick="closeWindow('win-osduelist')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="duelist-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
+    <div id="win-oswaysurfers" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)"><span>OsWay Surfers</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-oswaysurfers')"></button><button class="close-btn" onclick="closeWindow('win-oswaysurfers')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="waysurfers-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v15.0 💪 - Gelişmiş Tam Ekran Aktif!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v16.0 💪 - Eğlence ve Güvenlik Tam Gaz!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -433,15 +267,16 @@
             osgram: { name: 'OsGram', logo: 'https://r.resimlink.com/vfRoQ.png', winId: 'win-osgram', url: 'https://osgram.onrender.com', frameId: 'gram-frame', installed: false, isInstalling: false },
             osweb: { name: 'OsWeb', logo: 'https://r.resimlink.com/8KnjzqH6U.png', winId: 'win-osweb', url: '', frameId: '', installed: false, isInstalling: false },
             osblast: { name: 'OsBlast', logo: 'https://r.resimlink.com/F_Ekx5Uwd.png', winId: 'win-osblast', url: 'https://osblast.onrender.com', frameId: 'blast-frame', installed: false, isInstalling: false },
-            osduelist: { name: 'OsDuelist', logo: 'https://r.resimlink.com/coqFrZWl9OIk.png', winId: 'win-osduelist', url: 'https://osduelist-stickman.onrender.com', frameId: 'duelist-frame', installed: false, isInstalling: false }
+            osduelist: { name: 'OsDuelist', logo: 'https://r.resimlink.com/coqFrZWl9OIk.png', winId: 'win-osduelist', url: 'https://osduelist-stickman.onrender.com', frameId: 'duelist-frame', installed: false, isInstalling: false },
+            oswaysurfers: { name: 'OsWay Surfers', logo: 'https://i.ibb.co/nW8xS28/Os-Way-Surfers.png', winId: 'win-oswaysurfers', url: 'https://osway-surfers.onrender.com', frameId: 'waysurfers-frame', installed: false, isInstalling: false },
+            mysteryapp: { name: '???', logo: 'https://cdn-icons-png.flaticon.com/512/751/751381.png', winId: 'special-virus', url: '', frameId: '', installed: false, isInstalling: false }
         };
 
-        let currentDialogWindowId = null; // Şu an tam ekran yapılmak istenen pencere
+        let currentDialogWindowId = null;
 
         function switchStoreTab(tab) {
             document.querySelectorAll('.store-menu-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.store-page').forEach(p => p.classList.remove('active'));
-            
             document.getElementById(`menu-${tab}`).classList.add('active');
             document.getElementById(`page-${tab}`).classList.add('active');
         }
@@ -471,23 +306,20 @@
                         clearInterval(interval);
                         app.installed = true;
                         app.isInstalling = false;
-                        
                         actionBtn.innerText = 'Kaldır';
                         actionBtn.className = 'store-btn store-btn-uninstall';
                         openBtn.style.display = 'inline-block';
                         progressContainer.style.display = 'none';
-                        
                         renderDesktopIcons();
                     }
                 }, 200);
-
             } else {
                 app.installed = false;
                 actionBtn.innerText = 'Yükle';
                 actionBtn.className = 'store-btn store-btn-install';
                 openBtn.style.display = 'none';
                 if(progressContainer) progressContainer.style.display = 'none';
-                closeWindow(app.winId);
+                if(app.winId !== 'special-virus') closeWindow(app.winId);
                 renderDesktopIcons();
             }
         }
@@ -495,18 +327,51 @@
         function renderDesktopIcons() {
             const container = document.getElementById('dynamic-apps');
             container.innerHTML = '';
-            
             for (const key in appDatabase) {
                 const app = appDatabase[key];
                 if (app.installed) {
+                    let onclickAction = `openWindow('${app.winId}')`;
+                    if(key === 'mysteryapp') onclickAction = `openVirusPrompt()`;
                     container.innerHTML += `
-                        <div class="icon" onclick="openWindow('${app.winId}')">
+                        <div class="icon" onclick="${onclickAction}">
                             <img src="${app.logo}">
                             <span>${app.name}</span>
                         </div>
                     `;
                 }
             }
+        }
+
+        // VİRÜS ŞAKASI FONKSİYONLARI
+        function openVirusPrompt() {
+            document.getElementById('virus-dialog-overlay').style.display = 'flex';
+        }
+        function closeVirusDialog() {
+            document.getElementById('virus-dialog-overlay').style.display = 'none';
+        }
+        function triggerVirusPrank() {
+            closeVirusDialog();
+            
+            let endTime = Date.now() + 5000; // 5 saniye boyunca sürecek alert döngüsü
+            
+            function launchAlerts() {
+                if (Date.now() < endTime) {
+                    alert("KRİTİK HATA: Sistem dosyaları bozuldu!");
+                    alert("UYARI: Yetkisiz erişim algılandı!");
+                    alert("TR-06/TROJAN_DETECTION!");
+                    setTimeout(launchAlerts, 50);
+                } else {
+                    // 5 Saniye bitti, sarı virüs ekranını getir
+                    const virusScreen = document.getElementById('virus-screen');
+                    virusScreen.style.display = 'flex';
+                    
+                    // 7 saniye sonra sayfayı otomatik yenile (F5)
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 7000);
+                }
+            }
+            launchAlerts();
         }
 
         setInterval(() => {
@@ -518,14 +383,6 @@
             if(!w.classList.contains('maximized') && !w.classList.contains('ultra-maximized')) {
                 w.style.top = '15%'; w.style.left = '5%';
             }
-            if(id === 'win-osweb') {
-                document.getElementById('osweb-homepage').style.display = 'flex';
-                document.getElementById('osweb-frame').style.display = 'none';
-                document.getElementById('osweb-frame').src = 'about:blank';
-                document.getElementById('web-url').value = '';
-                document.getElementById('hp-search-input').value = '';
-            }
-            
             for (const key in appDatabase) {
                 const app = appDatabase[key];
                 if (app.winId === id && app.frameId) {
@@ -537,14 +394,11 @@
         function closeWindow(id) { 
             const w = document.getElementById(id);
             w.style.display = 'none'; 
-            
-            // Eğer ultra tam ekrandaysa, kapatıldığında alt barı geri getiriyoruz
             if (w.classList.contains('ultra-maximized')) {
                 w.classList.remove('ultra-maximized');
                 document.body.classList.remove('hide-taskbar');
             }
             w.classList.remove('maximized');
-
             for (const key in appDatabase) {
                 const app = appDatabase[key];
                 if (app.winId === id && app.frameId) {
@@ -553,38 +407,28 @@
             }
         }
 
-        // GELİŞMİŞ TAM EKRAN TETİKLEYİCİSİ
         function toggleMaximize(id) {
             const w = document.getElementById(id);
-            
-            // Eğer zaten tam ekrandaysa (normal veya ultra), direkt küçült ve barı geri getir
             if (w.classList.contains('maximized') || w.classList.contains('ultra-maximized')) {
                 w.classList.remove('maximized');
                 w.classList.remove('ultra-maximized');
                 document.body.classList.remove('hide-taskbar');
             } else {
-                // İlk kez tam ekran yapılıyorsa soru kutusunu aç
                 currentDialogWindowId = id;
                 document.getElementById('fullscreen-dialog-overlay').style.display = 'flex';
             }
         }
 
-        // SORU KUTUSU CEVAP FONKSİYONU
         function handleFullscreenResponse(hideBottom) {
             document.getElementById('fullscreen-dialog-overlay').style.display = 'none';
             if (!currentDialogWindowId) return;
-
             const w = document.getElementById(currentDialogWindowId);
-
             if (hideBottom) {
-                // EVET: Alt barı yok et ve tam ekrana oturt
                 document.body.classList.add('hide-taskbar');
                 w.classList.add('ultra-maximized');
             } else {
-                // HAYIR: Normal tam ekran yap (alt bar kalır)
                 w.classList.add('maximized');
             }
-            
             currentDialogWindowId = null;
         }
 
@@ -610,17 +454,11 @@
         function navigateOsWeb(query) {
             query = query.trim();
             const frame = document.getElementById('osweb-frame');
-            const homepage = document.getElementById('osweb-homepage');
             if (!query) return;
-
-            homepage.style.display = 'none';
             frame.style.display = 'block';
-
             let targetUrl = query;
             if (query.startsWith('http://') || query.startsWith('https://') || (query.includes('.') && !query.includes(' '))) {
-                if(!query.startsWith('http://') && !query.startsWith('https://')) {
-                    targetUrl = 'https://' + query;
-                }
+                if(!query.startsWith('http://') && !query.startsWith('https://')) targetUrl = 'https://' + query;
                 frame.src = targetUrl;
             } else {
                 frame.src = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
@@ -629,12 +467,10 @@
         }
 
         const SERVER_URL = window.location.origin;
-
         function uploadFileToServer() {
             const fileInput = document.getElementById('file-input');
             const file = fileInput.files[0];
             if (!file) return alert("Dosya seçmedin!");
-
             const reader = new FileReader();
             reader.onload = function(e) {
                 const payload = { name: file.name, type: file.type, content: e.target.result };
@@ -644,11 +480,7 @@
                     body: JSON.stringify(payload)
                 })
                 .then(res => res.json())
-                .then(data => {
-                    alert(data.message);
-                    fileInput.value = '';
-                    refreshFiles();
-                })
+                .then(data => { alert(data.message); fileInput.value = ''; refreshFiles(); })
                 .catch(err => alert("Yükleme hatası."));
             };
             reader.readAsDataURL(file);
@@ -667,7 +499,6 @@
                     if(file.type.startsWith('audio/')) icon = '🎵';
                     if(file.type.startsWith('video/')) icon = '🎬';
                     if(file.type === 'text/plain') icon = '📄';
-                    
                     li.innerHTML = `${icon} ${file.name}`;
                     li.onclick = () => openFileFromServer(file.index);
                     list.appendChild(li);
@@ -684,14 +515,10 @@
                 const img = document.getElementById('media-img');
                 v.style.display = a.style.display = img.style.display = 'none';
                 v.pause(); a.pause();
-
-                if (file.type.startsWith('image/')) {
-                    img.src = file.content; img.style.display = 'block'; openWindow('win-media');
-                } else if (file.type.startsWith('audio/')) {
-                    a.src = file.content; a.style.display = 'block'; openWindow('win-media'); a.play();
-                } else if (file.type.startsWith('video/')) {
-                    v.src = file.content; v.style.display = 'block'; openWindow('win-media'); v.play();
-                } else if (file.type === 'text/plain') {
+                if (file.type.startsWith('image/')) { img.src = file.content; img.style.display = 'block'; openWindow('win-media'); }
+                else if (file.type.startsWith('audio/')) { a.src = file.content; a.style.display = 'block'; openWindow('win-media'); a.play(); }
+                else if (file.type.startsWith('video/')) { v.src = file.content; v.style.display = 'block'; openWindow('win-media'); v.play(); }
+                else if (file.type === 'text/plain') {
                     const base64 = file.content.split(',')[1];
                     document.getElementById('txt-area').value = decodeURIComponent(escape(atob(base64)));
                     openWindow('win-notepad');
