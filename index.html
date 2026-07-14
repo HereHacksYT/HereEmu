@@ -40,7 +40,7 @@
         .window.maximized { width: 100% !important; height: calc(100% - 48px) !important; top: 0 !important; left: 0 !important; border-radius: 0; }
         .window.ultra-maximized { width: 100% !important; height: 100% !important; top: 0 !important; left: 0 !important; border-radius: 0; z-index: 99999 !important; }
 
-        input[type="text"], textarea { user-select: text !important; -webkit-user-select: text !important; font-size: 16px !important; }
+        input[type="text"], input[type="number"], textarea { user-select: text !important; -webkit-user-select: text !important; font-size: 16px !important; }
         textarea { width: 100%; height: 100%; border: none; resize: none; outline: none; font-family: monospace; }
         #file-list { list-style: none; }
         #file-list li { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 14px; }
@@ -95,6 +95,28 @@
         #virus-screen p { font-size: 18px; font-weight: bold; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
+        /* MİNİ AUTO CLICKER TASARIMI */
+        .autoclicker-panel {
+            position: absolute; top: 60px; right: 20px; width: 140px; background: rgba(30, 30, 30, 0.9);
+            border: 2px solid #0078d4; border-radius: 10px; padding: 8px; z-index: 99999;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5); color: white; font-family: sans-serif; display: flex; flex-direction: column; gap: 6px;
+        }
+        .autoclicker-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #444; padding-bottom: 4px; cursor: move; font-size: 11px; font-weight: bold; color: #0078d4; }
+        .autoclicker-header span.drag-handle { background: #0078d4; color: white; padding: 1px 4px; border-radius: 3px; font-size: 9px; }
+        .autoclicker-panel label { font-size: 10px; color: #bbb; }
+        .autoclicker-panel input { width: 100%; background: #333; border: 1px solid #555; color: white; padding: 3px; border-radius: 4px; text-align: center; font-size: 12px; }
+        .clicker-btn { width: 100%; padding: 6px; border: none; border-radius: 6px; font-weight: bold; font-size: 11px; cursor: pointer; color: white; }
+        .btn-pick { background: #ffbd2e; color: black; }
+        .btn-start { background: #28a745; }
+        .btn-stop { background: #dc3545; display: none; }
+        
+        /* Auto Clicker Kırmızı Hedef Noktası */
+        #clicker-target-visual {
+            position: fixed; width: 16px; height: 16px; border: 2px solid red; background: rgba(255,0,0,0.3);
+            border-radius: 50%; pointer-events: none; z-index: 100000; display: none; transform: translate(-50%, -50%);
+        }
+        #clicker-target-visual::after { content: ''; position: absolute; top: 50%; left: 50%; width: 4px; height: 4px; background: red; border-radius: 50%; transform: translate(-50%, -50%); }
+
         #taskbar { width: 100%; height: 48px; background: rgba(243, 243, 243, 0.85); backdrop-filter: blur(10px); position: absolute; bottom: 0; display: flex; align-items: center; padding: 0 15px; justify-content: space-between; border-top: 1px solid #ccc; z-index: 9999; }
         #start-button { background: #28a745; color: white; border: none; padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; }
         #clock { font-size: 14px; font-weight: bold; color: #333; }
@@ -121,6 +143,20 @@
         </div>
         <div id="dynamic-apps" style="display: contents;"></div>
     </div>
+
+    <div id="autoclicker" class="autoclicker-panel">
+        <div class="autoclicker-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
+            <span>Auto Clicker ⚡</span>
+            <span class="drag-handle">TUT</span>
+        </div>
+        <label>Aralık (ms):</label>
+        <input type="number" id="click-ms" value="100" min="10">
+        <button class="clicker-btn btn-pick" onclick="startPickingTarget()">🎯 Hedef Seç</button>
+        <button id="clicker-start" class="clicker-btn btn-start" onclick="startAutoClicker()">▶ Başlat</button>
+        <button id="clicker-stop" class="clicker-btn btn-stop" onclick="stopAutoClicker()">⏸ Durdur</button>
+    </div>
+
+    <div id="clicker-target-visual"></div>
 
     <div id="fullscreen-dialog-overlay" class="fullscreen-dialog-overlay">
         <div class="fullscreen-dialog">
@@ -232,15 +268,15 @@
         </div>
     </div>
 
-    <div id="win-uploader" class="window"><div class="window-header" onmousedown="dragStart(event)"><span>Yükleme İstasyonu</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-uploader')"></button><button class="close-btn" onclick="closeWindow('win-uploader')"></button></div></div><div class="window-content"><input type="file" id="file-input" style="margin-bottom:15px;"><br><button onclick="uploadFileToServer()" style="padding:10px; background:#0078d4; color:white; border:none; border-radius:4px; width:100%;">Render Sunucusuna Gönder</button></div></div>
-    <div id="win-files" class="window"><div class="window-header" onmousedown="dragStart(event)"><span>Render Sunucu Dosyaları</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-files')"></button><button class="close-btn" onclick="closeWindow('win-files')"></button></div></div><div class="window-content"><ul id="file-list"></ul></div></div>
-    <div id="win-notepad" class="window"><div class="window-header" onmousedown="dragStart(event)"><span>Not Defteri</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-notepad')"></button><button class="close-btn" onclick="closeWindow('win-notepad')"></button></div></div><div class="window-content"><textarea id="txt-area" placeholder="Yazılım notları..."></textarea></div></div>
-    <div id="win-media" class="window" style="width:340px; height:260px;"><div class="window-header" onmousedown="dragStart(event)"><span>Medya Oynatıcı</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-media')"></button><button class="close-btn" onclick="closeWindow('win-media')"></button></div></div><div class="window-content" style="display:flex; justify-content:center; align-items:center; background:#000;"><video id="media-video" controls style="max-width:100%; max-height:100%; display:none;"></video><audio id="media-audio" controls style="width:100%; display:none;"></audio><img id="media-img" style="max-width:100%; max-height:100%; object-fit:contain; display:none;"></div></div>
-    <div id="win-ostube" class="window" style="width:400px; height:320px;"><div class="window-header" onmousedown="dragStart(event)"><span>OsTube</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-ostube')"></button><button class="close-btn" onclick="closeWindow('win-ostube')"></button></div></div><div class="window-content" style="padding:0; background:#111;"><div class="browser-container"><iframe id="yt-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
-    <div id="win-osgram" class="window" style="width:380px; height:340px;"><div class="window-header" onmousedown="dragStart(event)"><span>OsGram</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osgram')"></button><button class="close-btn" onclick="closeWindow('win-osgram')"></button></div></div><div class="window-content" style="padding:0; background:#fff;"><div class="browser-container"><iframe id="gram-frame" src="about:blank"></iframe></div></div></div>
+    <div id="win-uploader" class="window"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>Yükleme İstasyonu</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-uploader')"></button><button class="close-btn" onclick="closeWindow('win-uploader')"></button></div></div><div class="window-content"><input type="file" id="file-input" style="margin-bottom:15px;"><br><button onclick="uploadFileToServer()" style="padding:10px; background:#0078d4; color:white; border:none; border-radius:4px; width:100%;">Render Sunucusuna Gönder</button></div></div>
+    <div id="win-files" class="window"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>Render Sunucu Dosyaları</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-files')"></button><button class="close-btn" onclick="closeWindow('win-files')"></button></div></div><div class="window-content"><ul id="file-list"></ul></div></div>
+    <div id="win-notepad" class="window"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>Not Defteri</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-notepad')"></button><button class="close-btn" onclick="closeWindow('win-notepad')"></button></div></div><div class="window-content"><textarea id="txt-area" placeholder="Yazılım notları..."></textarea></div></div>
+    <div id="win-media" class="window" style="width:340px; height:260px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>Medya Oynatıcı</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-media')"></button><button class="close-btn" onclick="closeWindow('win-media')"></button></div></div><div class="window-content" style="display:flex; justify-content:center; align-items:center; background:#000;"><video id="media-video" controls style="max-width:100%; max-height:100%; display:none;"></video><audio id="media-audio" controls style="width:100%; display:none;"></audio><img id="media-img" style="max-width:100%; max-height:100%; object-fit:contain; display:none;"></div></div>
+    <div id="win-ostube" class="window" style="width:400px; height:320px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsTube</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-ostube')"></button><button class="close-btn" onclick="closeWindow('win-ostube')"></button></div></div><div class="window-content" style="padding:0; background:#111;"><div class="browser-container"><iframe id="yt-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
+    <div id="win-osgram" class="window" style="width:380px; height:340px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsGram</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osgram')"></button><button class="close-btn" onclick="closeWindow('win-osgram')"></button></div></div><div class="window-content" style="padding:0; background:#fff;"><div class="browser-container"><iframe id="gram-frame" src="about:blank"></iframe></div></div></div>
     
     <div id="win-osweb" class="window" style="width:450px; height:350px;">
-        <div class="window-header" onmousedown="dragStart(event)"><span>OsWeb Tarayıcı</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osweb')"></button><button class="close-btn" onclick="closeWindow('win-osweb')"></button></div></div>
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsWeb Tarayıcı</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osweb')"></button><button class="close-btn" onclick="closeWindow('win-osweb')"></button></div></div>
         <div class="window-content" style="padding:10px; display:flex; flex-direction:column;">
             <div class="browser-container">
                 <div class="browser-bar">
@@ -252,12 +288,12 @@
         </div>
     </div>
 
-    <div id="win-osblast" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)"><span>OsBlast</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osblast')"></button><button class="close-btn" onclick="closeWindow('win-osblast')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="blast-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
-    <div id="win-osduelist" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)"><span>OsDuelist Stickman</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osduelist')"></button><button class="close-btn" onclick="closeWindow('win-osduelist')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="duelist-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
-    <div id="win-oswaysurfers" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)"><span>OsWay Surfers</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-oswaysurfers')"></button><button class="close-btn" onclick="closeWindow('win-oswaysurfers')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="waysurfers-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
+    <div id="win-osblast" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsBlast</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osblast')"></button><button class="close-btn" onclick="closeWindow('win-osblast')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="blast-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
+    <div id="win-osduelist" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsDuelist Stickman</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osduelist')"></button><button class="close-btn" onclick="closeWindow('win-osduelist')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="duelist-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
+    <div id="win-oswaysurfers" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsWay Surfers</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-oswaysurfers')"></button><button class="close-btn" onclick="closeWindow('win-oswaysurfers')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="waysurfers-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v16.0 💪 - Eğlence ve Güvenlik Tam Gaz!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v17.0 💪 - Auto Clicker Aktif!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -273,6 +309,67 @@
         };
 
         let currentDialogWindowId = null;
+
+        // AUTO CLICKER DEĞİŞKENLERİ
+        let clickInterval = null;
+        let isPickingTarget = false;
+        let targetX = 0;
+        let targetY = 0;
+
+        function startPickingTarget() {
+            isPickingTarget = true;
+            alert("Şimdi ekranda tıklanmasını istediğin herhangi bir yere dokun!");
+            
+            // Ekran tıklamasını yakala
+            const grabClick = (e) => {
+                if (!isPickingTarget) return;
+                const cX = e.touches ? e.touches[0].clientX : e.clientX;
+                const cY = e.touches ? e.touches[0].clientY : e.clientY;
+                
+                targetX = cX;
+                targetY = cY;
+                
+                // Hedef imlecini yerleştir
+                const visual = document.getElementById('clicker-target-visual');
+                visual.style.left = targetX + 'px';
+                visual.style.top = targetY + 'px';
+                visual.style.display = 'block';
+                
+                isPickingTarget = false;
+                window.removeEventListener('click', grabClick);
+                window.removeEventListener('touchstart', grabClick);
+            };
+            
+            setTimeout(() => {
+                window.addEventListener('click', grabClick);
+                window.addEventListener('touchstart', grabClick);
+            }, 100);
+        }
+
+        function startAutoClicker() {
+            if (targetX === 0 && targetY === 0) return alert("Önce 'Hedef Seç' butonu ile bir nokta belirlemelisin!");
+            const ms = parseInt(document.getElementById('click-ms').value) || 100;
+            
+            document.getElementById('clicker-start').style.display = 'none';
+            document.getElementById('clicker-stop').style.display = 'block';
+            
+            clickInterval = setInterval(() => {
+                // Sanal tıklama elementini bulup simüle etme
+                let elem = document.elementFromPoint(targetX, targetY);
+                if (elem) {
+                    elem.click();
+                    // Dokunmatik cihazlar için touch event simülasyonu
+                    let touchEvent = new TouchEvent('touchstart', { bubbles: true, cancelable: true });
+                    elem.dispatchEvent(touchEvent);
+                }
+            }, ms);
+        }
+
+        function stopAutoClicker() {
+            clearInterval(clickInterval);
+            document.getElementById('clicker-start').style.display = 'block';
+            document.getElementById('clicker-stop').style.display = 'none';
+        }
 
         function switchStoreTab(tab) {
             document.querySelectorAll('.store-menu-btn').forEach(b => b.classList.remove('active'));
@@ -342,33 +439,19 @@
             }
         }
 
-        // VİRÜS ŞAKASI FONKSİYONLARI
-        function openVirusPrompt() {
-            document.getElementById('virus-dialog-overlay').style.display = 'flex';
-        }
-        function closeVirusDialog() {
-            document.getElementById('virus-dialog-overlay').style.display = 'none';
-        }
+        function openVirusPrompt() { document.getElementById('virus-dialog-overlay').style.display = 'flex'; }
+        function closeVirusDialog() { document.getElementById('virus-dialog-overlay').style.display = 'none'; }
         function triggerVirusPrank() {
             closeVirusDialog();
-            
-            let endTime = Date.now() + 5000; // 5 saniye boyunca sürecek alert döngüsü
-            
+            let endTime = Date.now() + 5000;
             function launchAlerts() {
                 if (Date.now() < endTime) {
                     alert("KRİTİK HATA: Sistem dosyaları bozuldu!");
                     alert("UYARI: Yetkisiz erişim algılandı!");
-                    alert("TR-06/TROJAN_DETECTION!");
                     setTimeout(launchAlerts, 50);
                 } else {
-                    // 5 Saniye bitti, sarı virüs ekranını getir
-                    const virusScreen = document.getElementById('virus-screen');
-                    virusScreen.style.display = 'flex';
-                    
-                    // 7 saniye sonra sayfayı otomatik yenile (F5)
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 7000);
+                    document.getElementById('virus-screen').style.display = 'flex';
+                    setTimeout(() => { window.location.reload(); }, 7000);
                 }
             }
             launchAlerts();
@@ -432,9 +515,11 @@
             currentDialogWindowId = null;
         }
 
+        // GELİŞMİŞ SÜRÜKLEME FONKSİYONU
         let activeWin = null; let startX, startY; let initialX, initialY;
         function dragStart(e) {
-            activeWin = e.target.closest('.window'); 
+            // Hem normal pencereleri hem de autoclicker panelini yakalar
+            activeWin = e.target.closest('.window') || e.target.closest('.autoclicker-panel'); 
             if (!activeWin || activeWin.classList.contains('maximized') || activeWin.classList.contains('ultra-maximized')) { activeWin = null; return; }
             const cX = e.touches ? e.touches[0].clientX : e.clientX;
             const cY = e.touches ? e.touches[0].clientY : e.clientY;
