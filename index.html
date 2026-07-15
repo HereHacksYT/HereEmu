@@ -254,6 +254,14 @@
                     
                     <div id="page-games" class="store-page">
                         <div class="store-item">
+                            <div class="store-item-info"><img src="https://i.ibb.co/VWTfmHvL/Os-Dino.png"><div><div class="store-item-title">OsDino</div><div class="store-item-desc">Efsanevi dinozor engelleri aşma oyunu!</div></div></div>
+                            <div class="store-item-actions">
+                                <button id="btn-open-osdino" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osdino')">Aç</button>
+                                <button id="btn-action-osdino" class="store-btn store-btn-install" onclick="toggleAppInstallation('osdino')">Yükle</button>
+                                <div id="progress-container-osdino" class="progress-container"><div id="progress-bar-osdino" class="progress-bar"></div></div>
+                            </div>
+                        </div>
+                        <div class="store-item">
                             <div class="store-item-info"><img src="https://r.resimlink.com/F_Ekx5Uwd.png"><div><div class="store-item-title">OsBlast</div><div class="store-item-desc">Aksiyon dolu yeni nesil web oyunu!</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-osblast" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osblast')">Aç</button>
@@ -316,12 +324,13 @@
     </div>
 
     <!-- SÜRÜKLENEBİLİR OYUNLAR -->
+    <div id="win-osdino" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsDino</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osdino')"></button><button class="close-btn" onclick="closeWindow('win-osdino')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="dino-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
     <div id="win-osblast" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsBlast</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osblast')"></button><button class="close-btn" onclick="closeWindow('win-osblast')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="blast-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
     <div id="win-osduelist" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsDuelist Stickman</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osduelist')"></button><button class="close-btn" onclick="closeWindow('win-osduelist')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="duelist-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
     <div id="win-oswaysurfers" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsWay Surfers</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-oswaysurfers')"></button><button class="close-btn" onclick="closeWindow('win-oswaysurfers')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="waysurfers-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v20.0 💪 - Tam Kararlı Oyun Sürümü!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v21.0 💪 - OsDino Güncellemesi!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -331,6 +340,7 @@
             ostube: { name: 'OsTube', logo: 'https://r.resimlink.com/0AfaQN3LgC.png', winId: 'win-ostube', url: 'https://ostube.onrender.com', frameId: 'yt-frame', installed: false, isInstalling: false },
             osgram: { name: 'OsGram', logo: 'https://r.resimlink.com/vfRoQ.png', winId: 'win-osgram', url: 'https://osgram.onrender.com', frameId: 'gram-frame', installed: false, isInstalling: false },
             osweb: { name: 'OsWeb', logo: 'https://r.resimlink.com/8KnjzqH6U.png', winId: 'win-osweb', url: '', frameId: '', installed: false, isInstalling: false },
+            osdino: { name: 'OsDino', logo: 'https://i.ibb.co/VWTfmHvL/Os-Dino.png', winId: 'win-osdino', url: 'https://osdino.onrender.com', frameId: 'dino-frame', installed: false, isInstalling: false },
             osblast: { name: 'OsBlast', logo: 'https://r.resimlink.com/F_Ekx5Uwd.png', winId: 'win-osblast', url: 'https://osblast.onrender.com', frameId: 'blast-frame', installed: false, isInstalling: false },
             osduelist: { name: 'OsDuelist', logo: 'https://r.resimlink.com/coqFrZWl9OIk.png', winId: 'win-osduelist', url: 'https://osduelist-stickman.onrender.com', frameId: 'duelist-frame', installed: false, isInstalling: false },
             oswaysurfers: { name: 'OsWay Surfers', logo: 'https://i.ibb.co/nW8xS28/Os-Way-Surfers.png', winId: 'win-oswaysurfers', url: 'https://osway-surfers.onrender.com', frameId: 'waysurfers-frame', installed: false, isInstalling: false },
@@ -425,7 +435,6 @@
             if(clickInterval) stopAutoClicker();
         }
 
-        // KÖKTEN YENİLENEN GELİŞMİŞ CLICK VE DOKUNMA SİMÜLATÖRÜ
         function startAutoClicker() {
             if (targetPoints.length === 0) return alert("Lütfen önce '🎯 Ekle' butonu ile en az bir hedef belirle!");
             const ms = parseInt(document.getElementById('click-ms').value) || 100;
@@ -439,19 +448,15 @@
                 if(targetPoints.length === 0) return;
                 const target = targetPoints[currentTargetIndex];
                 
-                // 1. ADIM: Tam o noktadaki ana element veya iframe tespiti
                 let elem = document.elementFromPoint(target.x, target.y);
                 
                 if (elem) {
-                    // Eğer yakalanan element bir IFRAME (Oyun penceresi) ise içeri sızmayı dene
                     if (elem.tagName === 'IFRAME') {
                         try {
-                            // Iframe koordinatlarını hesapla
                             const iframeRect = elem.getBoundingClientRect();
                             const internalX = target.x - iframeRect.left;
                             const internalY = target.y - iframeRect.top;
                             
-                            // Iframe içindeki dökümana erişmeyi dene (Aynı sunucudaysa tam sızar)
                             const iframeDoc = elem.contentDocument || elem.contentWindow.document;
                             let innerElem = iframeDoc.elementFromPoint(internalX, internalY);
                             
@@ -459,7 +464,6 @@
                                 triggerFullEvents(innerElem, internalX, internalY);
                             }
                         } catch (e) {
-                            // ÇAPRAZ KÖKEN (Farklı Sunucu) Engeli Varsa Güçlü PostMessage Sinyali Gönder
                             elem.contentWindow.postMessage({
                                 type: 'auto-click',
                                 x: target.x,
@@ -468,11 +472,9 @@
                         }
                     } 
                     
-                    // Her ihtimale karşı ana penceredeki elementi de tetikle
                     triggerFullEvents(elem, target.x, target.y);
                 }
 
-                // 2. ADIM: Genel ekran koordinat tetiklemesi (Canvas tabanlı oyunlar için)
                 const globalClick = new MouseEvent('click', { clientX: target.x, clientY: target.y, bubbles: true, cancelable: true });
                 document.dispatchEvent(globalClick);
 
@@ -480,16 +482,12 @@
             }, ms);
         }
 
-        // Bir elemente 4 farklı türde dokunma olayı gönderen yardımcı fonksiyon
         function triggerFullEvents(element, x, y) {
             try {
                 element.click();
-                
-                // Mouse tetikleyicileri
                 element.dispatchEvent(new MouseEvent('mousedown', { clientX: x, clientY: y, bubbles: true, cancelable: true }));
                 element.dispatchEvent(new MouseEvent('mouseup', { clientX: x, clientY: y, bubbles: true, cancelable: true }));
                 
-                // Mobil/Tablet dokunma tetikleyicileri (Roblox/Minecraft tarzı web oyunları için)
                 const touchObj = new Touch({ identifier: Date.now(), target: element, clientX: x, clientY: y });
                 element.dispatchEvent(new TouchEvent('touchstart', { touches: [touchObj], targetTouches: [touchObj], changedTouches: [touchObj], bubbles: true, cancelable: true }));
                 element.dispatchEvent(new TouchEvent('touchend', { touches: [], targetTouches: [], changedTouches: [touchObj], bubbles: true, cancelable: true }));
