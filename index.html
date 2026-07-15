@@ -164,7 +164,7 @@
             <span class="drag-handle">TUT</span>
         </div>
         <label>Aralık (ms):</label>
-        <input type="number" id="click-ms" value="100" min="10">
+        <input type="number" id="click-ms" value="100" min="10" onchange="saveClickerSettings()">
         
         <div class="clicker-btn-group">
             <button class="clicker-btn btn-pick" onclick="startPickingTarget()">🎯 Ekle</button>
@@ -200,7 +200,6 @@
         <p>Sistem dosyaları temizleniyor, lütfen bekleyin...</p>
     </div>
 
-    <!-- OSSTORE PENCERESİ -->
     <div id="win-osstore" class="window" style="width:480px; height:380px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>OsStore</span>
@@ -302,7 +301,6 @@
         </div>
     </div>
 
-    <!-- PENCERELER -->
     <div id="win-uploader" class="window"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>Yükleme İstasyonu</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-uploader')"></button><button class="close-btn" onclick="closeWindow('win-uploader')"></button></div></div><div class="window-content"><input type="file" id="file-input" style="margin-bottom:15px;"><br><button onclick="uploadFileToServer()" style="padding:10px; background:#0078d4; color:white; border:none; border-radius:4px; width:100%;">Render Sunucusuna Gönder</button></div></div>
     <div id="win-files" class="window"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>Render Sunucu Dosyaları</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-files')"></button><button class="close-btn" onclick="closeWindow('win-files')"></button></div></div><div class="window-content"><ul id="file-list"></ul></div></div>
     <div id="win-notepad" class="window"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>Not Defteri</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-notepad')"></button><button class="close-btn" onclick="closeWindow('win-notepad')"></button></div></div><div class="window-content"><textarea id="txt-area" placeholder="Yazılım notları..."></textarea></div></div>
@@ -323,14 +321,13 @@
         </div>
     </div>
 
-    <!-- SÜRÜKLENEBİLİR OYUNLAR -->
     <div id="win-osdino" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsDino</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osdino')"></button><button class="close-btn" onclick="closeWindow('win-osdino')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="dino-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
     <div id="win-osblast" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsBlast</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osblast')"></button><button class="close-btn" onclick="closeWindow('win-osblast')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="blast-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
     <div id="win-osduelist" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsDuelist Stickman</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osduelist')"></button><button class="close-btn" onclick="closeWindow('win-osduelist')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="duelist-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
     <div id="win-oswaysurfers" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsWay Surfers</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-oswaysurfers')"></button><button class="close-btn" onclick="closeWindow('win-oswaysurfers')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="waysurfers-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v21.0 💪 - OsDino Güncellemesi!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v22.0 💪 - Kalıcı Bulut Sistemi!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -351,6 +348,54 @@
         let clickInterval = null;
         let isPickingTarget = false;
         let targetPoints = [];
+
+        // 💾 YEREL DEPOLAMA (KAYIT SİSTEMİ) FONKSİYONLARI
+        function saveSystemState() {
+            const installedApps = [];
+            for (const key in appDatabase) {
+                if (appDatabase[key].installed) {
+                    installedApps.push(key);
+                }
+            }
+            localStorage.setItem('hereemu_installed_apps', JSON.stringify(installedApps));
+        }
+
+        function loadSystemState() {
+            // 1. Uygulama Kurulum Durumlarını Yükle
+            try {
+                const savedApps = localStorage.getItem('hereemu_installed_apps');
+                if (savedApps) {
+                    const installedList = JSON.parse(savedApps);
+                    installedList.forEach(appKey => {
+                        if (appDatabase[appKey]) {
+                            appDatabase[appKey].installed = true;
+                            // OsStore arayüzündeki butonları güncelle
+                            const actionBtn = document.getElementById(`btn-action-${appKey}`);
+                            const openBtn = document.getElementById(`btn-open-${appKey}`);
+                            if (actionBtn) {
+                                actionBtn.innerText = 'Kaldır';
+                                actionBtn.className = 'store-btn store-btn-uninstall';
+                            }
+                            if (openBtn) {
+                                openBtn.style.display = 'inline-block';
+                            }
+                        }
+                    });
+                    renderDesktopIcons();
+                }
+            } catch (e) { console.error("Uygulama yükleme verisi okunamadı."); }
+
+            // 2. Auto Clicker Hız Ayarını Yükle
+            const savedMs = localStorage.getItem('hereemu_click_ms');
+            if (savedMs) {
+                document.getElementById('click-ms').value = savedMs;
+            }
+        }
+
+        function saveClickerSettings() {
+            const ms = document.getElementById('click-ms').value;
+            localStorage.setItem('hereemu_click_ms', ms);
+        }
 
         function toggleAutoClickerWindow(show) {
             const panel = document.getElementById('autoclicker');
@@ -536,6 +581,7 @@
                         actionBtn.className = 'store-btn store-btn-uninstall';
                         openBtn.style.display = 'inline-block';
                         progressContainer.style.display = 'none';
+                        saveSystemState(); // Hafızaya kaydet
                         renderDesktopIcons();
                     }
                 }, 100);
@@ -551,6 +597,7 @@
                 } else if(app.winId !== 'special-virus') {
                     closeWindow(app.winId);
                 }
+                saveSystemState(); // Hafızaya kaydet (Kaldırıldığını)
                 renderDesktopIcons();
             }
         }
@@ -746,6 +793,9 @@
                 }
             });
         }
+
+        // SAYFA YÜKLENDİĞİNDE KAYDEDİLENLERİ GERİ GETİR
+        window.addEventListener('DOMContentLoaded', loadSystemState);
     </script>
 </body>
 </html>
