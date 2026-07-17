@@ -13,6 +13,39 @@
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
         body, html { width: 100%; height: 100%; overflow: hidden; font-family: sans-serif; background-color: #000; }
         
+        /* AÇILIŞ EKRANI (SPLASH SCREEN) STİLİ */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000 url('https://i.ibb.co/YBk9CMP4/MG-4507.jpg') no-repeat center center;
+            background-size: cover;
+            z-index: 9999999999 !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        #splash-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .splash-loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: #28a745;
+            animation: splash-spin 1s linear infinite;
+            margin-top: 150px; /* Görselin odağına göre aşağı kaydırma */
+        }
+        @keyframes splash-spin {
+            to { transform: rotate(360deg); }
+        }
+
         #desktop {
             width: 100%; height: calc(100% - 48px);
             background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920') no-repeat center center;
@@ -135,6 +168,10 @@
     </style>
 </head>
 <body>
+
+    <div id="splash-screen">
+        <div class="splash-loader"></div>
+    </div>
 
     <div id="desktop">
         <div class="icon" onclick="openWindow('win-uploader')">
@@ -301,7 +338,22 @@
         </div>
     </div>
 
-    <div id="win-uploader" class="window"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>Yükleme İstasyonu</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-uploader')"></button><button class="close-btn" onclick="closeWindow('win-uploader')"></button></div></div><div class="window-content"><input type="file" id="file-input" style="margin-bottom:15px;"><br><button onclick="uploadFileToServer()" style="padding:10px; background:#0078d4; color:white; border:none; border-radius:4px; width:100%;">Render Sunucusuna Gönder</button></div></div>
+    <div id="win-uploader" class="window" style="width:380px; height:340px;">
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
+            <span>Yükleme İstasyonu</span>
+            <div class="header-buttons">
+                <button class="maximize-btn" onclick="toggleMaximize('win-uploader')"></button>
+                <button class="close-btn" onclick="closeWindow('win-uploader')"></button>
+            </div>
+        </div>
+        <div class="window-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; padding: 20px;">
+            <img src="https://i.ibb.co/Zpq9RmdH/Here-Emu.png" style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.2));" alt="HereEmu Ana Ekran Logosu">
+            <span style="font-size: 13px; font-weight: bold; color: #555;">Ana Ekran Başlatıcı Logosu</span>
+            <input type="file" id="file-input" style="width: 100%; border: 1px dashed #ccc; padding: 10px; border-radius: 6px; background: #fafafa;">
+            <button onclick="uploadFileToServer()" style="padding:12px; background:#0078d4; color:white; border:none; border-radius:6px; width:100%; font-weight: bold; cursor: pointer; transition: background 0.2s;">Render Sunucusuna Gönder</button>
+        </div>
+    </div>
+
     <div id="win-files" class="window"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>Render Sunucu Dosyaları</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-files')"></button><button class="close-btn" onclick="closeWindow('win-files')"></button></div></div><div class="window-content"><ul id="file-list"></ul></div></div>
     <div id="win-notepad" class="window"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>Not Defteri</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-notepad')"></button><button class="close-btn" onclick="closeWindow('win-notepad')"></button></div></div><div class="window-content"><textarea id="txt-area" placeholder="Yazılım notları..."></textarea></div></div>
     <div id="win-media" class="window" style="width:340px; height:260px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>Medya Oynatıcı</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-media')"></button><button class="close-btn" onclick="closeWindow('win-media')"></button></div></div><div class="window-content" style="display:flex; justify-content:center; align-items:center; background:#000;"><video id="media-video" controls style="max-width:100%; max-height:100%; display:none;"></video><audio id="media-audio" controls style="width:100%; display:none;"></audio><img id="media-img" style="max-width:100%; max-height:100%; object-fit:contain; display:none;"></div></div>
@@ -456,7 +508,7 @@
                 dot.className = 'clicker-target-dot';
                 dot.id = `click-dot-${index}`;
                 dot.style.left = cX + 'px';
-                dot.style.top = cY + 'px';
+                dot.style.top = SystemState = cY + 'px';
                 dot.innerText = index;
                 document.body.appendChild(dot);
                 
@@ -794,8 +846,17 @@
             });
         }
 
-        // SAYFA YÜKLENDİĞİNDE KAYDEDİLENLERİ GERİ GETİR
-        window.addEventListener('DOMContentLoaded', loadSystemState);
+        // SAYFA YÜKLENDİĞİNDE TETİKLENEN SİSTEMLER
+        window.addEventListener('DOMContentLoaded', () => {
+            // 1. AÇILIŞ EKRANI SÜRESİ: 3 saniye (3000ms) yüklenme animasyonu gösterir ve yumuşakça kaybolur
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                splash.classList.add('hidden');
+            }, 3000);
+
+            // Yerel kayıtları geri yükle
+            loadSystemState();
+        });
     </script>
 </body>
 </html>
