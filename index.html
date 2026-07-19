@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="HereEmu">
     
-    <!-- iPHONE SİMGESİNİN ÇIKMASINI SAĞLAYAN EKLEMELER (EKRAN GÖRÜNTÜSÜNDEKİ HATANIN ÇÖZÜMÜ) -->
+    <!-- iPHONE SİMGESİNİN ÇIKMASINI SAĞLAYAN EKLEMELER -->
     <link rel="apple-touch-icon" href="https://i.ibb.co/Zpq9RmdH/Here-Emu.png">
     <link rel="apple-touch-icon" sizes="152x152" href="https://i.ibb.co/Zpq9RmdH/Here-Emu.png">
     <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/Zpq9RmdH/Here-Emu.png">
@@ -29,12 +29,11 @@
             width: 100%;
             height: 100%;
             background: #000 url('https://i.ibb.co/YBk9CMP4/MG-4507.jpg') no-repeat center center;
-            /* contain sayesinde görsel hem dik hem yan tutuşta asla kırpılmaz, ekrana tam sığar */
             background-size: contain; 
             z-index: 9999999999 !important;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; /* Loader'ın görseli kapatmaması için alt kısma sabitleme */
+            justify-content: flex-end;
             align-items: center;
             padding-bottom: 80px;
             transition: opacity 0.6s ease, visibility 0.6s ease;
@@ -77,7 +76,7 @@
         .close-btn { background: #ff5f56; border: none; width: 15px; height: 15px; border-radius: 50%; cursor: pointer; }
         .maximize-btn { background: #ffbd2e; border: none; width: 15px; height: 15px; border-radius: 50%; cursor: pointer; }
         
-        .window-content { padding: 15px; flex: 1; overflow: auto; background: white; }
+        .window-content { padding: 15px; flex: 1; overflow: auto; background: white; position: relative; }
 
         .window.maximized { width: 100% !important; height: calc(100% - 48px) !important; top: 0 !important; left: 0 !important; border-radius: 0; z-index: 100; }
         .window.ultra-maximized { width: 100% !important; height: 100% !important; top: 0 !important; left: 0 !important; border-radius: 0; z-index: 99999 !important; }
@@ -117,6 +116,67 @@
 
         .progress-container { width: 100%; height: 5px; background: #e0e0e0; border-radius: 3px; overflow: hidden; display: none; margin-top: 2px; }
         .progress-bar { width: 0%; height: 100%; background: #28a745; transition: width 0.2s linear; }
+
+        /* CREDITS (EMEĞİ GEÇENLER) UYGULAMA STİLLERİ */
+        .credits-container {
+            width: 100%;
+            height: 100%;
+            background: #111;
+            overflow: hidden;
+            position: relative;
+            color: #fff;
+            font-family: monospace;
+        }
+        .credits-logo {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            z-index: 20;
+            filter: drop-shadow(0px 2px 6px rgba(255,255,255,0.2));
+        }
+        .credits-marquee-box {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .credits-scroller {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            animation: credits-scroll-up 10s linear infinite;
+        }
+        .credits-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .credits-label {
+            font-size: 11px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+        .credits-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #00ff66;
+            text-shadow: 0 0 8px rgba(0, 255, 102, 0.5);
+        }
+        @keyframes credits-scroll-up {
+            0% { transform: translateY(100%); }
+            100% { transform: translateY(-100%); }
+        }
 
         /* MODALLAR VE DIALOGLAR */
         .fullscreen-dialog-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 999999; backdrop-filter: blur(4px); }
@@ -178,7 +238,7 @@
 </head>
 <body>
 
-    <!-- TAM EKRAN AÇILIŞ EKRANI (SPLASH SCREEN) -->
+    <!-- TAM EKRAN AÇILIŞ EKRANI -->
     <div id="splash-screen">
         <div class="splash-loader"></div>
     </div>
@@ -200,6 +260,13 @@
             <img src="https://i.ibb.co/Z7N9Cj2/Os-Store.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3081/3081648.png';">
             <span>OsStore</span>
         </div>
+        
+        <!-- KALICI SESSİZ BİR BİÇİMDE OSSTORE'UN ALTINDA DURAN CREDITS SİMGESİ -->
+        <div class="icon" onclick="openWindow('win-credits')">
+            <img src="https://i.ibb.co/jvY8sJLZ/Credits.png">
+            <span>Credits</span>
+        </div>
+
         <div id="dynamic-apps" style="display: contents;"></div>
     </div>
 
@@ -220,6 +287,38 @@
         
         <button id="clicker-start" class="clicker-btn btn-start" onclick="startAutoClicker()">▶ Başlat</button>
         <button id="clicker-stop" class="clicker-btn btn-stop" onclick="stopAutoClicker()">⏸ Durdur</button>
+    </div>
+
+    <!-- CREDITS UYGULAMASI PENCERESİ -->
+    <div id="win-credits" class="window" style="width:340px; height:280px;">
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
+            <span>Credits</span>
+            <div class="header-buttons">
+                <button class="maximize-btn" onclick="toggleMaximize('win-credits')"></button>
+                <button class="close-btn" onclick="closeWindow('win-credits')"></button>
+            </div>
+        </div>
+        <div class="window-content" style="padding:0; background:#111;">
+            <div class="credits-container">
+                <img src="https://i.ibb.co/jvY8sJLZ/Credits.png" class="credits-logo" alt="Credits Logo">
+                <div class="credits-marquee-box">
+                    <div class="credits-scroller">
+                        <div class="credits-item">
+                            <span class="credits-label">Owner</span>
+                            <span class="credits-name">OsmanBurda</span>
+                        </div>
+                        <div class="credits-item">
+                            <span class="credits-label">YouTube</span>
+                            <span class="credits-name">@OsmanBurda</span>
+                        </div>
+                        <div class="credits-item">
+                            <span class="credits-label">Helper</span>
+                            <span class="credits-name">Gemini</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="fullscreen-dialog-overlay" class="fullscreen-dialog-overlay">
@@ -348,7 +447,6 @@
         </div>
     </div>
 
-    <!-- YÜKLEME İSTASYONU PENCERESİ VE LOGO ÖNİZLEME ALANI -->
     <div id="win-uploader" class="window" style="width:380px; height:340px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>Yükleme İstasyonu</span>
@@ -394,7 +492,7 @@
         <div id="clock">00:00</div>
     </div>
 
-    <script>
+    <script {nonce}>
         const appDatabase = {
             autoclicker: { name: 'Auto Clicker', logo: 'https://cdn-icons-png.flaticon.com/512/2888/2888656.png', winId: 'autoclicker', url: '', frameId: '', installed: false, isInstalling: false },
             ostube: { name: 'OsTube', logo: 'https://i.ibb.co/d0DqWV1g/Os-Tube.png', winId: 'win-ostube', url: 'https://ostube.onrender.com', frameId: 'yt-frame', installed: false, isInstalling: false },
