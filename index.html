@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
+    <!-- iOS ANA EKRANA EKLEME VE TAM EKRAN AYARLARI -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="HereEmu">
     
+    <!-- iPHONE SİMGESİNİN ÇIKMASINI SAĞLAYAN EKLEMELER -->
     <link rel="apple-touch-icon" href="https://i.ibb.co/Zpq9RmdH/Here-Emu.png">
     <link rel="apple-touch-icon" sizes="152x152" href="https://i.ibb.co/Zpq9RmdH/Here-Emu.png">
     <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/Zpq9RmdH/Here-Emu.png">
@@ -100,6 +102,16 @@
         .store-page { display: none; flex-direction: column; gap: 15px; }
         .store-page.active { display: flex; }
         
+        .store-section-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #0078d4;
+            border-bottom: 2px solid #0078d4;
+            padding-bottom: 4px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
         .store-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #f9f9f9; border: 1px solid #eee; border-radius: 8px; }
         .store-item-info { display: flex; align-items: center; gap: 12px; }
         .store-item-info img { width: 45px; height: 45px; object-fit: contain; border-radius: 6px; }
@@ -236,6 +248,7 @@
 </head>
 <body>
 
+    <!-- TAM EKRAN AÇILIŞ EKRANI -->
     <div id="splash-screen">
         <div class="splash-loader"></div>
     </div>
@@ -258,6 +271,7 @@
             <span>OsStore</span>
         </div>
         
+        <!-- KALICI OLARAK OSSTORE'UN ALTINDA DURAN CREDITS SİMGESİ -->
         <div class="icon" onclick="openWindow('win-credits')">
             <img src="https://i.ibb.co/jvY8sJLZ/Credits.png">
             <span>Credits</span>
@@ -285,6 +299,7 @@
         <button id="clicker-stop" class="clicker-btn btn-stop" onclick="stopAutoClicker()">⏸ Durdur</button>
     </div>
 
+    <!-- CREDITS UYGULAMASI PENCERESİ -->
     <div id="win-credits" class="window" style="width:340px; height:280px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>Credits</span>
@@ -341,6 +356,7 @@
         <p>Sistem dosyaları temizleniyor, lütfen bekleyin...</p>
     </div>
 
+    <!-- OSSTORE PENCERESİ -->
     <div id="win-osstore" class="window" style="width:480px; height:380px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>OsStore</span>
@@ -358,13 +374,25 @@
                     <button id="menu-mystery" class="store-menu-btn" onclick="switchStoreTab('mystery')">???</button>
                 </div>
                 <div class="store-main">
+                    <!-- POPÜLER SEKMESİ -->
                     <div id="page-popular" class="store-page active">
+                        <div class="store-section-title">Popüler Uygulamalar</div>
                         <div class="store-item">
                             <div class="store-item-info"><img src="https://i.ibb.co/C5yHnGg1/Os-Here-Ai.png"><div><div class="store-item-title">OsHereAi</div><div class="store-item-desc">Yapay zeka asistanı ile geleceği şekillendir!</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-oshereai-pop" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-oshereai')">Aç</button>
                                 <button id="btn-action-oshereai-pop" class="store-btn store-btn-install" onclick="toggleAppInstallation('oshereai')">Yükle</button>
                                 <div id="progress-container-oshereai-pop" class="progress-container"><div id="progress-bar-oshereai-pop" class="progress-bar"></div></div>
+                            </div>
+                        </div>
+
+                        <div class="store-section-title">Popüler Oyunlar</div>
+                        <div class="store-item">
+                            <div class="store-item-info"><img src="https://i.ibb.co/JR569wJG/Os-Chess.png"><div><div class="store-item-title">OsChess</div><div class="store-item-desc">Aklını konuştur ve şah mat et!</div></div></div>
+                            <div class="store-item-actions">
+                                <button id="btn-open-oschess-pop" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-oschess')">Aç</button>
+                                <button id="btn-action-oschess-pop" class="store-btn store-btn-install" onclick="toggleAppInstallation('oschess')">Yükle</button>
+                                <div id="progress-container-oschess-pop" class="progress-container"><div id="progress-bar-oschess-pop" class="progress-bar"></div></div>
                             </div>
                         </div>
                     </div>
@@ -414,6 +442,22 @@
                     
                     <div id="page-games" class="store-page">
                         <div class="store-item">
+                            <div class="store-item-info"><img src="https://i.ibb.co/6R0kQ4tx/Os-Marble.png"><div><div class="store-item-title">OsMarble</div><div class="store-item-desc">Bilye yarışı ve eğlence dolu labirentler!</div></div></div>
+                            <div class="store-item-actions">
+                                <button id="btn-open-osmarble" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osmarble')">Aç</button>
+                                <button id="btn-action-osmarble" class="store-btn store-btn-install" onclick="toggleAppInstallation('osmarble')">Yükle</button>
+                                <div id="progress-container-osmarble" class="progress-container"><div id="progress-bar-osmarble" class="progress-bar"></div></div>
+                            </div>
+                        </div>
+                        <div class="store-item">
+                            <div class="store-item-info"><img src="https://i.ibb.co/JR569wJG/Os-Chess.png"><div><div class="store-item-title">OsChess</div><div class="store-item-desc">Aklını konuştur ve şah mat et!</div></div></div>
+                            <div class="store-item-actions">
+                                <button id="btn-open-oschess" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-oschess')">Aç</button>
+                                <button id="btn-action-oschess" class="store-btn store-btn-install" onclick="toggleAppInstallation('oschess')">Yükle</button>
+                                <div id="progress-container-oschess" class="progress-container"><div id="progress-bar-oschess" class="progress-bar"></div></div>
+                            </div>
+                        </div>
+                        <div class="store-item">
                             <div class="store-item-info"><img src="https://i.ibb.co/VWTfmHvL/Os-Dino.png"><div><div class="store-item-title">OsDino</div><div class="store-item-desc">Efsanevi dinozor engelleri aşma oyunu!</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-osdino" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osdino')">Aç</button>
@@ -462,17 +506,20 @@
         </div>
     </div>
 
+    <!-- PENCERELER -->
     <div id="win-oshereai" class="window" style="width:440px; height:340px;">
-        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-            <span>OsHereAi</span>
-            <div class="header-buttons">
-                <button class="maximize-btn" onclick="toggleMaximize('win-oshereai')"></button>
-                <button class="close-btn" onclick="closeWindow('win-oshereai')"></button>
-            </div>
-        </div>
-        <div class="window-content" style="padding:0; background:#fff;">
-            <div class="browser-container"><iframe id="oshereai-frame" src="about:blank"></iframe></div>
-        </div>
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsHereAi</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-oshereai')"></button><button class="close-btn" onclick="closeWindow('win-oshereai')"></button></div></div>
+        <div class="window-content" style="padding:0; background:#fff;"><div class="browser-container"><iframe id="oshereai-frame" src="about:blank"></iframe></div></div>
+    </div>
+
+    <div id="win-osmarble" class="window" style="width:480px; height:360px;">
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsMarble</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osmarble')"></button><button class="close-btn" onclick="closeWindow('win-osmarble')"></button></div></div>
+        <div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="marble-frame" src="about:blank" allowfullscreen></iframe></div></div>
+    </div>
+
+    <div id="win-oschess" class="window" style="width:480px; height:360px;">
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsChess</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-oschess')"></button><button class="close-btn" onclick="closeWindow('win-oschess')"></button></div></div>
+        <div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="chess-frame" src="about:blank" allowfullscreen></iframe></div></div>
     </div>
 
     <div id="win-uploader" class="window" style="width:380px; height:340px;">
@@ -516,13 +563,15 @@
     <div id="win-oswaysurfers" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsWay Surfers</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-oswaysurfers')"></button><button class="close-btn" onclick="closeWindow('win-oswaysurfers')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="waysurfers-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v23.0 💪 - Popüler Yapay Zeka Güncellemesi!')">Başlat</button>
+        <button id="start-button" onclick="alert('HereEmu v24.0 💪 - Popüler Oyunlar & Mermer Güncellemesi!')">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
     <script {nonce}>
         const appDatabase = {
             oshereai: { name: 'OsHereAi', logo: 'https://i.ibb.co/C5yHnGg1/Os-Here-Ai.png', winId: 'win-oshereai', url: 'https://oshere-ai-app.onrender.com', frameId: 'oshereai-frame', installed: false, isInstalling: false },
+            osmarble: { name: 'OsMarble', logo: 'https://i.ibb.co/6R0kQ4tx/Os-Marble.png', winId: 'win-osmarble', url: 'https://osmarble.onrender.com', frameId: 'marble-frame', installed: false, isInstalling: false },
+            oschess: { name: 'OsChess', logo: 'https://i.ibb.co/JR569wJG/Os-Chess.png', winId: 'win-oschess', url: 'https://oschess.onrender.com', frameId: 'chess-frame', installed: false, isInstalling: false },
             autoclicker: { name: 'Auto Clicker', logo: 'https://cdn-icons-png.flaticon.com/512/2888/2888656.png', winId: 'autoclicker', url: '', frameId: '', installed: false, isInstalling: false },
             ostube: { name: 'OsTube', logo: 'https://i.ibb.co/d0DqWV1g/Os-Tube.png', winId: 'win-ostube', url: 'https://ostube.onrender.com', frameId: 'yt-frame', installed: false, isInstalling: false },
             osgram: { name: 'OsGram', logo: 'https://i.ibb.co/1J7qCyGJ/Os-Gram.png', winId: 'win-osgram', url: 'https://osgram.onrender.com', frameId: 'gram-frame', installed: false, isInstalling: false },
