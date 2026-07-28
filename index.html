@@ -17,6 +17,10 @@
     <link rel="icon" type="image/png" href="https://i.ibb.co/Zpq9RmdH/Here-Emu.png">
     
     <title>Güçlü Bulut Bilgisayarım</title>
+
+    <!-- Google Identity Services (GIS) - YENİ EKLENDİ -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
         body, html { width: 100%; height: 100%; overflow: hidden; font-family: sans-serif; background-color: #000; }
@@ -53,6 +57,41 @@
         @keyframes splash-spin {
             to { transform: rotate(360deg); }
         }
+
+        /* GATEWAY MODAL STİLLERİ (YENİ) */
+        #gateway-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92); z-index: 999999999; display: none;
+            flex-direction: column; align-items: center; justify-content: center;
+            color: white; text-align: center; padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        #gateway-modal.active { display: flex; }
+        .gateway-box {
+            background: rgba(30,30,30,0.95); backdrop-filter: blur(12px);
+            border-radius: 20px; padding: 30px 25px; max-width: 380px; width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+        }
+        .gateway-step { display: none; flex-direction: column; align-items: center; gap: 15px; }
+        .gateway-step.active { display: flex; }
+        .gateway-step h3 { font-size: 20px; margin-bottom: 10px; color: #fff; }
+        .gateway-step p { font-size: 14px; color: #ccc; margin-bottom: 10px; }
+        .ios-guide-img { width: 180px; height: auto; border-radius: 12px; border: 2px solid #555; }
+        .gateway-btn {
+            background: #0078d4; color: white; border: none;
+            padding: 12px 25px; border-radius: 30px; font-weight: bold;
+            font-size: 16px; cursor: pointer; width: 100%;
+            transition: background 0.2s;
+        }
+        .gateway-btn:hover { background: #005a9e; }
+        .gateway-btn:disabled { background: #555; cursor: not-allowed; }
+        .checkbox-label {
+            display: flex; align-items: center; gap: 10px; font-size: 14px;
+            color: #fff; background: rgba(255,255,255,0.1); padding: 10px;
+            border-radius: 8px; width: 100%;
+        }
+        .checkbox-label input { width: 18px; height: 18px; }
+        #abone-kontrol-sonuc { font-size: 13px; margin-top: 5px; min-height: 20px; }
 
         #desktop {
             width: 100%; height: calc(100% - 48px);
@@ -251,6 +290,33 @@
     <!-- TAM EKRAN AÇILIŞ EKRANI -->
     <div id="splash-screen">
         <div class="splash-loader"></div>
+    </div>
+
+    <!-- GATEWAY MODAL (YENİ) -->
+    <div id="gateway-modal">
+        <div class="gateway-box">
+            <div id="step-ios" class="gateway-step active">
+                <h3>📱 Daha İyi Deneyim</h3>
+                <p>iOS cihazlarda uygulamayı ana ekranınıza ekleyin.</p>
+                <img src="https://i.ibb.co/fdJz9X9/ios-add-to-home.jpg" alt="Ana Ekrana Ekle" class="ios-guide-img" onerror="this.style.display='none'">
+                <p style="font-size:12px; color:#aaa;">Safari'de paylaş butonuna 🡒 "Ana Ekrana Ekle"</p>
+                <button class="gateway-btn" id="btn-ios-ok">Anladım, ekledim / devam et</button>
+                <p style="font-size:11px; color:#888;">(Ana ekrana eklemezseniz yine de ilerleyebilirsiniz)</p>
+            </div>
+            <div id="step-youtube" class="gateway-step">
+                <h3>🔔 Kanalıma Abone Ol</h3>
+                <p>Devam etmek için YouTube kanalıma abone olman gerekiyor.</p>
+                <button id="google-signin-btn" class="gateway-btn">Google ile Giriş Yap</button>
+                <div id="abone-kontrol-sonuc"></div>
+                <button id="btn-abone-ol" class="gateway-btn" style="background:#ff0000; display:none;">📺 Abone Ol</button>
+                <button id="btn-kontrol-et" class="gateway-btn" style="display:none;">🔄 Tekrar Kontrol Et</button>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="chk-abone" disabled> Abone oldum, onaylıyorum
+                </label>
+                <button id="btn-son-adim" class="gateway-btn" disabled>✅ Başlat</button>
+                <p style="font-size:11px; color:#aaa;">Kanal: @OsmanBurda</p>
+            </div>
+        </div>
     </div>
 
     <div id="desktop">
@@ -567,7 +633,121 @@
         <div id="clock">00:00</div>
     </div>
 
-    <script {nonce}>
+    <script>
+        // ===================== YOUTUBE ABONE KONTROL SİSTEMİ (YENİ) =====================
+        const YOUTUBE_CHANNEL_ID = 'YOUR_YOUTUBE_CHANNEL_ID'; // <-- BURAYI KENDİ KANAL ID'NİZ İLE DEĞİŞTİRİN (UC...)
+        const CLIENT_ID = '79622809762-dipd413fnn34bi2k5pe4uijphqf950cf.apps.googleusercontent.com';
+        let accessToken = null;
+        let isSubscribed = false;
+
+        function initGoogleAuth() {
+            const tokenClient = google.accounts.oauth2.initTokenClient({
+                client_id: CLIENT_ID,
+                scope: 'https://www.googleapis.com/auth/youtube.readonly',
+                callback: (tokenResponse) => {
+                    if (tokenResponse.error) {
+                        document.getElementById('abone-kontrol-sonuc').innerText = 'Giriş başarısız.';
+                        return;
+                    }
+                    accessToken = tokenResponse.access_token;
+                    checkSubscriptionStatus();
+                },
+            });
+            document.getElementById('google-signin-btn').addEventListener('click', () => {
+                tokenClient.requestAccessToken({ prompt: 'consent' });
+            });
+        }
+
+        async function checkSubscriptionStatus() {
+            const sonucEl = document.getElementById('abone-kontrol-sonuc');
+            sonucEl.innerText = 'Kontrol ediliyor...';
+            try {
+                const response = await fetch(
+                    `https://www.googleapis.com/youtube/v3/subscriptions?part=snippet&mine=true&forChannelId=${YOUTUBE_CHANNEL_ID}`,
+                    { headers: { Authorization: `Bearer ${accessToken}` } }
+                );
+                const data = await response.json();
+                if (data.items && data.items.length > 0) {
+                    isSubscribed = true;
+                    sonucEl.innerText = '✅ Abone olduğunuz tespit edildi!';
+                    document.getElementById('chk-abone').disabled = false;
+                    document.getElementById('chk-abone').checked = true;
+                    document.getElementById('btn-abone-ol').style.display = 'none';
+                    document.getElementById('btn-kontrol-et').style.display = 'none';
+                    guncelleSonAdim();
+                } else {
+                    isSubscribed = false;
+                    sonucEl.innerText = '❌ Henüz abone değilsiniz.';
+                    document.getElementById('chk-abone').checked = false;
+                    document.getElementById('chk-abone').disabled = true;
+                    document.getElementById('btn-abone-ol').style.display = 'block';
+                    document.getElementById('btn-kontrol-et').style.display = 'block';
+                    guncelleSonAdim();
+                }
+            } catch (e) {
+                sonucEl.innerText = 'Hata oluştu, tekrar deneyin.';
+                console.error(e);
+            }
+        }
+
+        function guncelleSonAdim() {
+            const chk = document.getElementById('chk-abone');
+            const btn = document.getElementById('btn-son-adim');
+            btn.disabled = !(chk.checked && isSubscribed);
+        }
+
+        // ===================== iOS ANA EKRAN KONTROLÜ (YENİ) =====================
+        function isIOS() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        }
+        function isStandalone() {
+            return window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+        }
+
+        // ===================== GATEWAY YÖNETİMİ (YENİ) =====================
+        function showGatewayStep(stepId) {
+            document.querySelectorAll('.gateway-step').forEach(el => el.classList.remove('active'));
+            document.getElementById(stepId).classList.add('active');
+        }
+
+        function hideGatewayAndShowDesktop() {
+            document.getElementById('gateway-modal').classList.remove('active');
+            // Desktop zaten görünür durumda, sadece loadSystemState çağrılır
+        }
+
+        function handleGateway() {
+            const modal = document.getElementById('gateway-modal');
+            if (isIOS() && !isStandalone()) {
+                showGatewayStep('step-ios');
+            } else {
+                showGatewayStep('step-youtube');
+            }
+            modal.classList.add('active');
+
+            document.getElementById('btn-ios-ok').addEventListener('click', () => {
+                showGatewayStep('step-youtube');
+            });
+
+            document.getElementById('btn-abone-ol').addEventListener('click', () => {
+                window.open(`https://www.youtube.com/channel/${YOUTUBE_CHANNEL_ID}?sub_confirmation=1`, '_blank');
+            });
+
+            document.getElementById('btn-kontrol-et').addEventListener('click', () => {
+                if (accessToken) checkSubscriptionStatus();
+                else alert('Önce Google ile giriş yapmalısınız.');
+            });
+
+            document.getElementById('chk-abone').addEventListener('change', guncelleSonAdim);
+
+            document.getElementById('btn-son-adim').addEventListener('click', () => {
+                if (document.getElementById('chk-abone').checked && isSubscribed) {
+                    hideGatewayAndShowDesktop();
+                    loadSystemState();
+                }
+            });
+        }
+
+        // ===================== ORİJİNAL PROJE FONKSİYONLARI (AYNEN KORUNDU) =====================
         const appDatabase = {
             oshereai: { name: 'OsHereAi', logo: 'https://i.ibb.co/C5yHnGg1/Os-Here-Ai.png', winId: 'win-oshereai', url: 'https://oshere-ai-app.onrender.com', frameId: 'oshereai-frame', installed: false, isInstalling: false },
             osmarble: { name: 'OsMarble', logo: 'https://i.ibb.co/6R0kQ4tx/Os-Marble.png', winId: 'win-osmarble', url: 'https://osmarble.onrender.com', frameId: 'marble-frame', installed: false, isInstalling: false },
@@ -1046,12 +1226,22 @@
             });
         }
 
+        // BAŞLANGIÇ (GÜNCELLENDİ)
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splash-screen');
                 splash.classList.add('hidden');
+                // Gateway modal'ı başlat (yeni)
+                handleGateway();
             }, 3000);
-            loadSystemState();
+
+            // Google kütüphanesi yüklendiğinde init
+            window.onGoogleLibraryLoad = () => {
+                initGoogleAuth();
+            };
+            if (typeof google !== 'undefined' && google.accounts) {
+                initGoogleAuth();
+            }
         });
     </script>
 </body>
