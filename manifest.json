@@ -1,0 +1,28 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "HereEmu",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "HereEmu",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "https://i.ibb.co/Zpq9RmdH/Here-Emu.png",
+      "type": "image/png",
+      "sizes": "500x500",
+      "isSquare": true,
+      "isPng": true,
+      "isWebp": false,
+      "isJpg": false,
+      "width": 500,
+      "is512x512": false,
+      "is256x256": false,
+      "is192x192": false
+    }
+  ],
+  "id": "H.E.",
+  "description": "Made By YouTube:@OsmaBurda"
+}
