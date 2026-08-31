@@ -118,13 +118,13 @@
         .store-item-title { font-weight: bold; font-size: 14px; color: #222; }
         .store-item-desc { font-size: 11px; color: #666; margin-top: 2px; }
         .store-item-actions { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; min-width: 90px; }
-;        .store-btn { padding: 6px 12px; border: none; border-radius: 20px; font-weight: bold; display font-size: 12px; cursor: pointer; width: 100%; text-align: center; }
-        .store-btn-install { background: #0078:d4; color: white; }
+        .store-btn { padding: 6px 12px; border: none; border-radius: 20px; font-weight: bold; font-size: 12px; cursor: pointer; width: 100%; text-align: center; }
+        .store-btn-install { background: #0078d4; color: white; }
         .store-btn-uninstall { background: #dc3545; color: white; }
-        . nonestore-btn-open { background: #28a745; color: white; }
+        .store-btn-open { background: #28a745; color: white; }
         .store-btn-loading { background: #6c757d; color: white; cursor: not-allowed; font-size: 11px; }
 
-        .progress-container { width: 100%; height: 5px; background: #e0e0e0; border-radius: 3px; overflow: hidden; margin-top: 2px; }
+        .progress-container { width: 100%; height: 5px; background: #e0e0e0; border-radius: 3px; overflow: hidden; display: none; margin-top: 2px; }
         .progress-bar { width: 0%; height: 100%; background: #28a745; transition: width 0.2s linear; }
 
         /* CREDITS (EMEĞİ GEÇENLER) UYGULAMA STİLLERİ */
@@ -256,6 +256,7 @@
         .settings-group { border-bottom: 1px solid #eee; padding-bottom: 12px; margin-bottom: 12px; }
         .settings-group label { font-weight: bold; display: block; margin-bottom: 4px; font-size: 13px; color: #333; }
         .settings-group input[type="text"], .settings-group input[type="number"], .settings-group input[type="color"] { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+        .settings-group input[type="file"] { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; background: #fafafa; }
         .settings-group input[type="checkbox"] { width: 18px; height: 18px; margin-right: 8px; vertical-align: middle; }
         .settings-group .checkbox-label { display: flex; align-items: center; font-weight: normal; }
         .settings-group button { padding: 6px 14px; background: #0078d4; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
@@ -265,6 +266,7 @@
         .settings-group .app-item span { font-size: 14px; }
         .settings-group .app-item button { padding: 2px 10px; font-size: 12px; }
         .settings-version { font-size: 12px; color: #888; margin-top: 10px; }
+        .wallpaper-preview { width: 100%; height: 60px; border-radius: 6px; background-size: cover; background-position: center; border: 1px solid #ddd; margin-top: 4px; }
     </style>
 </head>
 <body>
@@ -298,9 +300,9 @@
             <span>Credits</span>
         </div>
 
-        <!-- AYARLAR SİMGESİ -->
+        <!-- AYARLAR SİMGESİ - YENİ LOGO -->
         <div class="icon" onclick="openWindow('win-settings'); loadSettings();">
-            <img src="https://cdn-icons-png.flaticon.com/512/993/993861.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png';">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaAq4QNKEGKjgKHCbSNM2O9z60C1q_z-8D8ydO-mQYTg&s=10" onerror="this.src='https://cdn-icons-png.flaticon.com/512/993/993861.png';">
             <span>Ayarlar</span>
         </div>
 
@@ -453,7 +455,7 @@
                             <div class="store-item-info"><img src="https://i.ibb.co/1J7qCyGJ/Os-Gram.png"><div><div class="store-item-title">OsGram</div><div class="store-item-desc">Kısa videoları özgürce izle</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-osgram" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osgram')">Aç</button>
-                                <button-os id="btn-action-osgram" class="store-btn store-btn-install" onclick="toggleAppInstallation('osgram')">Yükle</button>
+                                <button id="btn-action-osgram" class="store-btn store-btn-install" onclick="toggleAppInstallation('osgram')">Yükle</button>
                                 <div id="progress-container-osgram" class="progress-container"><div id="progress-bar-osgram" class="progress-bar"></div></div>
                             </div>
                         </div>
@@ -462,7 +464,7 @@
                             <div class="store-item-actions">
                                 <button id="btn-open-osweb" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osweb')">Aç</button>
                                 <button id="btn-action-osweb" class="store-btn store-btn-install" onclick="toggleAppInstallation('osweb')">Yükle</button>
-                                <div id="progress-containerweb" class="progress-container"><div id="progress-bar-osweb" class="progress-bar"></div></div>
+                                <div id="progress-container-osweb" class="progress-container"><div id="progress-bar-osweb" class="progress-bar"></div></div>
                             </div>
                         </div>
                     </div>
@@ -534,7 +536,7 @@
     </div>
 
     <!-- AYARLAR PENCERESİ (SETTINGS) -->
-    <div id="win-settings" class="window" style="width:500px; height:400px;">
+    <div id="win-settings" class="window" style="width:500px; height:420px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>⚙️ Ayarlar</span>
             <div class="header-buttons">
@@ -557,6 +559,12 @@
                             <label>Masaüstü Arka Plan (URL)</label>
                             <input type="text" id="settings-wallpaper" placeholder="https://...">
                             <button onclick="applyWallpaper()" style="margin-top:6px;">Uygula</button>
+                        </div>
+                        <div class="settings-group">
+                            <label>Fotoğraf Seç</label>
+                            <input type="file" id="settings-wallpaper-file" accept="image/*">
+                            <button onclick="applyWallpaperFromFile()" style="margin-top:6px;">Seçili Fotoğrafı Uygula</button>
+                            <div id="settings-wallpaper-preview" class="wallpaper-preview" style="background-image: none; background-color: #eee;"></div>
                         </div>
                         <div class="settings-group">
                             <label class="checkbox-label">
@@ -685,7 +693,6 @@
 
         // ----- AYARLAR (SETTINGS) -----
         function loadSettings() {
-            // Varsayılan ayarlar
             let settings = localStorage.getItem('hereemu_settings');
             if (!settings) {
                 settings = {
@@ -698,17 +705,19 @@
                 settings = JSON.parse(settings);
             }
 
-            // Form alanlarına yansıt
             document.getElementById('settings-wallpaper').value = settings.wallpaper || '';
             document.getElementById('settings-hide-taskbar').checked = settings.hideTaskbar || false;
             document.getElementById('settings-click-ms').value = settings.clickMs || 100;
 
-            // Masaüstüne uygula
             applyWallpaperFromSettings(settings.wallpaper);
             applyTaskbarVisibilityFromSettings(settings.hideTaskbar);
             document.getElementById('click-ms').value = settings.clickMs || 100;
 
-            // Uygulama listesini güncelle
+            // Önizlemeyi güncelle
+            if (settings.wallpaper) {
+                document.getElementById('settings-wallpaper-preview').style.backgroundImage = `url('${settings.wallpaper}')`;
+            }
+
             renderInstalledAppsList();
         }
 
@@ -719,7 +728,6 @@
                 clickMs: parseInt(document.getElementById('settings-click-ms').value) || 100
             };
             localStorage.setItem('hereemu_settings', JSON.stringify(settings));
-            // Aynı zamanda eski anahtarları da güncelle (uyumluluk)
             localStorage.setItem('hereemu_click_ms', settings.clickMs);
         }
 
@@ -727,13 +735,33 @@
             const url = document.getElementById('settings-wallpaper').value.trim();
             if (url) {
                 document.getElementById('desktop').style.backgroundImage = `url('${url}')`;
+                document.getElementById('settings-wallpaper-preview').style.backgroundImage = `url('${url}')`;
                 saveSettings();
             }
         }
         function applyWallpaperFromSettings(url) {
             if (url) {
                 document.getElementById('desktop').style.backgroundImage = `url('${url}')`;
+                document.getElementById('settings-wallpaper-preview').style.backgroundImage = `url('${url}')`;
             }
+        }
+
+        function applyWallpaperFromFile() {
+            const fileInput = document.getElementById('settings-wallpaper-file');
+            const file = fileInput.files[0];
+            if (!file) {
+                alert('Lütfen bir fotoğraf seçin.');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const dataUrl = e.target.result;
+                document.getElementById('desktop').style.backgroundImage = `url('${dataUrl}')`;
+                document.getElementById('settings-wallpaper-preview').style.backgroundImage = `url('${dataUrl}')`;
+                document.getElementById('settings-wallpaper').value = dataUrl;
+                saveSettings();
+            };
+            reader.readAsDataURL(file);
         }
 
         function applyTaskbarVisibility() {
@@ -749,8 +777,6 @@
             const ms = parseInt(document.getElementById('settings-click-ms').value) || 100;
             document.getElementById('click-ms').value = ms;
             saveSettings();
-            // Eğer auto clicker çalışıyorsa yeniden başlat?
-            // Kullanıcıya bildirim ver
             alert('Auto Clicker aralığı güncellendi.');
         }
 
@@ -779,9 +805,7 @@
             if (!confirm(`"${appDatabase[appKey].name}" uygulamasını kaldırmak istediğinize emin misiniz?`)) return;
             const app = appDatabase[appKey];
             app.installed = false;
-            // OsStore'daki butonları güncelle
             syncStoreButtons(appKey);
-            // Eğer uygulama açık ise kapat
             if (app.winId === 'autoclicker') {
                 toggleAutoClickerWindow(false);
             } else if (app.winId !== 'special-virus') {
@@ -794,7 +818,6 @@
 
         function resetAllSettings() {
             if (!confirm('Tüm ayarlar ve uygulama yüklemeleri sıfırlanacak. Devam et?')) return;
-            // Tüm uygulamaları kaldır
             for (const key in appDatabase) {
                 appDatabase[key].installed = false;
                 syncStoreButtons(key);
@@ -808,11 +831,10 @@
             renderDesktopIcons();
             renderInstalledAppsList();
 
-            // Ayarları sıfırla
             localStorage.removeItem('hereemu_settings');
             localStorage.removeItem('hereemu_click_ms');
-            // Varsayılan arka plan
             document.getElementById('desktop').style.backgroundImage = "url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920')";
+            document.getElementById('settings-wallpaper-preview').style.backgroundImage = "url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920')";
             document.body.classList.remove('hide-taskbar');
             document.getElementById('settings-wallpaper').value = '';
             document.getElementById('settings-hide-taskbar').checked = false;
@@ -882,14 +904,12 @@
             if (savedMs) {
                 document.getElementById('click-ms').value = savedMs;
             }
-            // Ayarları yükle
             loadSettings();
         }
 
         function saveClickerSettings() {
             const ms = document.getElementById('click-ms').value;
             localStorage.setItem('hereemu_click_ms', ms);
-            // Aynı zamanda settings'e kaydet
             const settings = JSON.parse(localStorage.getItem('hereemu_settings') || '{}');
             settings.clickMs = parseInt(ms) || 100;
             localStorage.setItem('hereemu_settings', JSON.stringify(settings));
@@ -1080,7 +1100,7 @@
                         syncStoreButtons(appKey);
                         saveSystemState();
                         renderDesktopIcons();
-                        renderInstalledAppsList(); // settings listesini güncelle
+                        renderInstalledAppsList();
                     }
                 }, 100);
             } else {
