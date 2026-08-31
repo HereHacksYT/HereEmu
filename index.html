@@ -4,24 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <!-- iOS ANA EKRANA EKLEME VE TAM EKRAN AYARLARI -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="HereEmu">
     
-    <!-- iPHONE SİMGESİNİN ÇIKMASINI SAĞLAYAN EKLEMELER -->
     <link rel="apple-touch-icon" href="https://i.ibb.co/Zpq9RmdH/Here-Emu.png">
     <link rel="apple-touch-icon" sizes="152x152" href="https://i.ibb.co/Zpq9RmdH/Here-Emu.png">
     <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/Zpq9RmdH/Here-Emu.png">
     <link rel="apple-touch-icon" sizes="167x167" href="https://i.ibb.co/Zpq9RmdH/Here-Emu.png">
     <link rel="icon" type="image/png" href="https://i.ibb.co/Zpq9RmdH/Here-Emu.png">
     
-    <title>HereEmu</title>
+    <title>Güçlü Bulut Bilgisayarım</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
         body, html { width: 100%; height: 100%; overflow: hidden; font-family: sans-serif; background-color: #000; }
         
-        /* HEM DÜZ HEM YANA GÖRE AYARLANMIŞ AÇILIŞ EKRANI STİLİ */
         #splash-screen {
             position: fixed;
             top: 0;
@@ -68,14 +65,11 @@
         .icon { width: 80px; display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); font-size: 12px; }
         .icon img { width: 45px; height: 45px; margin-bottom: 5px; pointer-events: none; object-fit: contain; }
 
-        /* Pencereler */
         .window { position: absolute; width: 360px; height: 320px; background: #f3f3f3; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: none; flex-direction: column; overflow: hidden; border: 1px solid #ccc; z-index: 10; transition: width 0.2s, height 0.2s, top 0.2s, left 0.2s; }
         .window-header { background: #e1e1e1; padding: 10px; display: flex; justify-content: space-between; align-items: center; cursor: move; font-weight: bold; font-size: 14px; border-bottom: 1px solid #ccc; }
-        
         .header-buttons { display: flex; gap: 8px; align-items: center; }
         .close-btn { background: #ff5f56; border: none; width: 15px; height: 15px; border-radius: 50%; cursor: pointer; }
         .maximize-btn { background: #ffbd2e; border: none; width: 15px; height: 15px; border-radius: 50%; cursor: pointer; }
-        
         .window-content { padding: 15px; flex: 1; overflow: auto; background: white; position: relative; }
 
         .window.maximized { width: 100% !important; height: calc(100% - 48px) !important; top: 0 !important; left: 0 !important; border-radius: 0; z-index: 100; }
@@ -93,7 +87,6 @@
         .browser-btn { padding: 5px 10px; background: #0078d4; color: white; border: none; border-radius: 4px; cursor: pointer; }
         iframe { width: 100%; height: 100%; border: none; background: white; }
 
-        /* OSSTORE TASARIMI */
         .store-layout { display: flex; height: 100%; width: 100%; }
         .store-sidebar { width: 130px; background: #f0f0f0; border-right: 1px solid #ddd; display: flex; flex-direction: column; gap: 5px; padding: 10px 5px; }
         .store-menu-btn { padding: 10px; background: transparent; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; text-align: left; color: #333; }
@@ -101,7 +94,6 @@
         .store-main { flex: 1; padding: 15px; overflow-y: auto; background: #fff; }
         .store-page { display: none; flex-direction: column; gap: 15px; }
         .store-page.active { display: flex; }
-        
         .store-section-title {
             font-size: 13px;
             font-weight: bold;
@@ -111,7 +103,6 @@
             margin-top: 5px;
             margin-bottom: 5px;
         }
-
         .store-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #f9f9f9; border: 1px solid #eee; border-radius: 8px; }
         .store-item-info { display: flex; align-items: center; gap: 12px; }
         .store-item-info img { width: 45px; height: 45px; object-fit: contain; border-radius: 6px; }
@@ -123,11 +114,9 @@
         .store-btn-uninstall { background: #dc3545; color: white; }
         .store-btn-open { background: #28a745; color: white; }
         .store-btn-loading { background: #6c757d; color: white; cursor: not-allowed; font-size: 11px; }
-
         .progress-container { width: 100%; height: 5px; background: #e0e0e0; border-radius: 3px; overflow: hidden; display: none; margin-top: 2px; }
         .progress-bar { width: 0%; height: 100%; background: #28a745; transition: width 0.2s linear; }
 
-        /* CREDITS (EMEĞİ GEÇENLER) UYGULAMA STİLLERİ */
         .credits-container {
             width: 100%;
             height: 100%;
@@ -188,7 +177,6 @@
             100% { transform: translateY(-100%); }
         }
 
-        /* MODALLAR VE DIALOGLAR */
         .fullscreen-dialog-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 999999; backdrop-filter: blur(4px); }
         .fullscreen-dialog { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); text-align: center; width: 300px; font-family: sans-serif; }
         .fullscreen-dialog p { font-size: 15px; font-weight: bold; margin-bottom: 20px; color: #222; }
@@ -197,7 +185,6 @@
         .dialog-btn-no { background: #ea4335; color: white; }
         .dialog-btn-yes { background: #34a853; color: white; }
 
-        /* VİRÜS EKRANI */
         #virus-screen {
             position: fixed; top:0; left:0; width:100%; height:100%; background: #ffcc00;
             display: none; flex-direction: column; justify-content: center; align-items: center;
@@ -207,7 +194,6 @@
         #virus-screen p { font-size: 18px; font-weight: bold; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        /* AUTO CLICKER PANELI */
         .autoclicker-panel {
             position: fixed; top: 60px; right: 20px; width: 140px; background: rgba(20, 20, 20, 0.95);
             border: 2px solid #0078d4; border-radius: 10px; padding: 8px; 
@@ -220,7 +206,6 @@
         .autoclicker-close { background: #ff5f56; border: none; width: 14px; height: 14px; border-radius: 50%; cursor: pointer; color: white; font-size: 8px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
         .autoclicker-panel label { font-size: 10px; color: #bbb; }
         .autoclicker-panel input { width: 100%; background: #333; border: 1px solid #555; color: white; padding: 3px; border-radius: 4px; text-align: center; font-size: 12px; }
-        
         .clicker-btn-group { display: flex; gap: 4px; }
         .clicker-btn { width: 100%; padding: 6px; border: none; border-radius: 6px; font-weight: bold; font-size: 11px; cursor: pointer; color: white; }
         .btn-pick { background: #ffbd2e; color: black; }
@@ -228,13 +213,11 @@
         .btn-start { background: #28a745; }
         .btn-stop { background: #dc3545; display: none; }
         
-        /* Kırmızı Hedef İşaretleri */
         .clicker-target-dot {
             position: fixed; width: 22px; height: 22px; border: 2px solid red; background: rgba(255,0,0,0.4);
             border-radius: 50%; pointer-events: none; z-index: 100000001 !important; transform: translate(-50%, -50%);
             display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 10px;
         }
-
         #clicker-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.05); z-index: 999999999 !important;
@@ -255,7 +238,7 @@
         .settings-page.active { display: flex; }
         .settings-group { border-bottom: 1px solid #eee; padding-bottom: 12px; margin-bottom: 12px; }
         .settings-group label { font-weight: bold; display: block; margin-bottom: 4px; font-size: 13px; color: #333; }
-        .settings-group input[type="text"], .settings-group input[type="number"], .settings-group input[type="color"] { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+        .settings-group input[type="text"], .settings-group input[type="number"] { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
         .settings-group input[type="file"] { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; background: #fafafa; }
         .settings-group input[type="checkbox"] { width: 18px; height: 18px; margin-right: 8px; vertical-align: middle; }
         .settings-group .checkbox-label { display: flex; align-items: center; font-weight: normal; }
@@ -266,12 +249,11 @@
         .settings-group .app-item span { font-size: 14px; }
         .settings-group .app-item button { padding: 2px 10px; font-size: 12px; }
         .settings-version { font-size: 12px; color: #888; margin-top: 10px; }
-        .wallpaper-preview { width: 100%; height: 60px; border-radius: 6px; background-size: cover; background-position: center; border: 1px solid #ddd; margin-top: 4px; }
+        .wallpaper-preview { width: 100%; height: 60px; border-radius: 6px; background-size: cover; background-position: center; border: 1px solid #ddd; margin-top: 4px; background-color: #eee; }
     </style>
 </head>
 <body>
 
-    <!-- TAM EKRAN AÇILIŞ EKRANI -->
     <div id="splash-screen">
         <div class="splash-loader"></div>
     </div>
@@ -293,8 +275,6 @@
             <img src="https://i.ibb.co/Z7N9Cj2/Os-Store.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3081/3081648.png';">
             <span>OsStore</span>
         </div>
-        
-        <!-- KALICI OLARAK OSSTORE'UN ALTINDA DURAN CREDITS SİMGESİ -->
         <div class="icon" onclick="openWindow('win-credits')">
             <img src="https://i.ibb.co/jvY8sJLZ/Credits.png">
             <span>Credits</span>
@@ -318,17 +298,14 @@
         </div>
         <label>Aralık (ms):</label>
         <input type="number" id="click-ms" value="100" min="10" onchange="saveClickerSettings()">
-        
         <div class="clicker-btn-group">
             <button class="clicker-btn btn-pick" onclick="startPickingTarget()">🎯 Ekle</button>
             <button class="clicker-btn btn-clear" onclick="clearTargets()">🗑️ Sil</button>
         </div>
-        
         <button id="clicker-start" class="clicker-btn btn-start" onclick="startAutoClicker()">▶ Başlat</button>
         <button id="clicker-stop" class="clicker-btn btn-stop" onclick="stopAutoClicker()">⏸ Durdur</button>
     </div>
 
-    <!-- CREDITS UYGULAMASI PENCERESİ -->
     <div id="win-credits" class="window" style="width:340px; height:280px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>Credits</span>
@@ -385,7 +362,6 @@
         <p>Sistem dosyaları temizleniyor, lütfen bekleyin...</p>
     </div>
 
-    <!-- OSSTORE PENCERESİ -->
     <div id="win-osstore" class="window" style="width:480px; height:380px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>OsStore</span>
@@ -403,7 +379,6 @@
                     <button id="menu-mystery" class="store-menu-btn" onclick="switchStoreTab('mystery')">???</button>
                 </div>
                 <div class="store-main">
-                    <!-- POPÜLER SEKMESİ -->
                     <div id="page-popular" class="store-page active">
                         <div class="store-section-title">Popüler Uygulamalar</div>
                         <div class="store-item">
@@ -414,7 +389,6 @@
                                 <div id="progress-container-oshereai-pop" class="progress-container"><div id="progress-bar-oshereai-pop" class="progress-bar"></div></div>
                             </div>
                         </div>
-
                         <div class="store-section-title">Popüler Oyunlar</div>
                         <div class="store-item">
                             <div class="store-item-info"><img src="https://i.ibb.co/JR569wJG/Os-Chess.png"><div><div class="store-item-title">OsChess</div><div class="store-item-desc">Aklını konuştur ve şah mat et!</div></div></div>
@@ -479,11 +453,11 @@
                             </div>
                         </div>
                         <div class="store-item">
-                            <div class="store-item-info"><img src="https://i.ibb.co/JR569wJG/Os-Chess.png"><div><div class="store-item-title">OsChess</div><div class="store-item-desc">Aklını konuştur ve şah mat et!</div></div></div>
-                            <div class="store-item-actions">
-                                <button id="btn-open-oschess" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-oschess')">Aç</button>
+                            <div class="store-item-info"><img src="https://i.ibbdiv.co/JR569wJG/Os-Chess.png"><div><div class="store-item-title">OsChess</div><div class id="store-item-desc">Aklını konuştur ve şah mat et!</div></div></div>
+                            <div class="store-item-="actions">
+                                <button id="btn-open-oschess" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osprogresschess')">Aç</button>
                                 <button id="btn-action-oschess" class="store-btn store-btn-install" onclick="toggleAppInstallation('oschess')">Yükle</button>
-                                <div id="progress-container-oschess" class="progress-container"><div id="progress-bar-oschess" class="progress-bar"></div></div>
+                                <div id="progress-container-oschess" class="progress-container"><-bar-oschess" class="progress-bar"></div></div>
                             </div>
                         </div>
                         <div class="store-item">
@@ -535,7 +509,7 @@
         </div>
     </div>
 
-    <!-- AYARLAR PENCERESİ (SETTINGS) -->
+    <!-- AYARLAR PENCERESİ (SETTINGS) - URL KALDIRILDI, SADECE DOSYA YÜKLEME VE SIFIRLAMA -->
     <div id="win-settings" class="window" style="width:500px; height:420px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>⚙️ Ayarlar</span>
@@ -556,15 +530,13 @@
                     <!-- Görünüm -->
                     <div id="settings-page-appearance" class="settings-page active">
                         <div class="settings-group">
-                            <label>Masaüstü Arka Plan (URL)</label>
-                            <input type="text" id="settings-wallpaper" placeholder="https://...">
-                            <button onclick="applyWallpaper()" style="margin-top:6px;">Uygula</button>
-                        </div>
-                        <div class="settings-group">
                             <label>Fotoğraf Seç</label>
                             <input type="file" id="settings-wallpaper-file" accept="image/*">
                             <button onclick="applyWallpaperFromFile()" style="margin-top:6px;">Seçili Fotoğrafı Uygula</button>
                             <div id="settings-wallpaper-preview" class="wallpaper-preview" style="background-image: none; background-color: #eee;"></div>
+                        </div>
+                        <div class="settings-group">
+                            <button onclick="resetWallpaper()" class="secondary">🔄 Arka Planı Sıfırla (Varsayılana Dön)</button>
                         </div>
                         <div class="settings-group">
                             <label class="checkbox-label">
@@ -692,11 +664,13 @@
         let targetPoints = [];
 
         // ----- AYARLAR (SETTINGS) -----
+        const DEFAULT_WALLPAPER = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920';
+
         function loadSettings() {
             let settings = localStorage.getItem('hereemu_settings');
             if (!settings) {
                 settings = {
-                    wallpaper: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920',
+                    wallpaper: DEFAULT_WALLPAPER,
                     hideTaskbar: false,
                     clickMs: 100
                 };
@@ -705,45 +679,33 @@
                 settings = JSON.parse(settings);
             }
 
-            document.getElementById('settings-wallpaper').value = settings.wallpaper || '';
             document.getElementById('settings-hide-taskbar').checked = settings.hideTaskbar || false;
             document.getElementById('settings-click-ms').value = settings.clickMs || 100;
 
-            applyWallpaperFromSettings(settings.wallpaper);
+            // Arka planı uygula (eğer varsa)
+            if (settings.wallpaper && settings.wallpaper !== '') {
+                document.getElementById('desktop').style.backgroundImage = `url('${settings.wallpaper}')`;
+                document.getElementById('settings-wallpaper-preview').style.backgroundImage = `url('${settings.wallpaper}')`;
+            } else {
+                // Varsayılan
+                document.getElementById('desktop').style.backgroundImage = `url('${DEFAULT_WALLPAPER}')`;
+                document.getElementById('settings-wallpaper-preview').style.backgroundImage = `url('${DEFAULT_WALLPAPER}')`;
+            }
+
             applyTaskbarVisibilityFromSettings(settings.hideTaskbar);
             document.getElementById('click-ms').value = settings.clickMs || 100;
-
-            // Önizlemeyi güncelle
-            if (settings.wallpaper) {
-                document.getElementById('settings-wallpaper-preview').style.backgroundImage = `url('${settings.wallpaper}')`;
-            }
 
             renderInstalledAppsList();
         }
 
         function saveSettings() {
             const settings = {
-                wallpaper: document.getElementById('settings-wallpaper').value,
+                wallpaper: document.getElementById('desktop').style.backgroundImage.slice(5, -2) || DEFAULT_WALLPAPER,
                 hideTaskbar: document.getElementById('settings-hide-taskbar').checked,
                 clickMs: parseInt(document.getElementById('settings-click-ms').value) || 100
             };
             localStorage.setItem('hereemu_settings', JSON.stringify(settings));
             localStorage.setItem('hereemu_click_ms', settings.clickMs);
-        }
-
-        function applyWallpaper() {
-            const url = document.getElementById('settings-wallpaper').value.trim();
-            if (url) {
-                document.getElementById('desktop').style.backgroundImage = `url('${url}')`;
-                document.getElementById('settings-wallpaper-preview').style.backgroundImage = `url('${url}')`;
-                saveSettings();
-            }
-        }
-        function applyWallpaperFromSettings(url) {
-            if (url) {
-                document.getElementById('desktop').style.backgroundImage = `url('${url}')`;
-                document.getElementById('settings-wallpaper-preview').style.backgroundImage = `url('${url}')`;
-            }
         }
 
         function applyWallpaperFromFile() {
@@ -758,10 +720,22 @@
                 const dataUrl = e.target.result;
                 document.getElementById('desktop').style.backgroundImage = `url('${dataUrl}')`;
                 document.getElementById('settings-wallpaper-preview').style.backgroundImage = `url('${dataUrl}')`;
-                document.getElementById('settings-wallpaper').value = dataUrl;
                 saveSettings();
+                alert('Arka plan güncellendi!');
+            };
+            reader.onerror = function() {
+                alert('Dosya okunamadı, lütfen başka bir dosya deneyin.');
             };
             reader.readAsDataURL(file);
+        }
+
+        function resetWallpaper() {
+            document.getElementById('desktop').style.backgroundImage = `url('${DEFAULT_WALLPAPER}')`;
+            document.getElementById('settings-wallpaper-preview').style.backgroundImage = `url('${DEFAULT_WALLPAPER}')`;
+            // Dosya seçiciyi temizle
+            document.getElementById('settings-wallpaper-file').value = '';
+            saveSettings();
+            alert('Arka plan varsayılana döndürüldü.');
         }
 
         function applyTaskbarVisibility() {
@@ -833,10 +807,11 @@
 
             localStorage.removeItem('hereemu_settings');
             localStorage.removeItem('hereemu_click_ms');
-            document.getElementById('desktop').style.backgroundImage = "url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920')";
-            document.getElementById('settings-wallpaper-preview').style.backgroundImage = "url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920')";
+            // Varsayılan arka plan
+            document.getElementById('desktop').style.backgroundImage = `url('${DEFAULT_WALLPAPER}')`;
+            document.getElementById('settings-wallpaper-preview').style.backgroundImage = `url('${DEFAULT_WALLPAPER}')`;
+            document.getElementById('settings-wallpaper-file').value = '';
             document.body.classList.remove('hide-taskbar');
-            document.getElementById('settings-wallpaper').value = '';
             document.getElementById('settings-hide-taskbar').checked = false;
             document.getElementById('settings-click-ms').value = 100;
             document.getElementById('click-ms').value = 100;
