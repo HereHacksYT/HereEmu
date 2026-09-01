@@ -395,7 +395,7 @@
         <!-- AYARLAR SİMGESİ -->
         <div class="icon" onclick="openWindow('win-settings'); loadSettings();">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaAq4QNKEGKjgKHCbSNM2O9z60C1q_z-8D8ydO-mQYTg&s=10" onerror="this.src='https://cdn-icons-png.flaticon.com/512/993/993861.png';">
-            <span>Ayarlar</span>
+            <span id="settings-icon-text">Ayarlar</span>
         </div>
 
         <div id="dynamic-apps" style="display: contents;"></div>
@@ -408,16 +408,16 @@
             <button class="autoclicker-close" onclick="toggleAutoClickerWindow(false)">X</button>
             <span class="drag-handle">TUT</span>
         </div>
-        <label>Aralık (ms):</label>
+        <label id="autoclicker-interval-label">Aralık (ms):</label>
         <input type="number" id="click-ms" value="100" min="10" onchange="saveClickerSettings()">
         
         <div class="clicker-btn-group">
-            <button class="clicker-btn btn-pick" onclick="startPickingTarget()">🎯 Ekle</button>
-            <button class="clicker-btn btn-clear" onclick="clearTargets()">🗑️ Sil</button>
+            <button class="clicker-btn btn-pick" id="autoclicker-add-btn" onclick="startPickingTarget()">🎯 Ekle</button>
+            <button class="clicker-btn btn-clear" id="autoclicker-clear-btn" onclick="clearTargets()">🗑️ Sil</button>
         </div>
         
-        <button id="clicker-start" class="clicker-btn btn-start" onclick="startAutoClicker()">▶ Başlat</button>
-        <button id="clicker-stop" class="clicker-btn btn-stop" onclick="stopAutoClicker()">⏸ Durdur</button>
+        <button id="clicker-start" class="clicker-btn btn-start" onclick="startAutoClicker()" id="autoclicker-start-btn">▶ Başlat</button>
+        <button id="clicker-stop" class="clicker-btn btn-stop" onclick="stopAutoClicker()" id="autoclicker-stop-btn">⏸ Durdur</button>
     </div>
 
     <!-- CREDITS UYGULAMASI PENCERESİ -->
@@ -454,20 +454,20 @@
 
     <div id="fullscreen-dialog-overlay" class="fullscreen-dialog-overlay">
         <div class="fullscreen-dialog">
-            <p>Alt yerleri de gizlemek istiyor musun?</p>
+            <p id="fullscreen-dialog-text">Alt yerleri de gizlemek istiyor musun?</p>
             <div class="dialog-buttons">
-                <button class="dialog-btn dialog-btn-no" onclick="handleFullscreenResponse(false)">Hayır</button>
-                <button class="dialog-btn dialog-btn-yes" onclick="handleFullscreenResponse(true)">Evet</button>
+                <button class="dialog-btn dialog-btn-no" id="fullscreen-dialog-no" onclick="handleFullscreenResponse(false)">Hayır</button>
+                <button class="dialog-btn dialog-btn-yes" id="fullscreen-dialog-yes" onclick="handleFullscreenResponse(true)">Evet</button>
             </div>
         </div>
     </div>
 
     <div id="virus-dialog-overlay" class="fullscreen-dialog-overlay">
         <div class="fullscreen-dialog">
-            <p>Uygulamayı açmak istiyor musun???</p>
+            <p id="virus-dialog-text">Uygulamayı açmak istiyor musun???</p>
             <div class="dialog-buttons">
-                <button class="dialog-btn dialog-btn-no" onclick="closeVirusDialog()">Vazgeçtim</button>
-                <button class="dialog-btn dialog-btn-yes" onclick="triggerVirusPrank()">Evet</button>
+                <button class="dialog-btn dialog-btn-no" id="virus-dialog-no" onclick="closeVirusDialog()">Vazgeçtim</button>
+                <button class="dialog-btn dialog-btn-yes" id="virus-dialog-yes" onclick="triggerVirusPrank()">Evet</button>
             </div>
         </div>
     </div>
@@ -630,7 +630,7 @@
     <!-- AYARLAR PENCERESİ (SETTINGS) -->
     <div id="win-settings" class="window" style="width:500px; height:440px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-            <span>⚙️ Ayarlar</span>
+            <span id="settings-window-title">⚙️ Ayarlar</span>
             <div class="header-buttons">
                 <button class="maximize-btn" onclick="toggleMaximize('win-settings')"></button>
                 <button class="close-btn" onclick="closeWindow('win-settings')"></button>
@@ -639,28 +639,29 @@
         <div class="window-content" style="padding:0;">
             <div class="settings-layout">
                 <div class="settings-sidebar">
-                    <button id="settings-menu-appearance" class="settings-menu-btn active" onclick="switchSettingsTab('appearance')">🖼️ Görünüm</button>
-                    <button id="settings-menu-autoclicker" class="settings-menu-btn" onclick="switchSettingsTab('autoclicker')">🖱️ Auto Clicker</button>
-                    <button id="settings-menu-apps" class="settings-menu-btn" onclick="switchSettingsTab('apps')">📦 Uygulamalar</button>
-                    <button id="settings-menu-language" class="settings-menu-btn" onclick="switchSettingsTab('language')">🌐 Dil</button>
-                    <button id="settings-menu-system" class="settings-menu-btn" onclick="switchSettingsTab('system')">💻 Sistem</button>
+                    <button id="settings-menu-appearance" class="settings-menu-btn active" onclick="switchSettingsTab('appearance')">🖼️ <span id="settings-menu-appearance-text">Görünüm</span></button>
+                    <button id="settings-menu-autoclicker" class="settings-menu-btn" onclick="switchSettingsTab('autoclicker')">🖱️ <span id="settings-menu-autoclicker-text">Auto Clicker</span></button>
+                    <button id="settings-menu-apps" class="settings-menu-btn" onclick="switchSettingsTab('apps')">📦 <span id="settings-menu-apps-text">Uygulamalar</span></button>
+                    <button id="settings-menu-language" class="settings-menu-btn" onclick="switchSettingsTab('language')">🌐 <span id="settings-menu-language-text">Dil</span></button>
+                    <button id="settings-menu-report" class="settings-menu-btn" onclick="switchSettingsTab('report')">🐞 <span id="settings-menu-report-text">Hata Raporla</span></button>
+                    <button id="settings-menu-system" class="settings-menu-btn" onclick="switchSettingsTab('system')">💻 <span id="settings-menu-system-text">Sistem</span></button>
                 </div>
                 <div class="settings-main">
                     <!-- Görünüm -->
                     <div id="settings-page-appearance" class="settings-page active">
                         <div class="settings-group">
-                            <label>Fotoğraf Seç</label>
+                            <label id="settings-appearance-file-label">Fotoğraf Seç</label>
                             <input type="file" id="settings-wallpaper-file" accept="image/*">
-                            <button onclick="applyWallpaperFromFile()" style="margin-top:6px;">Seçili Fotoğrafı Uygula</button>
+                            <button onclick="applyWallpaperFromFile()" style="margin-top:6px;" id="settings-appearance-apply-btn">Seçili Fotoğrafı Uygula</button>
                             <div id="settings-wallpaper-preview" class="wallpaper-preview" style="background-image: none; background-color: #eee;"></div>
                         </div>
                         <div class="settings-group">
-                            <button onclick="resetWallpaper()" class="secondary">🔄 Arka Planı Sıfırla (Varsayılana Dön)</button>
+                            <button onclick="resetWallpaper()" class="secondary" id="settings-appearance-reset-btn">🔄 Arka Planı Sıfırla (Varsayılana Dön)</button>
                         </div>
                         <div class="settings-group">
                             <label class="checkbox-label">
                                 <input type="checkbox" id="settings-hide-taskbar" onchange="applyTaskbarVisibility()">
-                                Görev çubuğunu gizle
+                                <span id="settings-appearance-taskbar-text">Görev çubuğunu gizle</span>
                             </label>
                         </div>
                     </div>
@@ -668,19 +669,19 @@
                     <!-- Auto Clicker -->
                     <div id="settings-page-autoclicker" class="settings-page">
                         <div class="settings-group">
-                            <label>Tıklama aralığı (ms)</label>
+                            <label id="settings-autoclicker-interval-label">Tıklama aralığı (ms)</label>
                             <input type="number" id="settings-click-ms" min="10" step="1">
-                            <button onclick="applyClickMs()" style="margin-top:6px;">Kaydet</button>
+                            <button onclick="applyClickMs()" style="margin-top:6px;" id="settings-autoclicker-save-btn">Kaydet</button>
                         </div>
                         <div class="settings-group">
-                            <button class="danger" onclick="clearTargets(); alert('Tüm hedefler temizlendi.')">🗑️ Hedefleri Temizle</button>
+                            <button class="danger" onclick="clearTargets(); alert('Tüm hedefler temizlendi.')" id="settings-autoclicker-clear-btn">🗑️ Hedefleri Temizle</button>
                         </div>
                     </div>
 
                     <!-- Uygulamalar -->
                     <div id="settings-page-apps" class="settings-page">
                         <div class="settings-group">
-                            <label>Yüklü Uygulamalar</label>
+                            <label id="settings-apps-label">Yüklü Uygulamalar</label>
                             <div id="settings-installed-apps-list"></div>
                         </div>
                     </div>
@@ -688,7 +689,7 @@
                     <!-- Dil -->
                     <div id="settings-page-language" class="settings-page">
                         <div class="settings-group">
-                            <label>🌐 Dil / Language</label>
+                            <label id="settings-language-label">🌐 Dil / Language</label>
                             <div style="display:flex; gap:15px; margin-top:10px; flex-wrap:wrap;">
                                 <button id="lang-btn-tr" onclick="changeLanguage('tr')" style="padding:10px 20px; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">🇹🇷 Türkçe</button>
                                 <button id="lang-btn-en" onclick="changeLanguage('en')" style="padding:10px 20px; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">🇬🇧 English</button>
@@ -697,21 +698,26 @@
                         </div>
                     </div>
 
+                    <!-- Hata Raporla -->
+                    <div id="settings-page-report" class="settings-page">
+                        <div class="settings-group">
+                            <label id="settings-report-label">🐞 Hata Raporlama / Report Bug</label>
+                            <button class="report-btn" onclick="reportBug()" style="background:#6c757d; color:white; border:none; border-radius:4px; padding:10px 14px; cursor:pointer; font-weight:bold; display:flex; align-items:center; gap:10px; width:100%; justify-content:center; margin-top:10px;">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-UpsGF25ae1gwhwoTGLavoHFld8MpH3HYrWiNf41geQ&s=10" alt="Report" style="width:24px; height:24px; object-fit:contain;">
+                                <span id="settings-report-btn-text">Hata Raporla / Report Bug</span>
+                            </button>
+                            <div style="margin-top:8px; font-size:12px; color:#666;" id="settings-report-desc">Bir hata ile karşılaştığınızda bize bildirin.</div>
+                        </div>
+                    </div>
+
                     <!-- Sistem -->
                     <div id="settings-page-system" class="settings-page">
                         <div class="settings-group">
-                            <label>Sürüm</label>
+                            <label id="settings-system-version-label">Sürüm</label>
                             <div class="settings-version">HereEmu v24.0</div>
                         </div>
                         <div class="settings-group">
-                            <label>Hata Raporlama / Report Bug</label>
-                            <button class="report-btn" onclick="reportBug()" style="background:#6c757d; color:white; border:none; border-radius:4px; padding:10px 14px; cursor:pointer; font-weight:bold; display:flex; align-items:center; gap:10px; width:100%; justify-content:center;">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-UpsGF25ae1gwhwoTGLavoHFld8MpH3HYrWiNf41geQ&s=10" alt="Report" style="width:24px; height:24px; object-fit:contain;">
-                                Hata Raporla / Report Bug
-                            </button>
-                        </div>
-                        <div class="settings-group">
-                            <button class="danger" onclick="resetAllSettings()">⚠️ Tüm ayarları sıfırla</button>
+                            <button class="danger" onclick="resetAllSettings()" id="settings-system-reset-btn">⚠️ Tüm ayarları sıfırla</button>
                         </div>
                     </div>
                 </div>
@@ -804,35 +810,224 @@
         // ----- DİL SEÇİM -----
         let currentLanguage = 'tr';
 
+        // Tüm metinler
+        const translations = {
+            tr: {
+                settings: 'Ayarlar',
+                settingsWindow: '⚙️ Ayarlar',
+                menuAppearance: 'Görünüm',
+                menuAutoclicker: 'Auto Clicker',
+                menuApps: 'Uygulamalar',
+                menuLanguage: 'Dil',
+                menuReport: 'Hata Raporla',
+                menuSystem: 'Sistem',
+                appearanceFileLabel: 'Fotoğraf Seç',
+                appearanceApplyBtn: 'Seçili Fotoğrafı Uygula',
+                appearanceResetBtn: '🔄 Arka Planı Sıfırla (Varsayılana Dön)',
+                appearanceTaskbar: 'Görev çubuğunu gizle',
+                autoclickerInterval: 'Tıklama aralığı (ms)',
+                autoclickerSave: 'Kaydet',
+                autoclickerClear: '🗑️ Hedefleri Temizle',
+                appsLabel: 'Yüklü Uygulamalar',
+                languageLabel: '🌐 Dil / Language',
+                reportLabel: '🐞 Hata Raporlama / Report Bug',
+                reportBtn: 'Hata Raporla / Report Bug',
+                reportDesc: 'Bir hata ile karşılaştığınızda bize bildirin.',
+                systemVersion: 'Sürüm',
+                systemReset: '⚠️ Tüm ayarları sıfırla',
+                langStatus: '✅ Türkçe seçili / Turkish selected',
+                fullscreenText: 'Alt yerleri de gizlemek istiyor musun?',
+                fullscreenNo: 'Hayır',
+                fullscreenYes: 'Evet',
+                virusText: 'Uygulamayı açmak istiyor musun???',
+                virusNo: 'Vazgeçtim',
+                virusYes: 'Evet',
+                autoclickerIntervalLabel: 'Aralık (ms):',
+                autoclickerAdd: '🎯 Ekle',
+                autoclickerClearBtn: '🗑️ Sil',
+                autoclickerStart: '▶ Başlat',
+                autoclickerStop: '⏸ Durdur',
+                iconSettings: 'Ayarlar'
+            },
+            en: {
+                settings: 'Settings',
+                settingsWindow: '⚙️ Settings',
+                menuAppearance: 'Appearance',
+                menuAutoclicker: 'Auto Clicker',
+                menuApps: 'Apps',
+                menuLanguage: 'Language',
+                menuReport: 'Report Bug',
+                menuSystem: 'System',
+                appearanceFileLabel: 'Select Photo',
+                appearanceApplyBtn: 'Apply Selected Photo',
+                appearanceResetBtn: '🔄 Reset Wallpaper (Default)',
+                appearanceTaskbar: 'Hide taskbar',
+                autoclickerInterval: 'Click interval (ms)',
+                autoclickerSave: 'Save',
+                autoclickerClear: '🗑️ Clear Targets',
+                appsLabel: 'Installed Apps',
+                languageLabel: '🌐 Language / Dil',
+                reportLabel: '🐞 Report Bug / Hata Raporla',
+                reportBtn: 'Report Bug / Hata Raporla',
+                reportDesc: 'Let us know if you encounter any issues.',
+                systemVersion: 'Version',
+                systemReset: '⚠️ Reset all settings',
+                langStatus: '✅ English selected / İngilizce seçili',
+                fullscreenText: 'Do you want to hide the bottom area too?',
+                fullscreenNo: 'No',
+                fullscreenYes: 'Yes',
+                virusText: 'Do you want to open the app???',
+                virusNo: 'Cancel',
+                virusYes: 'Yes',
+                autoclickerIntervalLabel: 'Interval (ms):',
+                autoclickerAdd: '🎯 Add',
+                autoclickerClearBtn: '🗑️ Clear',
+                autoclickerStart: '▶ Start',
+                autoclickerStop: '⏸ Stop',
+                iconSettings: 'Settings'
+            }
+        };
+
+        function getText(key) {
+            return translations[currentLanguage]?.[key] || translations.tr[key] || key;
+        }
+
+        function updateUILanguage() {
+            // Masaüstü ikon
+            const iconText = document.getElementById('settings-icon-text');
+            if (iconText) iconText.textContent = getText('iconSettings');
+
+            // Ayarlar penceresi başlığı
+            const title = document.getElementById('settings-window-title');
+            if (title) title.textContent = getText('settingsWindow');
+
+            // Menü butonları
+            const menuTexts = [
+                { id: 'settings-menu-appearance-text', key: 'menuAppearance' },
+                { id: 'settings-menu-autoclicker-text', key: 'menuAutoclicker' },
+                { id: 'settings-menu-apps-text', key: 'menuApps' },
+                { id: 'settings-menu-language-text', key: 'menuLanguage' },
+                { id: 'settings-menu-report-text', key: 'menuReport' },
+                { id: 'settings-menu-system-text', key: 'menuSystem' }
+            ];
+            menuTexts.forEach(item => {
+                const el = document.getElementById(item.id);
+                if (el) el.textContent = getText(item.key);
+            });
+
+            // Görünüm sayfası
+            const appearanceLabels = [
+                { id: 'settings-appearance-file-label', key: 'appearanceFileLabel' },
+                { id: 'settings-appearance-apply-btn', key: 'appearanceApplyBtn' },
+                { id: 'settings-appearance-reset-btn', key: 'appearanceResetBtn' },
+                { id: 'settings-appearance-taskbar-text', key: 'appearanceTaskbar' }
+            ];
+            appearanceLabels.forEach(item => {
+                const el = document.getElementById(item.id);
+                if (el) el.textContent = getText(item.key);
+            });
+
+            // Auto Clicker sayfası
+            const autoclickerLabels = [
+                { id: 'settings-autoclicker-interval-label', key: 'autoclickerInterval' },
+                { id: 'settings-autoclicker-save-btn', key: 'autoclickerSave' },
+                { id: 'settings-autoclicker-clear-btn', key: 'autoclickerClear' }
+            ];
+            autoclickerLabels.forEach(item => {
+                const el = document.getElementById(item.id);
+                if (el) el.textContent = getText(item.key);
+            });
+
+            // Uygulamalar sayfası
+            const appsLabel = document.getElementById('settings-apps-label');
+            if (appsLabel) appsLabel.textContent = getText('appsLabel');
+
+            // Dil sayfası
+            const langLabel = document.getElementById('settings-language-label');
+            if (langLabel) langLabel.textContent = getText('languageLabel');
+
+            // Hata Raporla sayfası
+            const reportLabels = [
+                { id: 'settings-report-label', key: 'reportLabel' },
+                { id: 'settings-report-btn-text', key: 'reportBtn' },
+                { id: 'settings-report-desc', key: 'reportDesc' }
+            ];
+            reportLabels.forEach(item => {
+                const el = document.getElementById(item.id);
+                if (el) el.textContent = getText(item.key);
+            });
+
+            // Sistem sayfası
+            const systemLabels = [
+                { id: 'settings-system-version-label', key: 'systemVersion' },
+                { id: 'settings-system-reset-btn', key: 'systemReset' }
+            ];
+            systemLabels.forEach(item => {
+                const el = document.getElementById(item.id);
+                if (el) el.textContent = getText(item.key);
+            });
+
+            // Dil durumu
+            const status = document.getElementById('lang-status');
+            if (status) status.textContent = getText('langStatus');
+
+            // Dialog metinleri
+            const fullscreenText = document.getElementById('fullscreen-dialog-text');
+            if (fullscreenText) fullscreenText.textContent = getText('fullscreenText');
+            const fullscreenNo = document.getElementById('fullscreen-dialog-no');
+            if (fullscreenNo) fullscreenNo.textContent = getText('fullscreenNo');
+            const fullscreenYes = document.getElementById('fullscreen-dialog-yes');
+            if (fullscreenYes) fullscreenYes.textContent = getText('fullscreenYes');
+
+            const virusText = document.getElementById('virus-dialog-text');
+            if (virusText) virusText.textContent = getText('virusText');
+            const virusNo = document.getElementById('virus-dialog-no');
+            if (virusNo) virusNo.textContent = getText('virusNo');
+            const virusYes = document.getElementById('virus-dialog-yes');
+            if (virusYes) virusYes.textContent = getText('virusYes');
+
+            // Auto Clicker paneli
+            const acInterval = document.getElementById('autoclicker-interval-label');
+            if (acInterval) acInterval.textContent = getText('autoclickerIntervalLabel');
+            const acAdd = document.getElementById('autoclicker-add-btn');
+            if (acAdd) acAdd.textContent = getText('autoclickerAdd');
+            const acClear = document.getElementById('autoclicker-clear-btn');
+            if (acClear) acClear.textContent = getText('autoclickerClearBtn');
+            const acStart = document.getElementById('clicker-start');
+            if (acStart) acStart.textContent = getText('autoclickerStart');
+            const acStop = document.getElementById('clicker-stop');
+            if (acStop) acStop.textContent = getText('autoclickerStop');
+
+            // Dil butonlarını güncelle
+            updateLanguageButtons();
+        }
+
         function selectLanguage(lang) {
             currentLanguage = lang;
             localStorage.setItem('hereemu_language', lang);
             document.getElementById('language-screen').classList.remove('show');
             document.getElementById('splash-screen').classList.add('hidden');
-            updateLanguageButtons();
+            updateUILanguage();
             loadSystemState();
         }
 
         function changeLanguage(lang) {
             currentLanguage = lang;
             localStorage.setItem('hereemu_language', lang);
-            updateLanguageButtons();
+            updateUILanguage();
             alert(lang === 'tr' ? 'Dil Türkçe olarak değiştirildi!' : 'Language changed to English!');
         }
 
         function updateLanguageButtons() {
             const trBtn = document.getElementById('lang-btn-tr');
             const enBtn = document.getElementById('lang-btn-en');
-            const status = document.getElementById('lang-status');
             
             if (currentLanguage === 'tr') {
                 trBtn.className = 'lang-btn-selected';
                 enBtn.className = 'lang-btn-unselected';
-                status.textContent = '✅ Türkçe seçili / Turkish selected';
             } else {
                 trBtn.className = 'lang-btn-unselected';
                 enBtn.className = 'lang-btn-selected';
-                status.textContent = '✅ English selected / İngilizce seçili';
             }
         }
 
@@ -842,7 +1037,7 @@
                 currentLanguage = savedLang;
                 document.getElementById('language-screen').classList.remove('show');
                 document.getElementById('splash-screen').classList.add('hidden');
-                updateLanguageButtons();
+                updateUILanguage();
                 loadSystemState();
             } else {
                 setTimeout(() => {
@@ -887,7 +1082,7 @@
             applyTaskbarVisibilityFromSettings(settings.hideTaskbar);
             document.getElementById('click-ms').value = settings.clickMs || 100;
             renderInstalledAppsList();
-            updateLanguageButtons();
+            updateUILanguage();
         }
 
         function saveSettings() {
@@ -956,18 +1151,19 @@
                     div.className = 'app-item';
                     div.innerHTML = `
                         <span>${appDatabase[key].name}</span>
-                        <button class="danger" onclick="uninstallAppFromSettings('${key}')">Kaldır</button>
+                        <button class="danger" onclick="uninstallAppFromSettings('${key}')">${currentLanguage === 'tr' ? 'Kaldır' : 'Uninstall'}</button>
                     `;
                     container.appendChild(div);
                 }
             }
             if (!hasAny) {
-                container.innerHTML = '<div style="color:#888;font-size:13px;">Hiç uygulama yüklü değil.</div>';
+                container.innerHTML = `<div style="color:#888;font-size:13px;">${currentLanguage === 'tr' ? 'Hiç uygulama yüklü değil.' : 'No apps installed.'}</div>`;
             }
         }
 
         function uninstallAppFromSettings(appKey) {
-            if (!confirm(`"${appDatabase[appKey].name}" uygulamasını kaldırmak istediğinize emin misiniz?`)) return;
+            const confirmText = currentLanguage === 'tr' ? `"${appDatabase[appKey].name}" uygulamasını kaldırmak istediğinize emin misiniz?` : `Are you sure you want to uninstall "${appDatabase[appKey].name}"?`;
+            if (!confirm(confirmText)) return;
             const app = appDatabase[appKey];
             app.installed = false;
             syncStoreButtons(appKey);
@@ -982,7 +1178,8 @@
         }
 
         function resetAllSettings() {
-            if (!confirm('Tüm ayarlar ve uygulama yüklemeleri sıfırlanacak. Devam et?')) return;
+            const confirmText = currentLanguage === 'tr' ? 'Tüm ayarlar ve uygulama yüklemeleri sıfırlanacak. Devam et?' : 'All settings and app installations will be reset. Continue?';
+            if (!confirm(confirmText)) return;
             for (const key in appDatabase) {
                 appDatabase[key].installed = false;
                 syncStoreButtons(key);
@@ -1006,7 +1203,7 @@
             document.getElementById('settings-click-ms').value = 100;
             document.getElementById('click-ms').value = 100;
             clearTargets();
-            alert('Tüm ayarlar sıfırlandı.');
+            alert(currentLanguage === 'tr' ? 'Tüm ayarlar sıfırlandı.' : 'All settings reset.');
         }
 
         function switchSettingsTab(tab) {
@@ -1037,10 +1234,10 @@
                 
                 if (actionBtn) {
                     if (app.installed) {
-                        actionBtn.innerText = 'Kaldır';
+                        actionBtn.innerText = currentLanguage === 'tr' ? 'Kaldır' : 'Uninstall';
                         actionBtn.className = 'store-btn store-btn-uninstall';
                     } else {
-                        actionBtn.innerText = 'Yükle';
+                        actionBtn.innerText = currentLanguage === 'tr' ? 'Yükle' : 'Install';
                         actionBtn.className = 'store-btn store-btn-install';
                     }
                 }
@@ -1164,7 +1361,7 @@
         }
 
         function startAutoClicker() {
-            if (targetPoints.length === 0) return alert("Lütfen önce '🎯 Ekle' butonu ile en az bir hedef belirle!");
+            if (targetPoints.length === 0) return alert(currentLanguage === 'tr' ? "Lütfen önce '🎯 Ekle' butonu ile en az bir hedef belirle!" : "Please add at least one target with '🎯 Add' button!");
             const ms = parseInt(document.getElementById('click-ms').value) || 100;
             
             document.getElementById('clicker-start').style.display = 'none';
