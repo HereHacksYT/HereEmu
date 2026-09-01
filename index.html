@@ -371,31 +371,31 @@
     <div id="desktop">
         <div class="icon" onclick="openWindow('win-uploader')">
             <img src="https://cdn-icons-png.flaticon.com/512/812/812850.png">
-            <span>Sisteme Yükle</span>
+            <span id="icon-upload">Sisteme Yükle</span>
         </div>
         <div class="icon" onclick="openWindow('win-files'); refreshFiles();">
             <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png">
-            <span>Harddisk</span>
+            <span id="icon-harddisk">Harddisk</span>
         </div>
         <div class="icon" onclick="openWindow('win-notepad')">
             <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png">
-            <span>Not Defteri</span>
+            <span id="icon-notepad">Not Defteri</span>
         </div>
         <div class="icon" onclick="openWindow('win-osstore')">
             <img src="https://i.ibb.co/Z7N9Cj2/Os-Store.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3081/3081648.png';">
-            <span>OsStore</span>
+            <span id="icon-osstore">OsStore</span>
         </div>
         
         <!-- KALICI OLARAK OSSTORE'UN ALTINDA DURAN CREDITS SİMGESİ -->
         <div class="icon" onclick="openWindow('win-credits')">
             <img src="https://i.ibb.co/jvY8sJLZ/Credits.png">
-            <span>Credits</span>
+            <span id="icon-credits">Credits</span>
         </div>
 
         <!-- AYARLAR SİMGESİ -->
         <div class="icon" onclick="openWindow('win-settings'); loadSettings();">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaAq4QNKEGKjgKHCbSNM2O9z60C1q_z-8D8ydO-mQYTg&s=10" onerror="this.src='https://cdn-icons-png.flaticon.com/512/993/993861.png';">
-            <span id="settings-icon-text">Ayarlar</span>
+            <span id="icon-settings">Ayarlar</span>
         </div>
 
         <div id="dynamic-apps" style="display: contents;"></div>
@@ -406,7 +406,7 @@
     <div id="autoclicker" class="autoclicker-panel">
         <div class="autoclicker-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <button class="autoclicker-close" onclick="toggleAutoClickerWindow(false)">X</button>
-            <span class="drag-handle">TUT</span>
+            <span class="drag-handle" id="autoclicker-drag">TUT</span>
         </div>
         <label id="autoclicker-interval-label">Aralık (ms):</label>
         <input type="number" id="click-ms" value="100" min="10" onchange="saveClickerSettings()">
@@ -416,8 +416,8 @@
             <button class="clicker-btn btn-clear" id="autoclicker-clear-btn" onclick="clearTargets()">🗑️ Sil</button>
         </div>
         
-        <button id="clicker-start" class="clicker-btn btn-start" onclick="startAutoClicker()" id="autoclicker-start-btn">▶ Başlat</button>
-        <button id="clicker-stop" class="clicker-btn btn-stop" onclick="stopAutoClicker()" id="autoclicker-stop-btn">⏸ Durdur</button>
+        <button id="clicker-start" class="clicker-btn btn-start" onclick="startAutoClicker()">▶ Başlat</button>
+        <button id="clicker-stop" class="clicker-btn btn-stop" onclick="stopAutoClicker()">⏸ Durdur</button>
     </div>
 
     <!-- CREDITS UYGULAMASI PENCERESİ -->
@@ -435,15 +435,15 @@
                 <div class="credits-marquee-box">
                     <div class="credits-scroller">
                         <div class="credits-item">
-                            <span class="credits-label">Owner</span>
+                            <span class="credits-label" id="credits-owner-label">Owner</span>
                             <span class="credits-name">OsmanBurda</span>
                         </div>
                         <div class="credits-item">
-                            <span class="credits-label">YouTube</span>
+                            <span class="credits-label" id="credits-yt-label">YouTube</span>
                             <span class="credits-name">@OsmanBurda</span>
                         </div>
                         <div class="credits-item">
-                            <span class="credits-label">Helper</span>
+                            <span class="credits-label" id="credits-helper-label">Helper</span>
                             <span class="credits-name">OsmanBurda :D</span>
                         </div>
                     </div>
@@ -489,15 +489,15 @@
         <div class="window-content" style="padding:0;">
             <div class="store-layout">
                 <div class="store-sidebar">
-                    <button id="menu-popular" class="store-menu-btn active" onclick="switchStoreTab('popular')">⭐ Popüler</button>
-                    <button id="menu-apps" class="store-menu-btn" onclick="switchStoreTab('apps')">Uygulamalar</button>
-                    <button id="menu-games" class="store-menu-btn" onclick="switchStoreTab('games')">Oyunlar</button>
-                    <button id="menu-mystery" class="store-menu-btn" onclick="switchStoreTab('mystery')">???</button>
+                    <button id="menu-popular" class="store-menu-btn active" onclick="switchStoreTab('popular')"><span id="store-menu-popular">⭐ Popüler</span></button>
+                    <button id="menu-apps" class="store-menu-btn" onclick="switchStoreTab('apps')"><span id="store-menu-apps">Uygulamalar</span></button>
+                    <button id="menu-games" class="store-menu-btn" onclick="switchStoreTab('games')"><span id="store-menu-games">Oyunlar</span></button>
+                    <button id="menu-mystery" class="store-menu-btn" onclick="switchStoreTab('mystery')"><span id="store-menu-mystery">???</span></button>
                 </div>
                 <div class="store-main">
                     <!-- POPÜLER SEKMESİ -->
                     <div id="page-popular" class="store-page active">
-                        <div class="store-section-title">Popüler Uygulamalar</div>
+                        <div class="store-section-title" id="store-title-popular-apps">Popüler Uygulamalar</div>
                         <div class="store-item">
                             <div class="store-item-info"><img src="https://i.ibb.co/C5yHnGg1/Os-Here-Ai.png"><div><div class="store-item-title">OsHereAi</div><div class="store-item-desc">Yapay zeka asistanı ile geleceği şekillendir!</div></div></div>
                             <div class="store-item-actions">
@@ -507,7 +507,7 @@
                             </div>
                         </div>
 
-                        <div class="store-section-title">Popüler Oyunlar</div>
+                        <div class="store-section-title" id="store-title-popular-games">Popüler Oyunlar</div>
                         <div class="store-item">
                             <div class="store-item-info"><img src="https://i.ibb.co/JR569wJG/Os-Chess.png"><div><div class="store-item-title">OsChess</div><div class="store-item-desc">Aklını konuştur ve şah mat et!</div></div></div>
                             <div class="store-item-actions">
@@ -614,7 +614,7 @@
 
                     <div id="page-mystery" class="store-page">
                         <div class="store-item">
-                            <div class="store-item-info"><img src="https://cdn-icons-png.flaticon.com/512/751/751381.png"><div><div class="store-item-title">???</div><div class="store-item-desc">Bunu açmaman tavsiye edilir...</div></div></div>
+                            <div class="store-item-info"><img src="https://cdn-icons-png.flaticon.com/512/751/751381.png"><div><div class="store-item-title">???</div><div class="store-item-desc" id="mystery-desc">Bunu açmaman tavsiye edilir...</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-mysteryapp" class="store-btn store-btn-open" style="display:none;" onclick="openVirusPrompt()">Aç</button>
                                 <button id="btn-action-mysteryapp" class="store-btn store-btn-install" onclick="toggleAppInstallation('mysteryapp')">Yükle</button>
@@ -674,7 +674,7 @@
                             <button onclick="applyClickMs()" style="margin-top:6px;" id="settings-autoclicker-save-btn">Kaydet</button>
                         </div>
                         <div class="settings-group">
-                            <button class="danger" onclick="clearTargets(); alert('Tüm hedefler temizlendi.')" id="settings-autoclicker-clear-btn">🗑️ Hedefleri Temizle</button>
+                            <button class="danger" onclick="clearTargets(); alert(getText('targetsCleared'))" id="settings-autoclicker-clear-btn">🗑️ Hedefleri Temizle</button>
                         </div>
                     </div>
 
@@ -743,7 +743,7 @@
 
     <div id="win-uploader" class="window" style="width:380px; height:340px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-            <span>Yükleme İstasyonu</span>
+            <span id="uploader-title">Yükleme İstasyonu</span>
             <div class="header-buttons">
                 <button class="maximize-btn" onclick="toggleMaximize('win-uploader')"></button>
                 <button class="close-btn" onclick="closeWindow('win-uploader')"></button>
@@ -751,15 +751,15 @@
         </div>
         <div class="window-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; padding: 20px;">
             <img src="https://i.ibb.co/Zpq9RmdH/Here-Emu.png" style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.2));" alt="HereEmu Ana Ekran Logosu">
-            <span style="font-size: 13px; font-weight: bold; color: #555;">Ana Ekran Başlatıcı Logosu</span>
+            <span id="uploader-logo-text" style="font-size: 13px; font-weight: bold; color: #555;">Ana Ekran Başlatıcı Logosu</span>
             <input type="file" id="file-input" style="width: 100%; border: 1px dashed #ccc; padding: 10px; border-radius: 6px; background: #fafafa;">
-            <button onclick="uploadFileToServer()" style="padding:12px; background:#0078d4; color:white; border:none; border-radius:6px; width:100%; font-weight: bold; cursor: pointer; transition: background 0.2s;">Render Sunucusuna Gönder</button>
+            <button onclick="uploadFileToServer()" id="uploader-send-btn" style="padding:12px; background:#0078d4; color:white; border:none; border-radius:6px; width:100%; font-weight: bold; cursor: pointer; transition: background 0.2s;">Render Sunucusuna Gönder</button>
         </div>
     </div>
 
-    <div id="win-files" class="window"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>Render Sunucu Dosyaları</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-files')"></button><button class="close-btn" onclick="closeWindow('win-files')"></button></div></div><div class="window-content"><ul id="file-list"></ul></div></div>
-    <div id="win-notepad" class="window"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>Not Defteri</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-notepad')"></button><button class="close-btn" onclick="closeWindow('win-notepad')"></button></div></div><div class="window-content"><textarea id="txt-area" placeholder="Yazılım notları..."></textarea></div></div>
-    <div id="win-media" class="window" style="width:340px; height:260px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>Medya Oynatıcı</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-media')"></button><button class="close-btn" onclick="closeWindow('win-media')"></button></div></div><div class="window-content" style="display:flex; justify-content:center; align-items:center; background:#000;"><video id="media-video" controls style="max-width:100%; max-height:100%; display:none;"></video><audio id="media-audio" controls style="width:100%; display:none;"></audio><img id="media-img" style="max-width:100%; max-height:100%; object-fit:contain; display:none;"></div></div>
+    <div id="win-files" class="window"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span id="files-title">Render Sunucu Dosyaları</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-files')"></button><button class="close-btn" onclick="closeWindow('win-files')"></button></div></div><div class="window-content"><ul id="file-list"></ul></div></div>
+    <div id="win-notepad" class="window"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span id="notepad-title">Not Defteri</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-notepad')"></button><button class="close-btn" onclick="closeWindow('win-notepad')"></button></div></div><div class="window-content"><textarea id="txt-area" id="notepad-textarea" placeholder="Yazılım notları..."></textarea></div></div>
+    <div id="win-media" class="window" style="width:340px; height:260px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span id="media-title">Medya Oynatıcı</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-media')"></button><button class="close-btn" onclick="closeWindow('win-media')"></button></div></div><div class="window-content" style="display:flex; justify-content:center; align-items:center; background:#000;"><video id="media-video" controls style="max-width:100%; max-height:100%; display:none;"></video><audio id="media-audio" controls style="width:100%; display:none;"></audio><img id="media-img" style="max-width:100%; max-height:100%; object-fit:contain; display:none;"></div></div>
     <div id="win-ostube" class="window" style="width:400px; height:320px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsTube</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-ostube')"></button><button class="close-btn" onclick="closeWindow('win-ostube')"></button></div></div><div class="window-content" style="padding:0; background:#111;"><div class="browser-container"><iframe id="yt-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
     <div id="win-osgram" class="window" style="width:380px; height:340px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsGram</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-osgram')"></button><button class="close-btn" onclick="closeWindow('win-osgram')"></button></div></div><div class="window-content" style="padding:0; background:#fff;"><div class="browser-container"><iframe id="gram-frame" src="about:blank"></iframe></div></div></div>
     
@@ -782,7 +782,7 @@
     <div id="win-oswaysurfers" class="window" style="width:480px; height:360px;"><div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsWay Surfers</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-oswaysurfers')"></button><button class="close-btn" onclick="closeWindow('win-oswaysurfers')"></button></div></div><div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="waysurfers-frame" src="about:blank" allowfullscreen></iframe></div></div></div>
 
     <div id="taskbar">
-        <button id="start-button" onclick="alert('HereEmu v24.0 💪 - Popüler Oyunlar & Mermer Güncellemesi!')">Başlat</button>
+        <button id="start-button" onclick="alert(getText('startButtonMsg'))">Başlat</button>
         <div id="clock">00:00</div>
     </div>
 
@@ -813,7 +813,63 @@
         // Tüm metinler
         const translations = {
             tr: {
-                settings: 'Ayarlar',
+                // Masaüstü ikonları
+                iconUpload: 'Sisteme Yükle',
+                iconHarddisk: 'Harddisk',
+                iconNotepad: 'Not Defteri',
+                iconOsstore: 'OsStore',
+                iconCredits: 'Credits',
+                iconSettings: 'Ayarlar',
+                
+                // Auto Clicker paneli
+                autoclickerDrag: 'TUT',
+                autoclickerInterval: 'Aralık (ms):',
+                autoclickerAdd: '🎯 Ekle',
+                autoclickerClear: '🗑️ Sil',
+                autoclickerStart: '▶ Başlat',
+                autoclickerStop: '⏸ Durdur',
+                
+                // Credits
+                creditsOwner: 'Owner',
+                creditsYt: 'YouTube',
+                creditsHelper: 'Helper',
+                
+                // Fullscreen dialog
+                fullscreenText: 'Alt yerleri de gizlemek istiyor musun?',
+                fullscreenNo: 'Hayır',
+                fullscreenYes: 'Evet',
+                
+                // Virus dialog
+                virusText: 'Uygulamayı açmak istiyor musun???',
+                virusNo: 'Vazgeçtim',
+                virusYes: 'Evet',
+                
+                // OsStore menü
+                storePopular: '⭐ Popüler',
+                storeApps: 'Uygulamalar',
+                storeGames: 'Oyunlar',
+                storeMystery: '???',
+                storeTitlePopularApps: 'Popüler Uygulamalar',
+                storeTitlePopularGames: 'Popüler Oyunlar',
+                mysteryDesc: 'Bunu açmaman tavsiye edilir...',
+                
+                // Uploader
+                uploaderTitle: 'Yükleme İstasyonu',
+                uploaderLogoText: 'Ana Ekran Başlatıcı Logosu',
+                uploaderSend: 'Render Sunucusuna Gönder',
+                
+                // Files
+                filesTitle: 'Render Sunucu Dosyaları',
+                filesEmpty: 'Hafıza boş.',
+                
+                // Notepad
+                notepadTitle: 'Not Defteri',
+                notepadPlaceholder: 'Yazılım notları...',
+                
+                // Media
+                mediaTitle: 'Medya Oynatıcı',
+                
+                // Settings
                 settingsWindow: '⚙️ Ayarlar',
                 menuAppearance: 'Görünüm',
                 menuAutoclicker: 'Auto Clicker',
@@ -825,9 +881,9 @@
                 appearanceApplyBtn: 'Seçili Fotoğrafı Uygula',
                 appearanceResetBtn: '🔄 Arka Planı Sıfırla (Varsayılana Dön)',
                 appearanceTaskbar: 'Görev çubuğunu gizle',
-                autoclickerInterval: 'Tıklama aralığı (ms)',
+                autoclickerIntervalLabel: 'Tıklama aralığı (ms)',
                 autoclickerSave: 'Kaydet',
-                autoclickerClear: '🗑️ Hedefleri Temizle',
+                autoclickerClearBtn: '🗑️ Hedefleri Temizle',
                 appsLabel: 'Yüklü Uygulamalar',
                 languageLabel: '🌐 Dil / Language',
                 reportLabel: '🐞 Hata Raporlama / Report Bug',
@@ -836,21 +892,81 @@
                 systemVersion: 'Sürüm',
                 systemReset: '⚠️ Tüm ayarları sıfırla',
                 langStatus: '✅ Türkçe seçili / Turkish selected',
-                fullscreenText: 'Alt yerleri de gizlemek istiyor musun?',
-                fullscreenNo: 'Hayır',
-                fullscreenYes: 'Evet',
-                virusText: 'Uygulamayı açmak istiyor musun???',
-                virusNo: 'Vazgeçtim',
-                virusYes: 'Evet',
-                autoclickerIntervalLabel: 'Aralık (ms):',
-                autoclickerAdd: '🎯 Ekle',
-                autoclickerClearBtn: '🗑️ Sil',
-                autoclickerStart: '▶ Başlat',
-                autoclickerStop: '⏸ Durdur',
-                iconSettings: 'Ayarlar'
+                
+                // Alert / Confirm mesajları
+                targetsCleared: 'Tüm hedefler temizlendi.',
+                wallpaperUpdated: 'Arka plan güncellendi!',
+                wallpaperReset: 'Arka plan varsayılana döndürüldü.',
+                clickerUpdated: 'Auto Clicker aralığı güncellendi.',
+                uninstallConfirm: (name) => `"${name}" uygulamasını kaldırmak istediğinize emin misiniz?`,
+                resetConfirm: 'Tüm ayarlar ve uygulama yüklemeleri sıfırlanacak. Devam et?',
+                resetDone: 'Tüm ayarlar sıfırlandı.',
+                noTarget: "Lütfen önce '🎯 Ekle' butonu ile en az bir hedef belirle!",
+                startButtonMsg: 'HereEmu v24.0 💪 - Popüler Oyunlar & Mermer Güncellemesi!',
+                noFile: 'Dosya seçmedin!',
+                uploadSuccess: 'Dosya Render sunucusuna başarıyla yüklendi!',
+                uploadError: 'Yükleme hatası.',
+                langChanged: 'Dil Türkçe olarak değiştirildi!',
+                fileReadError: 'Dosya okunamadı, lütfen başka bir dosya deneyin.'
             },
             en: {
-                settings: 'Settings',
+                // Masaüstü ikonları
+                iconUpload: 'Upload to System',
+                iconHarddisk: 'Harddisk',
+                iconNotepad: 'Notepad',
+                iconOsstore: 'OsStore',
+                iconCredits: 'Credits',
+                iconSettings: 'Settings',
+                
+                // Auto Clicker paneli
+                autoclickerDrag: 'HOLD',
+                autoclickerInterval: 'Interval (ms):',
+                autoclickerAdd: '🎯 Add',
+                autoclickerClear: '🗑️ Clear',
+                autoclickerStart: '▶ Start',
+                autoclickerStop: '⏸ Stop',
+                
+                // Credits
+                creditsOwner: 'Owner',
+                creditsYt: 'YouTube',
+                creditsHelper: 'Helper',
+                
+                // Fullscreen dialog
+                fullscreenText: 'Do you want to hide the bottom area too?',
+                fullscreenNo: 'No',
+                fullscreenYes: 'Yes',
+                
+                // Virus dialog
+                virusText: 'Do you want to open the app???',
+                virusNo: 'Cancel',
+                virusYes: 'Yes',
+                
+                // OsStore menü
+                storePopular: '⭐ Popular',
+                storeApps: 'Apps',
+                storeGames: 'Games',
+                storeMystery: '???',
+                storeTitlePopularApps: 'Popular Apps',
+                storeTitlePopularGames: 'Popular Games',
+                mysteryDesc: 'It is recommended not to open this...',
+                
+                // Uploader
+                uploaderTitle: 'Upload Station',
+                uploaderLogoText: 'Home Screen Launcher Logo',
+                uploaderSend: 'Send to Render Server',
+                
+                // Files
+                filesTitle: 'Render Server Files',
+                filesEmpty: 'Memory is empty.',
+                
+                // Notepad
+                notepadTitle: 'Notepad',
+                notepadPlaceholder: 'Software notes...',
+                
+                // Media
+                mediaTitle: 'Media Player',
+                
+                // Settings
                 settingsWindow: '⚙️ Settings',
                 menuAppearance: 'Appearance',
                 menuAutoclicker: 'Auto Clicker',
@@ -862,9 +978,9 @@
                 appearanceApplyBtn: 'Apply Selected Photo',
                 appearanceResetBtn: '🔄 Reset Wallpaper (Default)',
                 appearanceTaskbar: 'Hide taskbar',
-                autoclickerInterval: 'Click interval (ms)',
+                autoclickerIntervalLabel: 'Click interval (ms)',
                 autoclickerSave: 'Save',
-                autoclickerClear: '🗑️ Clear Targets',
+                autoclickerClearBtn: '🗑️ Clear Targets',
                 appsLabel: 'Installed Apps',
                 languageLabel: '🌐 Language / Dil',
                 reportLabel: '🐞 Report Bug / Hata Raporla',
@@ -873,133 +989,122 @@
                 systemVersion: 'Version',
                 systemReset: '⚠️ Reset all settings',
                 langStatus: '✅ English selected / İngilizce seçili',
-                fullscreenText: 'Do you want to hide the bottom area too?',
-                fullscreenNo: 'No',
-                fullscreenYes: 'Yes',
-                virusText: 'Do you want to open the app???',
-                virusNo: 'Cancel',
-                virusYes: 'Yes',
-                autoclickerIntervalLabel: 'Interval (ms):',
-                autoclickerAdd: '🎯 Add',
-                autoclickerClearBtn: '🗑️ Clear',
-                autoclickerStart: '▶ Start',
-                autoclickerStop: '⏸ Stop',
-                iconSettings: 'Settings'
+                
+                // Alert / Confirm mesajları
+                targetsCleared: 'All targets cleared.',
+                wallpaperUpdated: 'Wallpaper updated!',
+                wallpaperReset: 'Wallpaper reset to default.',
+                clickerUpdated: 'Auto Clicker interval updated.',
+                uninstallConfirm: (name) => `Are you sure you want to uninstall "${name}"?`,
+                resetConfirm: 'All settings and app installations will be reset. Continue?',
+                resetDone: 'All settings reset.',
+                noTarget: "Please add at least one target with '🎯 Add' button!",
+                startButtonMsg: 'HereEmu v24.0 💪 - Popular Games & Marble Update!',
+                noFile: 'No file selected!',
+                uploadSuccess: 'File successfully uploaded to Render server!',
+                uploadError: 'Upload error.',
+                langChanged: 'Language changed to English!',
+                fileReadError: 'Could not read file, please try another file.'
             }
         };
 
-        function getText(key) {
-            return translations[currentLanguage]?.[key] || translations.tr[key] || key;
+        function getText(key, ...args) {
+            let text = translations[currentLanguage]?.[key] || translations.tr[key] || key;
+            if (typeof text === 'function') return text(...args);
+            return text;
         }
 
         function updateUILanguage() {
-            // Masaüstü ikon
-            const iconText = document.getElementById('settings-icon-text');
-            if (iconText) iconText.textContent = getText('iconSettings');
-
-            // Ayarlar penceresi başlığı
-            const title = document.getElementById('settings-window-title');
-            if (title) title.textContent = getText('settingsWindow');
-
-            // Menü butonları
-            const menuTexts = [
-                { id: 'settings-menu-appearance-text', key: 'menuAppearance' },
-                { id: 'settings-menu-autoclicker-text', key: 'menuAutoclicker' },
-                { id: 'settings-menu-apps-text', key: 'menuApps' },
-                { id: 'settings-menu-language-text', key: 'menuLanguage' },
-                { id: 'settings-menu-report-text', key: 'menuReport' },
-                { id: 'settings-menu-system-text', key: 'menuSystem' }
-            ];
-            menuTexts.forEach(item => {
-                const el = document.getElementById(item.id);
-                if (el) el.textContent = getText(item.key);
-            });
-
-            // Görünüm sayfası
-            const appearanceLabels = [
-                { id: 'settings-appearance-file-label', key: 'appearanceFileLabel' },
-                { id: 'settings-appearance-apply-btn', key: 'appearanceApplyBtn' },
-                { id: 'settings-appearance-reset-btn', key: 'appearanceResetBtn' },
-                { id: 'settings-appearance-taskbar-text', key: 'appearanceTaskbar' }
-            ];
-            appearanceLabels.forEach(item => {
-                const el = document.getElementById(item.id);
-                if (el) el.textContent = getText(item.key);
-            });
-
-            // Auto Clicker sayfası
-            const autoclickerLabels = [
-                { id: 'settings-autoclicker-interval-label', key: 'autoclickerInterval' },
-                { id: 'settings-autoclicker-save-btn', key: 'autoclickerSave' },
-                { id: 'settings-autoclicker-clear-btn', key: 'autoclickerClear' }
-            ];
-            autoclickerLabels.forEach(item => {
-                const el = document.getElementById(item.id);
-                if (el) el.textContent = getText(item.key);
-            });
-
-            // Uygulamalar sayfası
-            const appsLabel = document.getElementById('settings-apps-label');
-            if (appsLabel) appsLabel.textContent = getText('appsLabel');
-
-            // Dil sayfası
-            const langLabel = document.getElementById('settings-language-label');
-            if (langLabel) langLabel.textContent = getText('languageLabel');
-
-            // Hata Raporla sayfası
-            const reportLabels = [
-                { id: 'settings-report-label', key: 'reportLabel' },
-                { id: 'settings-report-btn-text', key: 'reportBtn' },
-                { id: 'settings-report-desc', key: 'reportDesc' }
-            ];
-            reportLabels.forEach(item => {
-                const el = document.getElementById(item.id);
-                if (el) el.textContent = getText(item.key);
-            });
-
-            // Sistem sayfası
-            const systemLabels = [
-                { id: 'settings-system-version-label', key: 'systemVersion' },
-                { id: 'settings-system-reset-btn', key: 'systemReset' }
-            ];
-            systemLabels.forEach(item => {
-                const el = document.getElementById(item.id);
-                if (el) el.textContent = getText(item.key);
-            });
-
-            // Dil durumu
-            const status = document.getElementById('lang-status');
-            if (status) status.textContent = getText('langStatus');
-
-            // Dialog metinleri
-            const fullscreenText = document.getElementById('fullscreen-dialog-text');
-            if (fullscreenText) fullscreenText.textContent = getText('fullscreenText');
-            const fullscreenNo = document.getElementById('fullscreen-dialog-no');
-            if (fullscreenNo) fullscreenNo.textContent = getText('fullscreenNo');
-            const fullscreenYes = document.getElementById('fullscreen-dialog-yes');
-            if (fullscreenYes) fullscreenYes.textContent = getText('fullscreenYes');
-
-            const virusText = document.getElementById('virus-dialog-text');
-            if (virusText) virusText.textContent = getText('virusText');
-            const virusNo = document.getElementById('virus-dialog-no');
-            if (virusNo) virusNo.textContent = getText('virusNo');
-            const virusYes = document.getElementById('virus-dialog-yes');
-            if (virusYes) virusYes.textContent = getText('virusYes');
+            // Masaüstü ikonları
+            document.getElementById('icon-upload').textContent = getText('iconUpload');
+            document.getElementById('icon-harddisk').textContent = getText('iconHarddisk');
+            document.getElementById('icon-notepad').textContent = getText('iconNotepad');
+            document.getElementById('icon-osstore').textContent = getText('iconOsstore');
+            document.getElementById('icon-credits').textContent = getText('iconCredits');
+            document.getElementById('icon-settings').textContent = getText('iconSettings');
 
             // Auto Clicker paneli
-            const acInterval = document.getElementById('autoclicker-interval-label');
-            if (acInterval) acInterval.textContent = getText('autoclickerIntervalLabel');
-            const acAdd = document.getElementById('autoclicker-add-btn');
-            if (acAdd) acAdd.textContent = getText('autoclickerAdd');
-            const acClear = document.getElementById('autoclicker-clear-btn');
-            if (acClear) acClear.textContent = getText('autoclickerClearBtn');
-            const acStart = document.getElementById('clicker-start');
-            if (acStart) acStart.textContent = getText('autoclickerStart');
-            const acStop = document.getElementById('clicker-stop');
-            if (acStop) acStop.textContent = getText('autoclickerStop');
+            document.getElementById('autoclicker-drag').textContent = getText('autoclickerDrag');
+            document.getElementById('autoclicker-interval-label').textContent = getText('autoclickerInterval');
+            document.getElementById('autoclicker-add-btn').textContent = getText('autoclickerAdd');
+            document.getElementById('autoclicker-clear-btn').textContent = getText('autoclickerClear');
+            document.getElementById('clicker-start').textContent = getText('autoclickerStart');
+            document.getElementById('clicker-stop').textContent = getText('autoclickerStop');
 
+            // Credits
+            document.getElementById('credits-owner-label').textContent = getText('creditsOwner');
+            document.getElementById('credits-yt-label').textContent = getText('creditsYt');
+            document.getElementById('credits-helper-label').textContent = getText('creditsHelper');
+
+            // Fullscreen dialog
+            document.getElementById('fullscreen-dialog-text').textContent = getText('fullscreenText');
+            document.getElementById('fullscreen-dialog-no').textContent = getText('fullscreenNo');
+            document.getElementById('fullscreen-dialog-yes').textContent = getText('fullscreenYes');
+
+            // Virus dialog
+            document.getElementById('virus-dialog-text').textContent = getText('virusText');
+            document.getElementById('virus-dialog-no').textContent = getText('virusNo');
+            document.getElementById('virus-dialog-yes').textContent = getText('virusYes');
+
+            // OsStore menü
+            document.getElementById('store-menu-popular').textContent = getText('storePopular');
+            document.getElementById('store-menu-apps').textContent = getText('storeApps');
+            document.getElementById('store-menu-games').textContent = getText('storeGames');
+            document.getElementById('store-menu-mystery').textContent = getText('storeMystery');
+            document.getElementById('store-title-popular-apps').textContent = getText('storeTitlePopularApps');
+            document.getElementById('store-title-popular-games').textContent = getText('storeTitlePopularGames');
+            document.getElementById('mystery-desc').textContent = getText('mysteryDesc');
+
+            // Uploader
+            document.getElementById('uploader-title').textContent = getText('uploaderTitle');
+            document.getElementById('uploader-logo-text').textContent = getText('uploaderLogoText');
+            document.getElementById('uploader-send-btn').textContent = getText('uploaderSend');
+
+            // Files
+            document.getElementById('files-title').textContent = getText('filesTitle');
+
+            // Notepad
+            document.getElementById('notepad-title').textContent = getText('notepadTitle');
+            document.getElementById('txt-area').placeholder = getText('notepadPlaceholder');
+
+            // Media
+            document.getElementById('media-title').textContent = getText('mediaTitle');
+
+            // Settings
+            document.getElementById('settings-window-title').textContent = getText('settingsWindow');
+            document.getElementById('settings-menu-appearance-text').textContent = getText('menuAppearance');
+            document.getElementById('settings-menu-autoclicker-text').textContent = getText('menuAutoclicker');
+            document.getElementById('settings-menu-apps-text').textContent = getText('menuApps');
+            document.getElementById('settings-menu-language-text').textContent = getText('menuLanguage');
+            document.getElementById('settings-menu-report-text').textContent = getText('menuReport');
+            document.getElementById('settings-menu-system-text').textContent = getText('menuSystem');
+            document.getElementById('settings-appearance-file-label').textContent = getText('appearanceFileLabel');
+            document.getElementById('settings-appearance-apply-btn').textContent = getText('appearanceApplyBtn');
+            document.getElementById('settings-appearance-reset-btn').textContent = getText('appearanceResetBtn');
+            document.getElementById('settings-appearance-taskbar-text').textContent = getText('appearanceTaskbar');
+            document.getElementById('settings-autoclicker-interval-label').textContent = getText('autoclickerIntervalLabel');
+            document.getElementById('settings-autoclicker-save-btn').textContent = getText('autoclickerSave');
+            document.getElementById('settings-autoclicker-clear-btn').textContent = getText('autoclickerClearBtn');
+            document.getElementById('settings-apps-label').textContent = getText('appsLabel');
+            document.getElementById('settings-language-label').textContent = getText('languageLabel');
+            document.getElementById('settings-report-label').textContent = getText('reportLabel');
+            document.getElementById('settings-report-btn-text').textContent = getText('reportBtn');
+            document.getElementById('settings-report-desc').textContent = getText('reportDesc');
+            document.getElementById('settings-system-version-label').textContent = getText('systemVersion');
+            document.getElementById('settings-system-reset-btn').textContent = getText('systemReset');
+            document.getElementById('lang-status').textContent = getText('langStatus');
+
+            // Start button mesajı (alert kullanılacak)
             // Dil butonlarını güncelle
             updateLanguageButtons();
+            
+            // OsStore butonlarını güncelle (Yükle/Kaldır)
+            for (const key in appDatabase) {
+                syncStoreButtons(key);
+            }
+            
+            // Yüklü uygulama listesini güncelle
+            renderInstalledAppsList();
         }
 
         function selectLanguage(lang) {
@@ -1015,7 +1120,7 @@
             currentLanguage = lang;
             localStorage.setItem('hereemu_language', lang);
             updateUILanguage();
-            alert(lang === 'tr' ? 'Dil Türkçe olarak değiştirildi!' : 'Language changed to English!');
+            alert(getText('langChanged'));
         }
 
         function updateLanguageButtons() {
@@ -1099,7 +1204,7 @@
             const fileInput = document.getElementById('settings-wallpaper-file');
             const file = fileInput.files[0];
             if (!file) {
-                alert('Lütfen bir fotoğraf seçin.');
+                alert(getText('noFile'));
                 return;
             }
             const reader = new FileReader();
@@ -1108,10 +1213,10 @@
                 document.getElementById('desktop').style.backgroundImage = `url('${dataUrl}')`;
                 document.getElementById('settings-wallpaper-preview').style.backgroundImage = `url('${dataUrl}')`;
                 saveSettings();
-                alert('Arka plan güncellendi!');
+                alert(getText('wallpaperUpdated'));
             };
             reader.onerror = function() {
-                alert('Dosya okunamadı, lütfen başka bir dosya deneyin.');
+                alert(getText('fileReadError'));
             };
             reader.readAsDataURL(file);
         }
@@ -1121,7 +1226,7 @@
             document.getElementById('settings-wallpaper-preview').style.backgroundImage = `url('${DEFAULT_WALLPAPER}')`;
             document.getElementById('settings-wallpaper-file').value = '';
             saveSettings();
-            alert('Arka plan varsayılana döndürüldü.');
+            alert(getText('wallpaperReset'));
         }
 
         function applyTaskbarVisibility() {
@@ -1137,7 +1242,7 @@
             const ms = parseInt(document.getElementById('settings-click-ms').value) || 100;
             document.getElementById('click-ms').value = ms;
             saveSettings();
-            alert('Auto Clicker aralığı güncellendi.');
+            alert(getText('clickerUpdated'));
         }
 
         function renderInstalledAppsList() {
@@ -1162,8 +1267,7 @@
         }
 
         function uninstallAppFromSettings(appKey) {
-            const confirmText = currentLanguage === 'tr' ? `"${appDatabase[appKey].name}" uygulamasını kaldırmak istediğinize emin misiniz?` : `Are you sure you want to uninstall "${appDatabase[appKey].name}"?`;
-            if (!confirm(confirmText)) return;
+            if (!confirm(getText('uninstallConfirm', appDatabase[appKey].name))) return;
             const app = appDatabase[appKey];
             app.installed = false;
             syncStoreButtons(appKey);
@@ -1178,8 +1282,7 @@
         }
 
         function resetAllSettings() {
-            const confirmText = currentLanguage === 'tr' ? 'Tüm ayarlar ve uygulama yüklemeleri sıfırlanacak. Devam et?' : 'All settings and app installations will be reset. Continue?';
-            if (!confirm(confirmText)) return;
+            if (!confirm(getText('resetConfirm'))) return;
             for (const key in appDatabase) {
                 appDatabase[key].installed = false;
                 syncStoreButtons(key);
@@ -1203,7 +1306,7 @@
             document.getElementById('settings-click-ms').value = 100;
             document.getElementById('click-ms').value = 100;
             clearTargets();
-            alert(currentLanguage === 'tr' ? 'Tüm ayarlar sıfırlandı.' : 'All settings reset.');
+            alert(getText('resetDone'));
         }
 
         function switchSettingsTab(tab) {
@@ -1361,7 +1464,7 @@
         }
 
         function startAutoClicker() {
-            if (targetPoints.length === 0) return alert(currentLanguage === 'tr' ? "Lütfen önce '🎯 Ekle' butonu ile en az bir hedef belirle!" : "Please add at least one target with '🎯 Add' button!");
+            if (targetPoints.length === 0) return alert(getText('noTarget'));
             const ms = parseInt(document.getElementById('click-ms').value) || 100;
             
             document.getElementById('clicker-start').style.display = 'none';
@@ -1627,7 +1730,7 @@
         function uploadFileToServer() {
             const fileInput = document.getElementById('file-input');
             const file = fileInput.files[0];
-            if (!file) return alert("Dosya seçmedin!");
+            if (!file) return alert(getText('noFile'));
             const reader = new FileReader();
             reader.onload = function(e) {
                 const payload = { name: file.name, type: file.type, content: e.target.result };
@@ -1637,8 +1740,8 @@
                     body: JSON.stringify(payload)
                 })
                 .then(res => res.json())
-                .then(data => { alert(data.message); fileInput.value = ''; refreshFiles(); })
-                .catch(err => alert("Yükleme hatası."));
+                .then(data => { alert(getText('uploadSuccess')); fileInput.value = ''; refreshFiles(); })
+                .catch(err => alert(getText('uploadError')));
             };
             reader.readAsDataURL(file);
         }
@@ -1648,7 +1751,7 @@
             .then(res => res.json())
             .then(files => {
                 const list = document.getElementById('file-list');
-                list.innerHTML = files.length === 0 ? '<li>Hafıza boş.</li>' : '';
+                list.innerHTML = files.length === 0 ? `<li>${getText('filesEmpty')}</li>` : '';
                 files.forEach(file => {
                     const li = document.createElement('li');
                     let icon = '📁';
