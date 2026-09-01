@@ -579,6 +579,17 @@
                     <!-- POPÜLER SEKMESİ -->
                     <div id="page-popular" class="store-page active">
                         <div class="store-section-title" id="store-title-popular-apps">Popüler Uygulamalar</div>
+                        
+                        <!-- OsChat - POPÜLER -->
+                        <div class="store-item">
+                            <div class="store-item-info"><img src="https://i.ibb.co/dw1zgj3V/Os-Chat-png.png"><div><div class="store-item-title">OsChat</div><div class="store-item-desc" id="desc-oschat-pop">arkadaşlarınla sohbet et!💬</div></div></div>
+                            <div class="store-item-actions">
+                                <button id="btn-open-oschat-pop" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-oschat')">Aç</button>
+                                <button id="btn-action-oschat-pop" class="store-btn store-btn-install" onclick="toggleAppInstallation('oschat')">Yükle</button>
+                                <div id="progress-container-oschat-pop" class="progress-container"><div id="progress-bar-oschat-pop" class="progress-bar"></div></div>
+                            </div>
+                        </div>
+
                         <div class="store-item">
                             <div class="store-item-info"><img src="https://i.ibb.co/C5yHnGg1/Os-Here-Ai.png"><div><div class="store-item-title">OsHereAi</div><div class="store-item-desc" id="desc-oshereai-pop">Yapay zeka asistanı ile geleceği şekillendir!</div></div></div>
                             <div class="store-item-actions">
@@ -600,6 +611,16 @@
                     </div>
 
                     <div id="page-apps" class="store-page">
+                        <!-- OsChat - UYGULAMALAR -->
+                        <div class="store-item">
+                            <div class="store-item-info"><img src="https://i.ibb.co/dw1zgj3V/Os-Chat-png.png"><div><div class="store-item-title">OsChat</div><div class="store-item-desc" id="desc-oschat">arkadaşlarınla sohbet et!💬</div></div></div>
+                            <div class="store-item-actions">
+                                <button id="btn-open-oschat" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-oschat')">Aç</button>
+                                <button id="btn-action-oschat" class="store-btn store-btn-install" onclick="toggleAppInstallation('oschat')">Yükle</button>
+                                <div id="progress-container-oschat" class="progress-container"><div id="progress-bar-oschat" class="progress-bar"></div></div>
+                            </div>
+                        </div>
+
                         <div class="store-item">
                             <div class="store-item-info"><img src="https://i.ibb.co/C5yHnGg1/Os-Here-Ai.png"><div><div class="store-item-title">OsHereAi</div><div class="store-item-desc" id="desc-oshereai">Yapay zeka asistanı ile geleceği şekillendir!</div></div></div>
                             <div class="store-item-actions">
@@ -837,6 +858,12 @@
     </div>
 
     <!-- PENCERELER -->
+    <!-- OsChat PENCERESİ -->
+    <div id="win-oschat" class="window" style="width:480px; height:360px;">
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsChat</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-oschat')"></button><button class="close-btn" onclick="closeWindow('win-oschat')"></button></div></div>
+        <div class="window-content" style="padding:0; background:#fff;"><div class="browser-container"><iframe id="oschat-frame" src="about:blank"></iframe></div></div>
+    </div>
+
     <div id="win-oshereai" class="window" style="width:440px; height:340px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsHereAi</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-oshereai')"></button><button class="close-btn" onclick="closeWindow('win-oshereai')"></button></div></div>
         <div class="window-content" style="padding:0; background:#fff;"><div class="browser-container"><iframe id="oshereai-frame" src="about:blank"></iframe></div></div>
@@ -899,6 +926,7 @@
 
     <script {nonce}>
         const appDatabase = {
+            oschat: { name: 'OsChat', logo: 'https://i.ibb.co/dw1zgj3V/Os-Chat-png.png', winId: 'win-oschat', url: 'https://oschat-6nhw.onrender.com', frameId: 'oschat-frame', installed: false, isInstalling: false },
             oshereai: { name: 'OsHereAi', logo: 'https://i.ibb.co/C5yHnGg1/Os-Here-Ai.png', winId: 'win-oshereai', url: 'https://oshere-ai-app.onrender.com', frameId: 'oshereai-frame', installed: false, isInstalling: false },
             osmarble: { name: 'OsMarble', logo: 'https://i.ibb.co/6R0kQ4tx/Os-Marble.png', winId: 'win-osmarble', url: 'https://osmarble.onrender.com', frameId: 'marble-frame', installed: false, isInstalling: false },
             oschess: { name: 'OsChess', logo: 'https://i.ibb.co/JR569wJG/Os-Chess.png', winId: 'win-oschess', url: 'https://oschess.onrender.com', frameId: 'chess-frame', installed: false, isInstalling: false },
@@ -970,6 +998,7 @@
                 storeTitlePopularGames: 'Popüler Oyunlar',
                 
                 // Uygulama açıklamaları
+                descOschat: 'arkadaşlarınla sohbet et!💬',
                 descOshereai: 'Yapay zeka asistanı ile geleceği şekillendir!',
                 descOschess: 'Aklını konuştur ve şah mat et!',
                 descAutoclicker: 'Çok noktalı otomatik hızlı tıklama hilesi!',
@@ -1107,6 +1136,7 @@
                 storeTitlePopularGames: 'Popular Games',
                 
                 // Uygulama açıklamaları
+                descOschat: 'chat with your friends!💬',
                 descOshereai: 'Shape the future with AI assistant!',
                 descOschess: 'Use your mind and checkmate!',
                 descAutoclicker: 'Multi-point automatic fast clicking cheat!',
@@ -1250,6 +1280,8 @@
             document.getElementById('store-title-popular-games').textContent = getText('storeTitlePopularGames');
 
             // Uygulama açıklamaları
+            document.getElementById('desc-oschat-pop').textContent = getText('descOschat');
+            document.getElementById('desc-oschat').textContent = getText('descOschat');
             document.getElementById('desc-oshereai-pop').textContent = getText('descOshereai');
             document.getElementById('desc-oschess-pop').textContent = getText('descOschess');
             document.getElementById('desc-oshereai').textContent = getText('descOshereai');
@@ -1521,7 +1553,7 @@
             if (app.winId === 'autoclicker') {
                 toggleAutoClickerWindow(false);
             } else if (app.winId !== 'special-virus') {
-                closeWindow(app.winId);
+                closeWindow(app.win msId);
             }
             saveSystemState();
             renderDesktopIcons();
@@ -1531,13 +1563,14 @@
         function resetAllSettings() {
             if (!confirm(getText('resetConfirm'))) return;
             for (const key in appDatabase) {
-                appDatabase[key].installed = false;
+                appDatabase[key].installed = false);
+;
                 syncStoreButtons(key);
                 if (appDatabase[key].winId === 'autoclicker') {
-                    toggleAutoClickerWindow(false);
+                    toggleAutoClickerWindow(false           );
                 } else if (appDatabase[key].winId !== 'special-virus') {
                     closeWindow(appDatabase[key].winId);
-                }
+                const }
             }
             saveSystemState();
             renderDesktopIcons();
@@ -1622,8 +1655,7 @@
 
         function saveClickerSettings() {
             const ms = document.getElementById('click-ms').value;
-            localStorage.setItem('hereemu_click_ms', ms);
-            const settings = JSON.parse(localStorage.getItem('hereemu_settings') || '{}');
+            localStorage.setItem('hereemu_click_ms', settings = JSON.parse(localStorage.getItem('hereemu_settings') || '{}');
             settings.clickMs = parseInt(ms) || 100;
             localStorage.setItem('hereemu_settings', JSON.stringify(settings));
         }
@@ -1919,18 +1951,19 @@
                 document.body.classList.remove('hide-taskbar');
             } else {
                 currentDialogWindowId = id;
-                document.getElementById('fullscreen-dialog-overlay').style.display = 'flex';
+               .preventDefault document.getElementById('fullscreen-dialog-overlay').style.display = 'flex';
             }
         }
 
         function handleFullscreenResponse(hideBottom) {
-            document.getElementById('fullscreen-dialog-overlay').style.display = 'none';
+            document.getElementById('fullscreen-d();
+ialog-overlay').style.display = 'none';
             if (!currentDialogWindowId) return;
             const w = document.getElementById(currentDialogWindowId);
-            if (!w) return;
+            if (!           w) return;
             if (hideBottom) {
                 document.body.classList.add('hide-taskbar');
-                w.classList.add('ultra-maximized');
+                w.classList.add('ultra-maxim constized');
             } else {
                 w.classList.add('maximized');
             }
@@ -1948,8 +1981,7 @@
             document.addEventListener('touchmove', dragMove, { passive: false }); document.addEventListener('touchend', dragEnd);
         }
         function dragMove(e) {
-            if (!activeWin) return; e.preventDefault();
-            const cX = e.touches ? e.touches[0].clientX : e.clientX;
+            if (!activeWin) return; e cX = e.touches ? e.touches[0].clientX : e.clientX;
             const cY = e.touches ? e.touches[0].clientY : e.clientY;
             activeWin.style.left = (initialX + (cX - startX)) + 'px';
             activeWin.style.top = (initialY + (cY - startY)) + 'px';
