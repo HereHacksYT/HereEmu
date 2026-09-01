@@ -172,9 +172,21 @@
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
+            margin-bottom: 10px;
         }
         #get-site-screen .get-site-box .get-site-btn:hover {
             background: #218838;
+        }
+        #get-site-screen .get-site-box .get-site-skip-btn {
+            background: transparent;
+            color: #888;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        #get-site-screen .get-site-box .get-site-skip-btn:hover {
+            color: #fff;
         }
 
         #desktop {
@@ -397,6 +409,8 @@
         .lang-btn-unselected { background: #0078d4 !important; color: white !important; border: none; border-radius: 8px; padding: 10px 20px; cursor: pointer; font-weight: bold; }
         .get-site-btn-green { background: #28a745; color: white; border: none; border-radius: 8px; padding: 12px 30px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; }
         .get-site-btn-green:hover { background: #218838; }
+        .skip-btn { background: transparent; color: #888; border: none; font-size: 14px; cursor: pointer; text-decoration: underline; margin-top: 10px; }
+        .skip-btn:hover { color: #fff; }
     </style>
 </head>
 <body>
@@ -431,6 +445,7 @@
             <div class="get-site-title" id="get-site-title">siteyi elde etmek için tıklayın!</div>
             <div class="get-site-sub" id="get-site-sub">HereEmu'yu hemen keşfedin</div>
             <button class="get-site-btn" id="get-site-btn" onclick="openGetSite()">Siteyi aç</button>
+            <button class="skip-btn" id="get-site-skip-btn" onclick="skipGetSite()">İstemiyorum</button>
         </div>
     </div>
 
@@ -1022,6 +1037,7 @@
                 getSiteTitle: 'siteyi elde etmek için tıklayın!',
                 getSiteSub: 'HereEmu\'yu hemen keşfedin',
                 getSiteBtn: 'Siteyi aç',
+                getSiteSkip: 'İstemiyorum',
                 
                 // Open Source
                 opensourceLabel: '🔓 Açık Kaynak / Open Source',
@@ -1158,6 +1174,7 @@
                 getSiteTitle: 'Click to get the site!',
                 getSiteSub: 'Discover HereEmu now',
                 getSiteBtn: 'Open Site',
+                getSiteSkip: 'Skip',
                 
                 // Open Source
                 opensourceLabel: '🔓 Open Source',
@@ -1296,6 +1313,7 @@
             document.getElementById('get-site-title').textContent = getText('getSiteTitle');
             document.getElementById('get-site-sub').textContent = getText('getSiteSub');
             document.getElementById('get-site-btn').textContent = getText('getSiteBtn');
+            document.getElementById('get-site-skip-btn').textContent = getText('getSiteSkip');
 
             // Open Source
             document.getElementById('settings-opensource-label').textContent = getText('opensourceLabel');
@@ -1362,17 +1380,23 @@
             }
         }
 
-        // Siteyi aç (HereEmu ana sayfası)
+        // Siteyi aç (HereEmu ana sayfası) - YENİ SEKMEDE
         function openGetSite() {
-            navigateOsWeb('https://gethereemu.onrender.com');
+            window.open('https://gethereemu.onrender.com', '_blank');
             document.getElementById('get-site-screen').classList.remove('show');
             // Masaüstünü göster
             loadSystemState();
         }
 
-        // Açık Kaynak (GitHub)
+        // Siteyi atla
+        function skipGetSite() {
+            document.getElementById('get-site-screen').classList.remove('show');
+            loadSystemState();
+        }
+
+        // Açık Kaynak (GitHub) - YENİ SEKMEDE
         function openOpenSource() {
-            navigateOsWeb('https://github.com/HereHacksYT/HereEmu/blob/main/README.md');
+            window.open('https://github.com/HereHacksYT/HereEmu/blob/main/README.md', '_blank');
         }
 
         // Hata Raporlama
