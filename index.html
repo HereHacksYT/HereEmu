@@ -123,6 +123,60 @@
             line-height: 1.4;
         }
 
+        /* SİTEYİ ALMA EKRANI */
+        #get-site-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999999997 !important;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        #get-site-screen.show {
+            display: flex;
+        }
+        #get-site-screen .get-site-box {
+            max-width: 400px;
+        }
+        #get-site-screen .get-site-box img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+        #get-site-screen .get-site-box .get-site-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        #get-site-screen .get-site-box .get-site-sub {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+        #get-site-screen .get-site-box .get-site-btn {
+            padding: 12px 30px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        #get-site-screen .get-site-box .get-site-btn:hover {
+            background: #218838;
+        }
+
         #desktop {
             width: 100%; height: calc(100% - 48px);
             background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920') no-repeat center center;
@@ -341,6 +395,8 @@
         .report-btn img { width: 24px; height: 24px; object-fit: contain; }
         .lang-btn-selected { background: #28a745 !important; color: white !important; border: none; border-radius: 8px; padding: 10px 20px; cursor: pointer; font-weight: bold; }
         .lang-btn-unselected { background: #0078d4 !important; color: white !important; border: none; border-radius: 8px; padding: 10px 20px; cursor: pointer; font-weight: bold; }
+        .get-site-btn-green { background: #28a745; color: white; border: none; border-radius: 8px; padding: 12px 30px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; }
+        .get-site-btn-green:hover { background: #218838; }
     </style>
 </head>
 <body>
@@ -365,6 +421,16 @@
                 <div class="lang-name">English</div>
                 <div class="lang-desc">You can change<br>it later in the settings</div>
             </div>
+        </div>
+    </div>
+
+    <!-- SİTEYİ ALMA EKRANI -->
+    <div id="get-site-screen">
+        <div class="get-site-box">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPyt9o2vV7qbUzPXo1bet8BsmumaYMNWALTk29xdsx5A&s=10" alt="HereEmu">
+            <div class="get-site-title" id="get-site-title">siteyi elde etmek için tıklayın!</div>
+            <div class="get-site-sub" id="get-site-sub">HereEmu'yu hemen keşfedin</div>
+            <button class="get-site-btn" id="get-site-btn" onclick="openGetSite()">Siteyi aç</button>
         </div>
     </div>
 
@@ -628,7 +694,7 @@
     </div>
 
     <!-- AYARLAR PENCERESİ (SETTINGS) -->
-    <div id="win-settings" class="window" style="width:500px; height:440px;">
+    <div id="win-settings" class="window" style="width:500px; height:480px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span id="settings-window-title">⚙️ Ayarlar</span>
             <div class="header-buttons">
@@ -639,16 +705,37 @@
         <div class="window-content" style="padding:0;">
             <div class="settings-layout">
                 <div class="settings-sidebar">
-                    <button id="settings-menu-appearance" class="settings-menu-btn active" onclick="switchSettingsTab('appearance')">🖼️ <span id="settings-menu-appearance-text">Görünüm</span></button>
+                    <!-- HereEmu'yu al - EN ÜSTE -->
+                    <button id="settings-menu-get" class="settings-menu-btn active" onclick="switchSettingsTab('get')">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPyt9o2vV7qbUzPXo1bet8BsmumaYMNWALTk29xdsx5A&s=10" style="width:16px; height:16px; vertical-align:middle; margin-right:4px;">
+                        <span id="settings-menu-get-text">HereEmu'yu al</span>
+                    </button>
+                    <button id="settings-menu-appearance" class="settings-menu-btn" onclick="switchSettingsTab('appearance')">🖼️ <span id="settings-menu-appearance-text">Görünüm</span></button>
                     <button id="settings-menu-autoclicker" class="settings-menu-btn" onclick="switchSettingsTab('autoclicker')">🖱️ <span id="settings-menu-autoclicker-text">Auto Clicker</span></button>
                     <button id="settings-menu-apps" class="settings-menu-btn" onclick="switchSettingsTab('apps')">📦 <span id="settings-menu-apps-text">Uygulamalar</span></button>
                     <button id="settings-menu-language" class="settings-menu-btn" onclick="switchSettingsTab('language')">🌐 <span id="settings-menu-language-text">Dil</span></button>
                     <button id="settings-menu-report" class="settings-menu-btn" onclick="switchSettingsTab('report')">🐞 <span id="settings-menu-report-text">Hata Raporla</span></button>
+                    <!-- Açık Kaynak -->
+                    <button id="settings-menu-opensource" class="settings-menu-btn" onclick="switchSettingsTab('opensource')">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPyt9o2vV7qbUzPXo1bet8BsmumaYMNWALTk29xdsx5A&s=10" style="width:16px; height:16px; vertical-align:middle; margin-right:4px;">
+                        <span id="settings-menu-opensource-text">Açık Kaynak</span>
+                    </button>
                     <button id="settings-menu-system" class="settings-menu-btn" onclick="switchSettingsTab('system')">💻 <span id="settings-menu-system-text">Sistem</span></button>
                 </div>
                 <div class="settings-main">
+                    <!-- HereEmu'yu al -->
+                    <div id="settings-page-get" class="settings-page active">
+                        <div class="settings-group">
+                            <label id="settings-get-label">🚀 HereEmu'yu al / Get HereEmu</label>
+                            <div style="margin-top:10px;">
+                                <button class="get-site-btn-green" id="settings-get-btn" onclick="openGetSite()">Siteyi aç</button>
+                            </div>
+                            <div style="margin-top:8px; font-size:12px; color:#666;" id="settings-get-desc">HereEmu'nun ana sayfasını ziyaret edin.</div>
+                        </div>
+                    </div>
+
                     <!-- Görünüm -->
-                    <div id="settings-page-appearance" class="settings-page active">
+                    <div id="settings-page-appearance" class="settings-page">
                         <div class="settings-group">
                             <label id="settings-appearance-file-label">Fotoğraf Seç</label>
                             <input type="file" id="settings-wallpaper-file" accept="image/*">
@@ -707,6 +794,15 @@
                                 <span id="settings-report-btn-text">Hata Raporla / Report Bug</span>
                             </button>
                             <div style="margin-top:8px; font-size:12px; color:#666;" id="settings-report-desc">Bir hata ile karşılaştığınızda bize bildirin.</div>
+                        </div>
+                    </div>
+
+                    <!-- Açık Kaynak -->
+                    <div id="settings-page-opensource" class="settings-page">
+                        <div class="settings-group">
+                            <label id="settings-opensource-label">🔓 Açık Kaynak / Open Source</label>
+                            <div style="margin-top:8px; font-size:13px; color:#555;" id="settings-opensource-desc">HereEmu açık kaynak kodludur. GitHub'da inceleyin.</div>
+                            <button class="get-site-btn-green" id="settings-opensource-btn" onclick="openOpenSource()" style="margin-top:12px;">GitHub'da Aç</button>
                         </div>
                     </div>
 
@@ -895,11 +991,13 @@
                 
                 // Settings
                 settingsWindow: '⚙️ Ayarlar',
+                menuGet: 'HereEmu\'yu al',
                 menuAppearance: 'Görünüm',
                 menuAutoclicker: 'Auto Clicker',
                 menuApps: 'Uygulamalar',
                 menuLanguage: 'Dil',
                 menuReport: 'Hata Raporla',
+                menuOpensource: 'Açık Kaynak',
                 menuSystem: 'Sistem',
                 appearanceFileLabel: 'Fotoğraf Seç',
                 appearanceApplyBtn: 'Seçili Fotoğrafı Uygula',
@@ -916,6 +1014,19 @@
                 systemVersion: 'Sürüm',
                 systemReset: '⚠️ Tüm ayarları sıfırla',
                 langStatus: '✅ Türkçe seçili / Turkish selected',
+                
+                // Get HereEmu
+                getLabel: '🚀 HereEmu\'yu al / Get HereEmu',
+                getBtn: 'Siteyi aç',
+                getDesc: 'HereEmu\'nun ana sayfasını ziyaret edin.',
+                getSiteTitle: 'siteyi elde etmek için tıklayın!',
+                getSiteSub: 'HereEmu\'yu hemen keşfedin',
+                getSiteBtn: 'Siteyi aç',
+                
+                // Open Source
+                opensourceLabel: '🔓 Açık Kaynak / Open Source',
+                opensourceDesc: 'HereEmu açık kaynak kodludur. GitHub\'da inceleyin.',
+                opensourceBtn: 'GitHub\'da Aç',
                 
                 // Alert / Confirm mesajları
                 targetsCleared: 'Tüm hedefler temizlendi.',
@@ -1016,11 +1127,13 @@
                 
                 // Settings
                 settingsWindow: '⚙️ Settings',
+                menuGet: 'Get HereEmu',
                 menuAppearance: 'Appearance',
                 menuAutoclicker: 'Auto Clicker',
                 menuApps: 'Apps',
                 menuLanguage: 'Language',
                 menuReport: 'Report Bug',
+                menuOpensource: 'Open Source',
                 menuSystem: 'System',
                 appearanceFileLabel: 'Select Photo',
                 appearanceApplyBtn: 'Apply Selected Photo',
@@ -1037,6 +1150,19 @@
                 systemVersion: 'Version',
                 systemReset: '⚠️ Reset all settings',
                 langStatus: '✅ English selected / İngilizce seçili',
+                
+                // Get HereEmu
+                getLabel: '🚀 Get HereEmu',
+                getBtn: 'Open Site',
+                getDesc: 'Visit the HereEmu main page.',
+                getSiteTitle: 'Click to get the site!',
+                getSiteSub: 'Discover HereEmu now',
+                getSiteBtn: 'Open Site',
+                
+                // Open Source
+                opensourceLabel: '🔓 Open Source',
+                opensourceDesc: 'HereEmu is open source. View on GitHub.',
+                opensourceBtn: 'Open on GitHub',
                 
                 // Alert / Confirm mesajları
                 targetsCleared: 'All targets cleared.',
@@ -1139,11 +1265,13 @@
 
             // Settings
             document.getElementById('settings-window-title').textContent = getText('settingsWindow');
+            document.getElementById('settings-menu-get-text').textContent = getText('menuGet');
             document.getElementById('settings-menu-appearance-text').textContent = getText('menuAppearance');
             document.getElementById('settings-menu-autoclicker-text').textContent = getText('menuAutoclicker');
             document.getElementById('settings-menu-apps-text').textContent = getText('menuApps');
             document.getElementById('settings-menu-language-text').textContent = getText('menuLanguage');
             document.getElementById('settings-menu-report-text').textContent = getText('menuReport');
+            document.getElementById('settings-menu-opensource-text').textContent = getText('menuOpensource');
             document.getElementById('settings-menu-system-text').textContent = getText('menuSystem');
             document.getElementById('settings-appearance-file-label').textContent = getText('appearanceFileLabel');
             document.getElementById('settings-appearance-apply-btn').textContent = getText('appearanceApplyBtn');
@@ -1160,6 +1288,19 @@
             document.getElementById('settings-system-version-label').textContent = getText('systemVersion');
             document.getElementById('settings-system-reset-btn').textContent = getText('systemReset');
             document.getElementById('lang-status').textContent = getText('langStatus');
+
+            // Get HereEmu
+            document.getElementById('settings-get-label').textContent = getText('getLabel');
+            document.getElementById('settings-get-btn').textContent = getText('getBtn');
+            document.getElementById('settings-get-desc').textContent = getText('getDesc');
+            document.getElementById('get-site-title').textContent = getText('getSiteTitle');
+            document.getElementById('get-site-sub').textContent = getText('getSiteSub');
+            document.getElementById('get-site-btn').textContent = getText('getSiteBtn');
+
+            // Open Source
+            document.getElementById('settings-opensource-label').textContent = getText('opensourceLabel');
+            document.getElementById('settings-opensource-desc').textContent = getText('opensourceDesc');
+            document.getElementById('settings-opensource-btn').textContent = getText('opensourceBtn');
 
             // Dil butonlarını güncelle
             updateLanguageButtons();
@@ -1178,8 +1319,9 @@
             localStorage.setItem('hereemu_language', lang);
             document.getElementById('language-screen').classList.remove('show');
             document.getElementById('splash-screen').classList.add('hidden');
+            // Dil seçildikten sonra "Siteyi al" ekranını göster
+            document.getElementById('get-site-screen').classList.add('show');
             updateUILanguage();
-            loadSystemState();
         }
 
         function changeLanguage(lang) {
@@ -1208,6 +1350,8 @@
                 currentLanguage = savedLang;
                 document.getElementById('language-screen').classList.remove('show');
                 document.getElementById('splash-screen').classList.add('hidden');
+                // Dil zaten seçiliyse "Siteyi al" ekranını gösterme, direkt masaüstü
+                document.getElementById('get-site-screen').classList.remove('show');
                 updateUILanguage();
                 loadSystemState();
             } else {
@@ -1216,6 +1360,19 @@
                     document.getElementById('language-screen').classList.add('show');
                 }, 3000);
             }
+        }
+
+        // Siteyi aç (HereEmu ana sayfası)
+        function openGetSite() {
+            navigateOsWeb('https://gethereemu.onrender.com');
+            document.getElementById('get-site-screen').classList.remove('show');
+            // Masaüstünü göster
+            loadSystemState();
+        }
+
+        // Açık Kaynak (GitHub)
+        function openOpenSource() {
+            navigateOsWeb('https://github.com/HereHacksYT/HereEmu/blob/main/README.md');
         }
 
         // Hata Raporlama
