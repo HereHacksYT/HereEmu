@@ -473,8 +473,8 @@
     </div>
 
     <div id="virus-screen">
-        <h1>Bilgisayara Virüs Bulaştı! 🦠</h1>
-        <p>Sistem dosyaları temizleniyor, lütfen bekleyin...</p>
+        <h1 id="virus-title">Bilgisayara Virüs Bulaştı! 🦠</h1>
+        <p id="virus-desc">Sistem dosyaları temizleniyor, lütfen bekleyin...</p>
     </div>
 
     <!-- OSSTORE PENCERESİ -->
@@ -499,7 +499,7 @@
                     <div id="page-popular" class="store-page active">
                         <div class="store-section-title" id="store-title-popular-apps">Popüler Uygulamalar</div>
                         <div class="store-item">
-                            <div class="store-item-info"><img src="https://i.ibb.co/C5yHnGg1/Os-Here-Ai.png"><div><div class="store-item-title">OsHereAi</div><div class="store-item-desc">Yapay zeka asistanı ile geleceği şekillendir!</div></div></div>
+                            <div class="store-item-info"><img src="https://i.ibb.co/C5yHnGg1/Os-Here-Ai.png"><div><div class="store-item-title">OsHereAi</div><div class="store-item-desc" id="desc-oshereai-pop">Yapay zeka asistanı ile geleceği şekillendir!</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-oshereai-pop" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-oshereai')">Aç</button>
                                 <button id="btn-action-oshereai-pop" class="store-btn store-btn-install" onclick="toggleAppInstallation('oshereai')">Yükle</button>
@@ -509,7 +509,7 @@
 
                         <div class="store-section-title" id="store-title-popular-games">Popüler Oyunlar</div>
                         <div class="store-item">
-                            <div class="store-item-info"><img src="https://i.ibb.co/JR569wJG/Os-Chess.png"><div><div class="store-item-title">OsChess</div><div class="store-item-desc">Aklını konuştur ve şah mat et!</div></div></div>
+                            <div class="store-item-info"><img src="https://i.ibb.co/JR569wJG/Os-Chess.png"><div><div class="store-item-title">OsChess</div><div class="store-item-desc" id="desc-oschess-pop">Aklını konuştur ve şah mat et!</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-oschess-pop" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-oschess')">Aç</button>
                                 <button id="btn-action-oschess-pop" class="store-btn store-btn-install" onclick="toggleAppInstallation('oschess')">Yükle</button>
@@ -520,7 +520,7 @@
 
                     <div id="page-apps" class="store-page">
                         <div class="store-item">
-                            <div class="store-item-info"><img src="https://i.ibb.co/C5yHnGg1/Os-Here-Ai.png"><div><div class="store-item-title">OsHereAi</div><div class="store-item-desc">Yapay zeka asistanı ile geleceği şekillendir!</div></div></div>
+                            <div class="store-item-info"><img src="https://i.ibb.co/C5yHnGg1/Os-Here-Ai.png"><div><div class="store-item-title">OsHereAi</div><div class="store-item-desc" id="desc-oshereai">Yapay zeka asistanı ile geleceği şekillendir!</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-oshereai" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-oshereai')">Aç</button>
                                 <button id="btn-action-oshereai" class="store-btn store-btn-install" onclick="toggleAppInstallation('oshereai')">Yükle</button>
@@ -528,7 +528,7 @@
                             </div>
                         </div>
                         <div class="store-item">
-                            <div class="store-item-info"><img src="https://cdn-icons-png.flaticon.com/512/2888/2888656.png"><div><div class="store-item-title">Auto Clicker</div><div class="store-item-desc">Çok noktalı otomatik hızlı tıklama hilesi!</div></div></div>
+                            <div class="store-item-info"><img src="https://cdn-icons-png.flaticon.com/512/2888/2888656.png"><div><div class="store-item-title">Auto Clicker</div><div class="store-item-desc" id="desc-autoclicker">Çok noktalı otomatik hızlı tıklama hilesi!</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-autoclicker" class="store-btn store-btn-open" style="display:none;" onclick="toggleAutoClickerWindow(true)">Aç</button>
                                 <button id="btn-action-autoclicker" class="store-btn store-btn-install" onclick="toggleAppInstallation('autoclicker')">Yükle</button>
@@ -536,7 +536,7 @@
                             </div>
                         </div>
                         <div class="store-item">
-                            <div class="store-item-info"><img src="https://i.ibb.co/d0DqWV1g/Os-Tube.png"><div><div class="store-item-title">OsTube</div><div class="store-item-desc">Özgür video izleme platformu.</div></div></div>
+                            <div class="store-item-info"><img src="https://i.ibb.co/d0DqWV1g/Os-Tube.png"><div><div class="store-item-title">OsTube</div><div class="store-item-desc" id="desc-ostube">Özgür video izleme platformu.</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-ostube" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-ostube')">Aç</button>
                                 <button id="btn-action-ostube" class="store-btn store-btn-install" onclick="toggleAppInstallation('ostube')">Yükle</button>
@@ -544,7 +544,7 @@
                             </div>
                         </div>
                         <div class="store-item">
-                            <div class="store-item-info"><img src="https://i.ibb.co/1J7qCyGJ/Os-Gram.png"><div><div class="store-item-title">OsGram</div><div class="store-item-desc">Kısa videoları özgürce izle</div></div></div>
+                            <div class="store-item-info"><img src="https://i.ibb.co/1J7qCyGJ/Os-Gram.png"><div><div class="store-item-title">OsGram</div><div class="store-item-desc" id="desc-osgram">Kısa videoları özgürce izle</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-osgram" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osgram')">Aç</button>
                                 <button id="btn-action-osgram" class="store-btn store-btn-install" onclick="toggleAppInstallation('osgram')">Yükle</button>
@@ -552,7 +552,7 @@
                             </div>
                         </div>
                         <div class="store-item">
-                            <div class="store-item-info"><img src="https://i.ibb.co/ZpWVn8d4/Os-Web.png"><div><div class="store-item-title">OsWeb</div><div class="store-item-desc">Hızlı ve güvenli internet tarayıcısı.</div></div></div>
+                            <div class="store-item-info"><img src="https://i.ibb.co/ZpWVn8d4/Os-Web.png"><div><div class="store-item-title">OsWeb</div><div class="store-item-desc" id="desc-osweb">Hızlı ve güvenli internet tarayıcısı.</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-osweb" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osweb')">Aç</button>
                                 <button id="btn-action-osweb" class="store-btn store-btn-install" onclick="toggleAppInstallation('osweb')">Yükle</button>
@@ -563,7 +563,7 @@
                     
                     <div id="page-games" class="store-page">
                         <div class="store-item">
-                            <div class="store-item-info"><img src="https://i.ibb.co/6R0kQ4tx/Os-Marble.png"><div><div class="store-item-title">OsMarble</div><div class="store-item-desc">Bilye yarışı ve eğlence dolu labirentler!</div></div></div>
+                            <div class="store-item-info"><img src="https://i.ibb.co/6R0kQ4tx/Os-Marble.png"><div><div class="store-item-title">OsMarble</div><div class="store-item-desc" id="desc-osmarble">Bilye yarışı ve eğlence dolu labirentler!</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-osmarble" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osmarble')">Aç</button>
                                 <button id="btn-action-osmarble" class="store-btn store-btn-install" onclick="toggleAppInstallation('osmarble')">Yükle</button>
@@ -571,7 +571,7 @@
                             </div>
                         </div>
                         <div class="store-item">
-                            <div class="store-item-info"><img src="https://i.ibb.co/JR569wJG/Os-Chess.png"><div><div class="store-item-title">OsChess</div><div class="store-item-desc">Aklını konuştur ve şah mat et!</div></div></div>
+                            <div class="store-item-info"><img src="https://i.ibb.co/JR569wJG/Os-Chess.png"><div><div class="store-item-title">OsChess</div><div class="store-item-desc" id="desc-oschess">Aklını konuştur ve şah mat et!</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-oschess" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-oschess')">Aç</button>
                                 <button id="btn-action-oschess" class="store-btn store-btn-install" onclick="toggleAppInstallation('oschess')">Yükle</button>
@@ -579,7 +579,7 @@
                             </div>
                         </div>
                         <div class="store-item">
-                            <div class="store-item-info"><img src="https://i.ibb.co/VWTfmHvL/Os-Dino.png"><div><div class="store-item-title">OsDino</div><div class="store-item-desc">Efsanevi dinozor engelleri aşma oyunu!</div></div></div>
+                            <div class="store-item-info"><img src="https://i.ibb.co/VWTfmHvL/Os-Dino.png"><div><div class="store-item-title">OsDino</div><div class="store-item-desc" id="desc-osdino">Efsanevi dinozor engelleri aşma oyunu!</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-osdino" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osdino')">Aç</button>
                                 <button id="btn-action-osdino" class="store-btn store-btn-install" onclick="toggleAppInstallation('osdino')">Yükle</button>
@@ -587,7 +587,7 @@
                             </div>
                         </div>
                         <div class="store-item">
-                            <div class="store-item-info"><img src="https://i.ibb.co/mrLW5MnR/Os-Blast.png"><div><div class="store-item-title">OsBlast</div><div class="store-item-desc">Aksiyon dolu yeni nesil web oyunu!</div></div></div>
+                            <div class="store-item-info"><img src="https://i.ibb.co/mrLW5MnR/Os-Blast.png"><div><div class="store-item-title">OsBlast</div><div class="store-item-desc" id="desc-osblast">Aksiyon dolu yeni nesil web oyunu!</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-osblast" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osblast')">Aç</button>
                                 <button id="btn-action-osblast" class="store-btn store-btn-install" onclick="toggleAppInstallation('osblast')">Yükle</button>
@@ -595,7 +595,7 @@
                             </div>
                         </div>
                         <div class="store-item">
-                            <div class="store-item-info"><img src="https://i.ibb.co/MkCR1kmS/Os-Duelist-Stickman.png"><div><div class="store-item-title">OsDuelist Stickman</div><div class="store-item-desc">Çöp adamların efsanevi düello savaşı!</div></div></div>
+                            <div class="store-item-info"><img src="https://i.ibb.co/MkCR1kmS/Os-Duelist-Stickman.png"><div><div class="store-item-title">OsDuelist Stickman</div><div class="store-item-desc" id="desc-osduelist">Çöp adamların efsanevi düello savaşı!</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-osduelist" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-osduelist')">Aç</button>
                                 <button id="btn-action-osduelist" class="store-btn store-btn-install" onclick="toggleAppInstallation('osduelist')">Yükle</button>
@@ -603,7 +603,7 @@
                             </div>
                         </div>
                         <div class="store-item">
-                            <div class="store-item-info"><img src="https://i.ibb.co/nW8xS28/Os-Way-Surfers.png"><div><div class="store-item-title">OsWay Surfers</div><div class="store-item-desc">Rayların üzerinde sonsuz koşu macerası!</div></div></div>
+                            <div class="store-item-info"><img src="https://i.ibb.co/nW8xS28/Os-Way-Surfers.png"><div><div class="store-item-title">OsWay Surfers</div><div class="store-item-desc" id="desc-oswaysurfers">Rayların üzerinde sonsuz koşu macerası!</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-oswaysurfers" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-oswaysurfers')">Aç</button>
                                 <button id="btn-action-oswaysurfers" class="store-btn store-btn-install" onclick="toggleAppInstallation('oswaysurfers')">Yükle</button>
@@ -614,7 +614,7 @@
 
                     <div id="page-mystery" class="store-page">
                         <div class="store-item">
-                            <div class="store-item-info"><img src="https://cdn-icons-png.flaticon.com/512/751/751381.png"><div><div class="store-item-title">???</div><div class="store-item-desc" id="mystery-desc">Bunu açmaman tavsiye edilir...</div></div></div>
+                            <div class="store-item-info"><img src="https://cdn-icons-png.flaticon.com/512/751/751381.png"><div><div class="store-item-title">???</div><div class="store-item-desc" id="desc-mystery">Bunu açmaman tavsiye edilir...</div></div></div>
                             <div class="store-item-actions">
                                 <button id="btn-open-mysteryapp" class="store-btn store-btn-open" style="display:none;" onclick="openVirusPrompt()">Aç</button>
                                 <button id="btn-action-mysteryapp" class="store-btn store-btn-install" onclick="toggleAppInstallation('mysteryapp')">Yükle</button>
@@ -844,6 +844,12 @@
                 virusNo: 'Vazgeçtim',
                 virusYes: 'Evet',
                 
+                // Virus screen
+                virusScreenTitle: 'Bilgisayara Virüs Bulaştı! 🦠',
+                virusScreenDesc: 'Sistem dosyaları temizleniyor, lütfen bekleyin...',
+                virusAlert1: 'KRİTİK HATA: Sistem dosyaları bozuldu!',
+                virusAlert2: 'UYARI: Yetkisiz erişim algılandı!',
+                
                 // OsStore menü
                 storePopular: '⭐ Popüler',
                 storeApps: 'Uygulamalar',
@@ -851,7 +857,25 @@
                 storeMystery: '???',
                 storeTitlePopularApps: 'Popüler Uygulamalar',
                 storeTitlePopularGames: 'Popüler Oyunlar',
-                mysteryDesc: 'Bunu açmaman tavsiye edilir...',
+                
+                // Uygulama açıklamaları
+                descOshereai: 'Yapay zeka asistanı ile geleceği şekillendir!',
+                descOschess: 'Aklını konuştur ve şah mat et!',
+                descAutoclicker: 'Çok noktalı otomatik hızlı tıklama hilesi!',
+                descOstube: 'Özgür video izleme platformu.',
+                descOsgram: 'Kısa videoları özgürce izle',
+                descOsweb: 'Hızlı ve güvenli internet tarayıcısı.',
+                descOsmarble: 'Bilye yarışı ve eğlence dolu labirentler!',
+                descOsdino: 'Efsanevi dinozor engelleri aşma oyunu!',
+                descOsblast: 'Aksiyon dolu yeni nesil web oyunu!',
+                descOsduelist: 'Çöp adamların efsanevi düello savaşı!',
+                descOswaysurfers: 'Rayların üzerinde sonsuz koşu macerası!',
+                descMystery: 'Bunu açmaman tavsiye edilir...',
+                
+                // Butonlar
+                storeOpen: 'Aç',
+                storeInstall: 'Yükle',
+                storeUninstall: 'Kaldır',
                 
                 // Uploader
                 uploaderTitle: 'Yükleme İstasyonu',
@@ -941,6 +965,12 @@
                 virusNo: 'Cancel',
                 virusYes: 'Yes',
                 
+                // Virus screen
+                virusScreenTitle: 'Computer Infected with Virus! 🦠',
+                virusScreenDesc: 'System files are being cleaned, please wait...',
+                virusAlert1: 'CRITICAL ERROR: System files corrupted!',
+                virusAlert2: 'WARNING: Unauthorized access detected!',
+                
                 // OsStore menü
                 storePopular: '⭐ Popular',
                 storeApps: 'Apps',
@@ -948,7 +978,25 @@
                 storeMystery: '???',
                 storeTitlePopularApps: 'Popular Apps',
                 storeTitlePopularGames: 'Popular Games',
-                mysteryDesc: 'It is recommended not to open this...',
+                
+                // Uygulama açıklamaları
+                descOshereai: 'Shape the future with AI assistant!',
+                descOschess: 'Use your mind and checkmate!',
+                descAutoclicker: 'Multi-point automatic fast clicking cheat!',
+                descOstube: 'Free video watching platform.',
+                descOsgram: 'Watch short videos freely',
+                descOsweb: 'Fast and secure web browser.',
+                descOsmarble: 'Marble race and fun mazes!',
+                descOsdino: 'Legendary dinosaur obstacle game!',
+                descOsblast: 'Action-packed new generation web game!',
+                descOsduelist: 'Epic duel battle of stickmen!',
+                descOswaysurfers: 'Endless running adventure on rails!',
+                descMystery: 'It is recommended not to open this...',
+                
+                // Butonlar
+                storeOpen: 'Open',
+                storeInstall: 'Install',
+                storeUninstall: 'Uninstall',
                 
                 // Uploader
                 uploaderTitle: 'Upload Station',
@@ -1046,6 +1094,10 @@
             document.getElementById('virus-dialog-no').textContent = getText('virusNo');
             document.getElementById('virus-dialog-yes').textContent = getText('virusYes');
 
+            // Virus screen
+            document.getElementById('virus-title').textContent = getText('virusScreenTitle');
+            document.getElementById('virus-desc').textContent = getText('virusScreenDesc');
+
             // OsStore menü
             document.getElementById('store-menu-popular').textContent = getText('storePopular');
             document.getElementById('store-menu-apps').textContent = getText('storeApps');
@@ -1053,7 +1105,22 @@
             document.getElementById('store-menu-mystery').textContent = getText('storeMystery');
             document.getElementById('store-title-popular-apps').textContent = getText('storeTitlePopularApps');
             document.getElementById('store-title-popular-games').textContent = getText('storeTitlePopularGames');
-            document.getElementById('mystery-desc').textContent = getText('mysteryDesc');
+
+            // Uygulama açıklamaları
+            document.getElementById('desc-oshereai-pop').textContent = getText('descOshereai');
+            document.getElementById('desc-oschess-pop').textContent = getText('descOschess');
+            document.getElementById('desc-oshereai').textContent = getText('descOshereai');
+            document.getElementById('desc-autoclicker').textContent = getText('descAutoclicker');
+            document.getElementById('desc-ostube').textContent = getText('descOstube');
+            document.getElementById('desc-osgram').textContent = getText('descOsgram');
+            document.getElementById('desc-osweb').textContent = getText('descOsweb');
+            document.getElementById('desc-osmarble').textContent = getText('descOsmarble');
+            document.getElementById('desc-oschess').textContent = getText('descOschess');
+            document.getElementById('desc-osdino').textContent = getText('descOsdino');
+            document.getElementById('desc-osblast').textContent = getText('descOsblast');
+            document.getElementById('desc-osduelist').textContent = getText('descOsduelist');
+            document.getElementById('desc-oswaysurfers').textContent = getText('descOswaysurfers');
+            document.getElementById('desc-mystery').textContent = getText('descMystery');
 
             // Uploader
             document.getElementById('uploader-title').textContent = getText('uploaderTitle');
@@ -1094,11 +1161,10 @@
             document.getElementById('settings-system-reset-btn').textContent = getText('systemReset');
             document.getElementById('lang-status').textContent = getText('langStatus');
 
-            // Start button mesajı (alert kullanılacak)
             // Dil butonlarını güncelle
             updateLanguageButtons();
             
-            // OsStore butonlarını güncelle (Yükle/Kaldır)
+            // OsStore butonlarını güncelle (Yükle/Kaldır/Aç)
             for (const key in appDatabase) {
                 syncStoreButtons(key);
             }
@@ -1256,7 +1322,7 @@
                     div.className = 'app-item';
                     div.innerHTML = `
                         <span>${appDatabase[key].name}</span>
-                        <button class="danger" onclick="uninstallAppFromSettings('${key}')">${currentLanguage === 'tr' ? 'Kaldır' : 'Uninstall'}</button>
+                        <button class="danger" onclick="uninstallAppFromSettings('${key}')">${getText('storeUninstall')}</button>
                     `;
                     container.appendChild(div);
                 }
@@ -1337,14 +1403,15 @@
                 
                 if (actionBtn) {
                     if (app.installed) {
-                        actionBtn.innerText = currentLanguage === 'tr' ? 'Kaldır' : 'Uninstall';
+                        actionBtn.innerText = getText('storeUninstall');
                         actionBtn.className = 'store-btn store-btn-uninstall';
                     } else {
-                        actionBtn.innerText = currentLanguage === 'tr' ? 'Yükle' : 'Install';
+                        actionBtn.innerText = getText('storeInstall');
                         actionBtn.className = 'store-btn store-btn-install';
                     }
                 }
                 if (openBtn) {
+                    openBtn.innerText = getText('storeOpen');
                     openBtn.style.display = app.installed ? 'inline-block' : 'none';
                 }
             });
@@ -1615,8 +1682,8 @@
             let endTime = Date.now() + 5000;
             function launchAlerts() {
                 if (Date.now() < endTime) {
-                    alert("KRİTİK HATA: Sistem dosyaları bozuldu!");
-                    alert("UYARI: Yetkisiz erişim algılandı!");
+                    alert(getText('virusAlert1'));
+                    alert(getText('virusAlert2'));
                     setTimeout(launchAlerts, 50);
                 } else {
                     document.getElementById('virus-screen').style.display = 'flex';
