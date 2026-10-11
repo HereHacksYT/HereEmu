@@ -590,6 +590,16 @@
                             </div>
                         </div>
 
+                        <!-- OsCodeVideo - POPÜLER -->
+                        <div class="store-item">
+                            <div class="store-item-info"><img src="https://i.ibb.co/JjPFLbcP/Os-Code-Video.png"><div><div class="store-item-title">OsCodeVideo</div><div class="store-item-desc" id="desc-oscodevideo-pop">Kodlama videoları izle!</div></div></div>
+                            <div class="store-item-actions">
+                                <button id="btn-open-oscodevideo-pop" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-oscodevideo')">Aç</button>
+                                <button id="btn-action-oscodevideo-pop" class="store-btn store-btn-install" onclick="toggleAppInstallation('oscodevideo')">Yükle</button>
+                                <div id="progress-container-oscodevideo-pop" class="progress-container"><div id="progress-bar-oscodevideo-pop" class="progress-bar"></div></div>
+                            </div>
+                        </div>
+
                         <div class="store-item">
                             <div class="store-item-info"><img src="https://i.ibb.co/C5yHnGg1/Os-Here-Ai.png"><div><div class="store-item-title">OsHereAi</div><div class="store-item-desc" id="desc-oshereai-pop">Yapay zeka asistanı ile geleceği şekillendir!</div></div></div>
                             <div class="store-item-actions">
@@ -618,6 +628,16 @@
                                 <button id="btn-open-oschat" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-oschat')">Aç</button>
                                 <button id="btn-action-oschat" class="store-btn store-btn-install" onclick="toggleAppInstallation('oschat')">Yükle</button>
                                 <div id="progress-container-oschat" class="progress-container"><div id="progress-bar-oschat" class="progress-bar"></div></div>
+                            </div>
+                        </div>
+
+                        <!-- OsCodeVideo - UYGULAMALAR -->
+                        <div class="store-item">
+                            <div class="store-item-info"><img src="https://i.ibb.co/JjPFLbcP/Os-Code-Video.png"><div><div class="store-item-title">OsCodeVideo</div><div class="store-item-desc" id="desc-oscodevideo">Kodlama videoları izle!</div></div></div>
+                            <div class="store-item-actions">
+                                <button id="btn-open-oscodevideo" class="store-btn store-btn-open" style="display:none;" onclick="openWindow('win-oscodevideo')">Aç</button>
+                                <button id="btn-action-oscodevideo" class="store-btn store-btn-install" onclick="toggleAppInstallation('oscodevideo')">Yükle</button>
+                                <div id="progress-container-oscodevideo" class="progress-container"><div id="progress-bar-oscodevideo" class="progress-bar"></div></div>
                             </div>
                         </div>
 
@@ -864,6 +884,12 @@
         <div class="window-content" style="padding:0; background:#fff;"><div class="browser-container"><iframe id="oschat-frame" src="about:blank"></iframe></div></div>
     </div>
 
+    <!-- OsCodeVideo PENCERESİ -->
+    <div id="win-oscodevideo" class="window" style="width:480px; height:360px;">
+        <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsCodeVideo</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-oscodevideo')"></button><button class="close-btn" onclick="closeWindow('win-oscodevideo')"></button></div></div>
+        <div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="oscodevideo-frame" src="about:blank" allowfullscreen></iframe></div></div>
+    </div>
+
     <div id="win-oshereai" class="window" style="width:440px; height:340px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsHereAi</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-oshereai')"></button><button class="close-btn" onclick="closeWindow('win-oshereai')"></button></div></div>
         <div class="window-content" style="padding:0; background:#fff;"><div class="browser-container"><iframe id="oshereai-frame" src="about:blank"></iframe></div></div>
@@ -927,6 +953,7 @@
     <script {nonce}>
         const appDatabase = {
             oschat: { name: 'OsChat', logo: 'https://i.ibb.co/dw1zgj3V/Os-Chat-png.png', winId: 'win-oschat', url: 'https://oschat-6nhw.onrender.com', frameId: 'oschat-frame', installed: false, isInstalling: false },
+            oscodevideo: { name: 'OsCodeVideo', logo: 'https://i.ibb.co/JjPFLbcP/Os-Code-Video.png', winId: 'win-oscodevideo', url: 'https://oscodevideo.onrender.com', frameId: 'oscodevideo-frame', installed: false, isInstalling: false },
             oshereai: { name: 'OsHereAi', logo: 'https://i.ibb.co/C5yHnGg1/Os-Here-Ai.png', winId: 'win-oshereai', url: 'https://oshere-ai-app.onrender.com', frameId: 'oshereai-frame', installed: false, isInstalling: false },
             osmarble: { name: 'OsMarble', logo: 'https://i.ibb.co/6R0kQ4tx/Os-Marble.png', winId: 'win-osmarble', url: 'https://osmarble.onrender.com', frameId: 'marble-frame', installed: false, isInstalling: false },
             oschess: { name: 'OsChess', logo: 'https://i.ibb.co/JR569wJG/Os-Chess.png', winId: 'win-oschess', url: 'https://oschess.onrender.com', frameId: 'chess-frame', installed: false, isInstalling: false },
@@ -999,6 +1026,7 @@
                 
                 // Uygulama açıklamaları
                 descOschat: 'arkadaşlarınla sohbet et!💬',
+                descOscodevideo: 'Kodlama videoları izle!',
                 descOshereai: 'Yapay zeka asistanı ile geleceği şekillendir!',
                 descOschess: 'Aklını konuştur ve şah mat et!',
                 descAutoclicker: 'Çok noktalı otomatik hızlı tıklama hilesi!',
@@ -1137,6 +1165,7 @@
                 
                 // Uygulama açıklamaları
                 descOschat: 'chat with your friends!💬',
+                descOscodevideo: 'Watch coding videos!',
                 descOshereai: 'Shape the future with AI assistant!',
                 descOschess: 'Use your mind and checkmate!',
                 descAutoclicker: 'Multi-point automatic fast clicking cheat!',
@@ -1282,6 +1311,8 @@
             // Uygulama açıklamaları
             document.getElementById('desc-oschat-pop').textContent = getText('descOschat');
             document.getElementById('desc-oschat').textContent = getText('descOschat');
+            document.getElementById('desc-oscodevideo-pop').textContent = getText('descOscodevideo');
+            document.getElementById('desc-oscodevideo').textContent = getText('descOscodevideo');
             document.getElementById('desc-oshereai-pop').textContent = getText('descOshereai');
             document.getElementById('desc-oschess-pop').textContent = getText('descOschess');
             document.getElementById('desc-oshereai').textContent = getText('descOshereai');
