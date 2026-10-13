@@ -56,7 +56,7 @@
 | <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png" width="40"> | **Not Defteri** | Yazı notları |
 | <img src="https://i.ibb.co/Z7N9Cj2/Os-Store.png" width="40"> | **OsStore** | Uygulama mağazası |
 | <img src="https://i.ibb.co/jvY8sJLZ/Credits.png" width="40"> | **Credits** | Emeği geçenler |
-| <img src="https://cdn-icons-png.flaticon.com/512/993/993861.png" width="40"> | **Ayarlar** | Sistem ayarları |
+| <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaAq4QNKEGKjgKHCbSNM2O9z60C1q_z-8D8ydO-mQYTg&s=10" width="40"> | **Ayarlar** | Sistem ayarları |
 
 </div>
 
@@ -221,7 +221,7 @@ Bu proje **ücretsizdir** ve olduğu gibi sunulur. Ticari amaçla satılamaz.
 | <img src="https://cdn-icons-png.flaticon.com/512/3209/320.png" width="40"> | **Notepad** | Text notes |
 | <img src="https://i.ibb.co/Z7N9Cj2/Os-Store.png" width="40"> | **OsStore** | App marketplace |
 | <img src="https://i.ibb.co/jvY8sJLZ/Credits.png" width="40"> | **Credits** | Contributors |
-| <img src="https://cdn-icons-png.flaticon.com/512/993/993861.png" width="40"> | **Settings** | System settings |
+| <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaAq4QNKEGKjgKHCbSNM2O9z60C1q_z-8D8ydO-mQYTg&s=10" width="40"> | **Settings** | System settings |
 
 </div>
 
