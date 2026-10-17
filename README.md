@@ -182,6 +182,9 @@ Bu proje **ücretsizdir** ve olduğu gibi sunulur. Ticari amaçla satılamaz.
 
 [![Website](https://img.shields.io/badge/🌐_Main_Site-gethereemu.onrender.com-28a745?style=for-the-badge)](https://gethereemu.onrender.com)
 [![Website](https://img.shields.io/badge/🌐_Backup-hereemu.onrender.com-0078d4?style=for-the-badge)](https://hereemu.onrender.com)
+[![Website](https://img.shields.io/badge/🌐_Backup2-[hereemu.onrender.com]https://osmanburda.itch.io/hereemu-0078d4?style=for-the-badge)](https://osmanburda.itch.io/hereemu)
+
+* Note: Backup2 is not recommended.
 
 [🇹🇷 Türkçe](#-türkçe) | **🇬🇧 English**
 
