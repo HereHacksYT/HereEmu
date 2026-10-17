@@ -121,7 +121,7 @@
 - **Frontend:** HTML + CSS + Vanilla JavaScript
 - **Barındırma:** [Render](https://render.com) (ücretsiz plan)
 - **Depolama:** `localStorage` (ayarlar ve yüklü uygulamalar)
-- **Sürüm:** v24.0
+- **Sürüm:** v26.0
 
 ---
 
@@ -289,7 +289,7 @@ Bu proje **ücretsizdir** ve olduğu gibi sunulur. Ticari amaçla satılamaz.
 - **Frontend:** HTML + CSS + Vanilla JavaScript
 - **Hosting:** [Render](https://render.com) (free plan)
 - **Storage:** `localStorage` (settings & installed apps)
-- **Version:** v24.0
+- **Version:** v26.0
 
 ---
 
