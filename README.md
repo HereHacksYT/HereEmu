@@ -14,7 +14,7 @@
 
 [![Website](https://img.shields.io/badge/🌐_Ana_Site-gethereemu.onrender.com-28a745?style=for-the-badge)](https://gethereemu.onrender.com)
 [![Website](https://img.shields.io/badge/🌐_Yedek-hereemu.onrender.com-0078d4?style=for-the-badge)](https://hereemu.onrender.com)
-
+[![Website](https://img.shields.io/badge/🌐_yedek-2-önerilmez-hereemu.onrender.com-0078d4?style=for-the-badge)](https://osmanburda.itch.io/hereemu)
 **🇹🇷 Türkçe** | [🇬🇧 English](#-english)
 
 ---
