@@ -16,6 +16,8 @@
 [![Website](https://img.shields.io/badge/🌐_Yedek-hereemu.onrender.com-0078d4?style=for-the-badge)](https://hereemu.onrender.com)
 [![Website](https://img.shields.io/badge/🌐_Yedek2-[hereemu.onrender.com]https://osmanburda.itch.io/hereemu-0078d4?style=for-the-badge)](https://osmanburda.itch.io/hereemu)
 
+* Not:Yedek2 önerilmez
+
 **🇹🇷 Türkçe** | [🇬🇧 English](#-english)
 
 ---
