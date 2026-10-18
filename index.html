@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <!-- iOS ANA EKRANA EKLEME VE TAM EKRAN AYARLARI -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="HereEmu">
     
-    <!-- iPHONE SİMGESİNİN ÇIKMASINI SAĞLAYAN EKLEMELER -->
     <link rel="apple-touch-icon" href="https://i.ibb.co/Zpq9RmdH/Here-Emu.png">
     <link rel="apple-touch-icon" sizes="152x152" href="https://i.ibb.co/Zpq9RmdH/Here-Emu.png">
     <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/Zpq9RmdH/Here-Emu.png">
@@ -21,7 +19,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
         body, html { width: 100%; height: 100%; overflow: hidden; font-family: sans-serif; background-color: #000; }
         
-        /* HEM DÜZ HEM YANA GÖRE AYARLANMIŞ AÇILIŞ EKRANI STİLİ */
         #splash-screen {
             position: fixed;
             top: 0;
@@ -54,7 +51,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* DİL SEÇİM EKRANI */
         #language-screen {
             position: fixed;
             top: 0;
@@ -123,7 +119,6 @@
             line-height: 1.4;
         }
 
-        /* SİTEYİ ALMA EKRANI */
         #get-site-screen {
             position: fixed;
             top: 0;
@@ -203,7 +198,6 @@
         .icon { width: 80px; display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); font-size: 12px; }
         .icon img { width: 45px; height: 45px; margin-bottom: 5px; pointer-events: none; object-fit: contain; }
 
-        /* Pencereler */
         .window { position: absolute; width: 360px; height: 320px; background: #f3f3f3; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: none; flex-direction: column; overflow: hidden; border: 1px solid #ccc; z-index: 10; transition: width 0.2s, height 0.2s, top 0.2s, left 0.2s; }
         .window-header { background: #e1e1e1; padding: 10px; display: flex; justify-content: space-between; align-items: center; cursor: move; font-weight: bold; font-size: 14px; border-bottom: 1px solid #ccc; }
         
@@ -228,7 +222,6 @@
         .browser-btn { padding: 5px 10px; background: #0078d4; color: white; border: none; border-radius: 4px; cursor: pointer; }
         iframe { width: 100%; height: 100%; border: none; background: white; }
 
-        /* OSSTORE TASARIMI */
         .store-layout { display: flex; height: 100%; width: 100%; }
         .store-sidebar { width: 130px; background: #f0f0f0; border-right: 1px solid #ddd; display: flex; flex-direction: column; gap: 5px; padding: 10px 5px; }
         .store-menu-btn { padding: 10px; background: transparent; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; text-align: left; color: #333; }
@@ -262,7 +255,6 @@
         .progress-container { width: 100%; height: 5px; background: #e0e0e0; border-radius: 3px; overflow: hidden; display: none; margin-top: 2px; }
         .progress-bar { width: 0%; height: 100%; background: #28a745; transition: width 0.2s linear; }
 
-        /* CREDITS (EMEĞİ GEÇENLER) UYGULAMA STİLLERİ */
         .credits-container {
             width: 100%;
             height: 100%;
@@ -323,7 +315,6 @@
             100% { transform: translateY(-100%); }
         }
 
-        /* MODALLAR VE DIALOGLAR */
         .fullscreen-dialog-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 999999; backdrop-filter: blur(4px); }
         .fullscreen-dialog { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); text-align: center; width: 300px; font-family: sans-serif; }
         .fullscreen-dialog p { font-size: 15px; font-weight: bold; margin-bottom: 20px; color: #222; }
@@ -332,7 +323,6 @@
         .dialog-btn-no { background: #ea4335; color: white; }
         .dialog-btn-yes { background: #34a853; color: white; }
 
-        /* VİRÜS EKRANI */
         #virus-screen {
             position: fixed; top:0; left:0; width:100%; height:100%; background: #ffcc00;
             display: none; flex-direction: column; justify-content: center; align-items: center;
@@ -342,7 +332,6 @@
         #virus-screen p { font-size: 18px; font-weight: bold; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        /* AUTO CLICKER PANELI */
         .autoclicker-panel {
             position: fixed; top: 60px; right: 20px; width: 140px; background: rgba(20, 20, 20, 0.95);
             border: 2px solid #0078d4; border-radius: 10px; padding: 8px; 
@@ -363,7 +352,6 @@
         .btn-start { background: #28a745; }
         .btn-stop { background: #dc3545; display: none; }
         
-        /* Kırmızı Hedef İşaretleri */
         .clicker-target-dot {
             position: fixed; width: 22px; height: 22px; border: 2px solid red; background: rgba(255,0,0,0.4);
             border-radius: 50%; pointer-events: none; z-index: 100000001 !important; transform: translate(-50%, -50%);
@@ -380,7 +368,6 @@
         #start-button { background: #28a745; color: white; border: none; padding: 6px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; }
         #clock { font-size: 14px; font-weight: bold; color: #333; }
 
-        /* AYARLAR (SETTINGS) STİLLERİ */
         .settings-layout { display: flex; height: 100%; width: 100%; }
         .settings-sidebar { width: 130px; background: #f0f0f0; border-right: 1px solid #ddd; display: flex; flex-direction: column; gap: 5px; padding: 10px 5px; }
         .settings-menu-btn { padding: 10px; background: transparent; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; text-align: left; color: #333; }
@@ -415,12 +402,10 @@
 </head>
 <body>
 
-    <!-- TAM EKRAN AÇILIŞ EKRANI -->
     <div id="splash-screen">
         <div class="splash-loader"></div>
     </div>
 
-    <!-- DİL SEÇİM EKRANI -->
     <div id="language-screen">
         <div class="lang-title">🌐 Select Language / Dil Seçin</div>
         <div class="lang-subtitle">Please select your language / Lütfen dilinizi seçin</div>
@@ -438,7 +423,6 @@
         </div>
     </div>
 
-    <!-- SİTEYİ ALMA EKRANI -->
     <div id="get-site-screen">
         <div class="get-site-box">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPyt9o2vV7qbUzPXo1bet8BsmumaYMNWALTk29xdsx5A&s=10" alt="HereEmu">
@@ -467,13 +451,11 @@
             <span id="icon-osstore">OsStore</span>
         </div>
         
-        <!-- KALICI OLARAK OSSTORE'UN ALTINDA DURAN CREDITS SİMGESİ -->
         <div class="icon" onclick="openWindow('win-credits')">
             <img src="https://i.ibb.co/jvY8sJLZ/Credits.png">
             <span id="icon-credits">Credits</span>
         </div>
 
-        <!-- AYARLAR SİMGESİ -->
         <div class="icon" onclick="openWindow('win-settings'); loadSettings();">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaAq4QNKEGKjgKHCbSNM2O9z60C1q_z-8D8ydO-mQYTg&s=10" onerror="this.src='https://cdn-icons-png.flaticon.com/512/993/993861.png';">
             <span id="icon-settings">Ayarlar</span>
@@ -501,7 +483,6 @@
         <button id="clicker-stop" class="clicker-btn btn-stop" onclick="stopAutoClicker()">⏸ Durdur</button>
     </div>
 
-    <!-- CREDITS UYGULAMASI PENCERESİ -->
     <div id="win-credits" class="window" style="width:340px; height:280px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>Credits</span>
@@ -558,7 +539,6 @@
         <p id="virus-desc">Sistem dosyaları temizleniyor, lütfen bekleyin...</p>
     </div>
 
-    <!-- OSSTORE PENCERESİ -->
     <div id="win-osstore" class="window" style="width:480px; height:380px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span>OsStore</span>
@@ -576,11 +556,9 @@
                     <button id="menu-mystery" class="store-menu-btn" onclick="switchStoreTab('mystery')"><span id="store-menu-mystery">???</span></button>
                 </div>
                 <div class="store-main">
-                    <!-- POPÜLER SEKMESİ -->
                     <div id="page-popular" class="store-page active">
                         <div class="store-section-title" id="store-title-popular-apps">Popüler Uygulamalar</div>
                         
-                        <!-- OsChat - POPÜLER -->
                         <div class="store-item">
                             <div class="store-item-info"><img src="https://i.ibb.co/dw1zgj3V/Os-Chat-png.png"><div><div class="store-item-title">OsChat</div><div class="store-item-desc" id="desc-oschat-pop">arkadaşlarınla sohbet et!💬</div></div></div>
                             <div class="store-item-actions">
@@ -590,7 +568,6 @@
                             </div>
                         </div>
 
-                        <!-- OsCodeVideo - POPÜLER -->
                         <div class="store-item">
                             <div class="store-item-info"><img src="https://i.ibb.co/JjPFLbcP/Os-Code-Video.png"><div><div class="store-item-title">OsCodeVideo</div><div class="store-item-desc" id="desc-oscodevideo-pop">Kodlama videoları izle!</div></div></div>
                             <div class="store-item-actions">
@@ -621,7 +598,6 @@
                     </div>
 
                     <div id="page-apps" class="store-page">
-                        <!-- OsChat - UYGULAMALAR -->
                         <div class="store-item">
                             <div class="store-item-info"><img src="https://i.ibb.co/dw1zgj3V/Os-Chat-png.png"><div><div class="store-item-title">OsChat</div><div class="store-item-desc" id="desc-oschat">arkadaşlarınla sohbet et!💬</div></div></div>
                             <div class="store-item-actions">
@@ -631,7 +607,6 @@
                             </div>
                         </div>
 
-                        <!-- OsCodeVideo - UYGULAMALAR -->
                         <div class="store-item">
                             <div class="store-item-info"><img src="https://i.ibb.co/JjPFLbcP/Os-Code-Video.png"><div><div class="store-item-title">OsCodeVideo</div><div class="store-item-desc" id="desc-oscodevideo">Kodlama videoları izle!</div></div></div>
                             <div class="store-item-actions">
@@ -749,7 +724,6 @@
         </div>
     </div>
 
-    <!-- AYARLAR PENCERESİ (SETTINGS) -->
     <div id="win-settings" class="window" style="width:500px; height:480px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span id="settings-window-title">⚙️ Ayarlar</span>
@@ -761,7 +735,6 @@
         <div class="window-content" style="padding:0;">
             <div class="settings-layout">
                 <div class="settings-sidebar">
-                    <!-- HereEmu'yu al - EN ÜSTE -->
                     <button id="settings-menu-get" class="settings-menu-btn active" onclick="switchSettingsTab('get')">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPyt9o2vV7qbUzPXo1bet8BsmumaYMNWALTk29xdsx5A&s=10" style="width:16px; height:16px; vertical-align:middle; margin-right:4px;">
                         <span id="settings-menu-get-text">HereEmu'yu al</span>
@@ -771,7 +744,6 @@
                     <button id="settings-menu-apps" class="settings-menu-btn" onclick="switchSettingsTab('apps')">📦 <span id="settings-menu-apps-text">Uygulamalar</span></button>
                     <button id="settings-menu-language" class="settings-menu-btn" onclick="switchSettingsTab('language')">🌐 <span id="settings-menu-language-text">Dil</span></button>
                     <button id="settings-menu-report" class="settings-menu-btn" onclick="switchSettingsTab('report')">🐞 <span id="settings-menu-report-text">Hata Raporla</span></button>
-                    <!-- Açık Kaynak -->
                     <button id="settings-menu-opensource" class="settings-menu-btn" onclick="switchSettingsTab('opensource')">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPyt9o2vV7qbUzPXo1bet8BsmumaYMNWALTk29xdsx5A&s=10" style="width:16px; height:16px; vertical-align:middle; margin-right:4px;">
                         <span id="settings-menu-opensource-text">Açık Kaynak</span>
@@ -779,7 +751,6 @@
                     <button id="settings-menu-system" class="settings-menu-btn" onclick="switchSettingsTab('system')">💻 <span id="settings-menu-system-text">Sistem</span></button>
                 </div>
                 <div class="settings-main">
-                    <!-- HereEmu'yu al -->
                     <div id="settings-page-get" class="settings-page active">
                         <div class="settings-group">
                             <label id="settings-get-label">🚀 HereEmu'yu al / Get HereEmu</label>
@@ -790,7 +761,6 @@
                         </div>
                     </div>
 
-                    <!-- Görünüm -->
                     <div id="settings-page-appearance" class="settings-page">
                         <div class="settings-group">
                             <label id="settings-appearance-file-label">Fotoğraf Seç</label>
@@ -809,7 +779,6 @@
                         </div>
                     </div>
 
-                    <!-- Auto Clicker -->
                     <div id="settings-page-autoclicker" class="settings-page">
                         <div class="settings-group">
                             <label id="settings-autoclicker-interval-label">Tıklama aralığı (ms)</label>
@@ -821,7 +790,6 @@
                         </div>
                     </div>
 
-                    <!-- Uygulamalar -->
                     <div id="settings-page-apps" class="settings-page">
                         <div class="settings-group">
                             <label id="settings-apps-label">Yüklü Uygulamalar</label>
@@ -829,7 +797,6 @@
                         </div>
                     </div>
 
-                    <!-- Dil -->
                     <div id="settings-page-language" class="settings-page">
                         <div class="settings-group">
                             <label id="settings-language-label">🌐 Dil / Language</label>
@@ -841,7 +808,6 @@
                         </div>
                     </div>
 
-                    <!-- Hata Raporla -->
                     <div id="settings-page-report" class="settings-page">
                         <div class="settings-group">
                             <label id="settings-report-label">🐞 Hata Raporlama / Report Bug</label>
@@ -853,7 +819,6 @@
                         </div>
                     </div>
 
-                    <!-- Açık Kaynak -->
                     <div id="settings-page-opensource" class="settings-page">
                         <div class="settings-group">
                             <label id="settings-opensource-label">🔓 Açık Kaynak / Open Source</label>
@@ -862,11 +827,11 @@
                         </div>
                     </div>
 
-                    <!-- Sistem -->
                     <div id="settings-page-system" class="settings-page">
                         <div class="settings-group">
                             <label id="settings-system-version-label">Sürüm</label>
-                            <div class="settings-version">HereEmu v27.0</div>
+                            <div class="settings-version">HereEmu v28.0</div>
+                            <div class="settings-version" style="color:#28a745; font-weight:bold;" id="settings-system-changelog">Harddisk'e indirme eklendi</div>
                         </div>
                         <div class="settings-group">
                             <button class="danger" onclick="resetAllSettings()" id="settings-system-reset-btn">⚠️ Tüm ayarları sıfırla</button>
@@ -877,14 +842,11 @@
         </div>
     </div>
 
-    <!-- PENCERELER -->
-    <!-- OsChat PENCERESİ -->
     <div id="win-oschat" class="window" style="width:480px; height:360px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsChat</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-oschat')"></button><button class="close-btn" onclick="closeWindow('win-oschat')"></button></div></div>
         <div class="window-content" style="padding:0; background:#fff;"><div class="browser-container"><iframe id="oschat-frame" src="about:blank"></iframe></div></div>
     </div>
 
-    <!-- OsCodeVideo PENCERESİ -->
     <div id="win-oscodevideo" class="window" style="width:480px; height:360px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)"><span>OsCodeVideo</span><div class="header-buttons"><button class="maximize-btn" onclick="toggleMaximize('win-oscodevideo')"></button><button class="close-btn" onclick="closeWindow('win-oscodevideo')"></button></div></div>
         <div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="oscodevideo-frame" src="about:blank" allowfullscreen></iframe></div></div>
@@ -905,7 +867,7 @@
         <div class="window-content" style="padding:0; background:#000;"><div class="browser-container"><iframe id="chess-frame" src="about:blank" allowfullscreen></iframe></div></div>
     </div>
 
-    <div id="win-uploader" class="window" style="width:380px; height:340px;">
+    <div id="win-uploader" class="window" style="width:380px; height:380px;">
         <div class="window-header" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
             <span id="uploader-title">Yükleme İstasyonu</span>
             <div class="header-buttons">
@@ -916,6 +878,7 @@
         <div class="window-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; padding: 20px;">
             <img src="https://i.ibb.co/Zpq9RmdH/Here-Emu.png" style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.2));" alt="HereEmu Ana Ekran Logosu">
             <span id="uploader-logo-text" style="font-size: 13px; font-weight: bold; color: #555;">Ana Ekran Başlatıcı Logosu</span>
+            <div id="uploader-warning" style="font-size:11px; color:#856404; font-weight:bold; text-align:center; background:#fff3cd; padding:8px 10px; border-radius:6px; border:1px solid #ffc107; width:100%; box-sizing:border-box;">⚠️ Yüklediğiniz şeyler başkalarında da gözükür</div>
             <input type="file" id="file-input" style="width: 100%; border: 1px dashed #ccc; padding: 10px; border-radius: 6px; background: #fafafa;">
             <button onclick="uploadFileToServer()" id="uploader-send-btn" style="padding:12px; background:#0078d4; color:white; border:none; border-radius:6px; width:100%; font-weight: bold; cursor: pointer; transition: background 0.2s;">Render Sunucusuna Gönder</button>
         </div>
@@ -973,58 +936,41 @@
         let isPickingTarget = false;
         let targetPoints = [];
 
-        // ----- DİL SEÇİM -----
         let currentLanguage = 'tr';
 
-        // Tüm metinler
         const translations = {
             tr: {
-                // Masaüstü ikonları
                 iconUpload: 'Sisteme Yükle',
                 iconHarddisk: 'Harddisk',
                 iconNotepad: 'Not Defteri',
                 iconOsstore: 'OsStore',
                 iconCredits: 'Credits',
                 iconSettings: 'Ayarlar',
-                
-                // Auto Clicker paneli
                 autoclickerDrag: 'TUT',
                 autoclickerInterval: 'Aralık (ms):',
                 autoclickerAdd: '🎯 Ekle',
                 autoclickerClear: '🗑️ Sil',
                 autoclickerStart: '▶ Başlat',
                 autoclickerStop: '⏸ Durdur',
-                
-                // Credits
                 creditsOwner: 'Owner',
                 creditsYt: 'YouTube',
                 creditsHelper: 'Helper',
-                
-                // Fullscreen dialog
                 fullscreenText: 'Alt yerleri de gizlemek istiyor musun?',
                 fullscreenNo: 'Hayır',
                 fullscreenYes: 'Evet',
-                
-                // Virus dialog
                 virusText: 'Uygulamayı açmak istiyor musun???',
                 virusNo: 'Vazgeçtim',
                 virusYes: 'Evet',
-                
-                // Virus screen
                 virusScreenTitle: 'Bilgisayara Virüs Bulaştı! 🦠',
                 virusScreenDesc: 'Sistem dosyaları temizleniyor, lütfen bekleyin...',
                 virusAlert1: 'KRİTİK HATA: Sistem dosyaları bozuldu!',
                 virusAlert2: 'UYARI: Yetkisiz erişim algılandı!',
-                
-                // OsStore menü
                 storePopular: '⭐ Popüler',
                 storeApps: 'Uygulamalar',
                 storeGames: 'Oyunlar',
                 storeMystery: '???',
                 storeTitlePopularApps: 'Popüler Uygulamalar',
                 storeTitlePopularGames: 'Popüler Oyunlar',
-                
-                // Uygulama açıklamaları
                 descOschat: 'arkadaşlarınla sohbet et!💬',
                 descOscodevideo: 'Kodlama videoları izle!',
                 descOshereai: 'Yapay zeka asistanı ile geleceği şekillendir!',
@@ -1039,29 +985,19 @@
                 descOsduelist: 'Çöp adamların efsanevi düello savaşı!',
                 descOswaysurfers: 'Rayların üzerinde sonsuz koşu macerası!',
                 descMystery: 'Bunu açmaman tavsiye edilir...',
-                
-                // Butonlar
                 storeOpen: 'Aç',
                 storeInstall: 'Yükle',
                 storeUninstall: 'Kaldır',
-                
-                // Uploader
                 uploaderTitle: 'Yükleme İstasyonu',
                 uploaderLogoText: 'Ana Ekran Başlatıcı Logosu',
                 uploaderSend: 'Render Sunucusuna Gönder',
-                
-                // Files
+                uploaderWarning: '⚠️ Yüklediğiniz şeyler başkalarında da gözükür',
+                download: 'İndir',
                 filesTitle: 'Render Sunucu Dosyaları',
                 filesEmpty: 'Hafıza boş.',
-                
-                // Notepad
                 notepadTitle: 'Not Defteri',
                 notepadPlaceholder: 'Yazılım notları...',
-                
-                // Media
                 mediaTitle: 'Medya Oynatıcı',
-                
-                // Settings
                 settingsWindow: '⚙️ Ayarlar',
                 menuGet: 'HereEmu\'yu al',
                 menuAppearance: 'Görünüm',
@@ -1086,8 +1022,6 @@
                 systemVersion: 'Sürüm',
                 systemReset: '⚠️ Tüm ayarları sıfırla',
                 langStatus: '✅ Türkçe seçili / Turkish selected',
-                
-                // Get HereEmu
                 getLabel: '🚀 HereEmu\'yu al / Get HereEmu',
                 getBtn: 'Siteyi aç',
                 getDesc: 'HereEmu\'nun ana sayfasını ziyaret edin.',
@@ -1095,13 +1029,9 @@
                 getSiteSub: 'HereEmu\'yu hemen keşfedin',
                 getSiteBtn: 'Siteyi aç',
                 getSiteSkip: 'İstemiyorum',
-                
-                // Open Source
                 opensourceLabel: '🔓 Açık Kaynak / Open Source',
                 opensourceDesc: 'HereEmu açık kaynak kodludur. GitHub\'da inceleyin.',
                 opensourceBtn: 'GitHub\'da Aç',
-                
-                // Alert / Confirm mesajları
                 targetsCleared: 'Tüm hedefler temizlendi.',
                 wallpaperUpdated: 'Arka plan güncellendi!',
                 wallpaperReset: 'Arka plan varsayılana döndürüldü.',
@@ -1110,7 +1040,7 @@
                 resetConfirm: 'Tüm ayarlar ve uygulama yüklemeleri sıfırlanacak. Devam et?',
                 resetDone: 'Tüm ayarlar sıfırlandı.',
                 noTarget: "Lütfen önce '🎯 Ekle' butonu ile en az bir hedef belirle!",
-                startButtonMsg: 'HereEmu v27.0 💪 - Popüler Oyunlar & Mermer Güncellemesi!',
+                startButtonMsg: 'HereEmu v28.0 💪 - Harddisk\'e indirme eklendi!',
                 noFile: 'Dosya seçmedin!',
                 uploadSuccess: 'Dosya Render sunucusuna başarıyla yüklendi!',
                 uploadError: 'Yükleme hatası.',
@@ -1118,52 +1048,37 @@
                 fileReadError: 'Dosya okunamadı, lütfen başka bir dosya deneyin.'
             },
             en: {
-                // Masaüstü ikonları
                 iconUpload: 'Upload to System',
                 iconHarddisk: 'Harddisk',
                 iconNotepad: 'Notepad',
                 iconOsstore: 'OsStore',
                 iconCredits: 'Credits',
                 iconSettings: 'Settings',
-                
-                // Auto Clicker paneli
                 autoclickerDrag: 'HOLD',
                 autoclickerInterval: 'Interval (ms):',
                 autoclickerAdd: '🎯 Add',
                 autoclickerClear: '🗑️ Clear',
                 autoclickerStart: '▶ Start',
                 autoclickerStop: '⏸ Stop',
-                
-                // Credits
                 creditsOwner: 'Owner',
                 creditsYt: 'YouTube',
                 creditsHelper: 'Helper',
-                
-                // Fullscreen dialog
                 fullscreenText: 'Do you want to hide the bottom area too?',
                 fullscreenNo: 'No',
                 fullscreenYes: 'Yes',
-                
-                // Virus dialog
                 virusText: 'Do you want to open the app???',
                 virusNo: 'Cancel',
                 virusYes: 'Yes',
-                
-                // Virus screen
                 virusScreenTitle: 'Computer Infected with Virus! 🦠',
                 virusScreenDesc: 'System files are being cleaned, please wait...',
                 virusAlert1: 'CRITICAL ERROR: System files corrupted!',
                 virusAlert2: 'WARNING: Unauthorized access detected!',
-                
-                // OsStore menü
                 storePopular: '⭐ Popular',
                 storeApps: 'Apps',
                 storeGames: 'Games',
                 storeMystery: '???',
                 storeTitlePopularApps: 'Popular Apps',
                 storeTitlePopularGames: 'Popular Games',
-                
-                // Uygulama açıklamaları
                 descOschat: 'chat with your friends!💬',
                 descOscodevideo: 'Watch coding videos!',
                 descOshereai: 'Shape the future with AI assistant!',
@@ -1178,29 +1093,19 @@
                 descOsduelist: 'Epic duel battle of stickmen!',
                 descOswaysurfers: 'Endless running adventure on rails!',
                 descMystery: 'It is recommended not to open this...',
-                
-                // Butonlar
                 storeOpen: 'Open',
                 storeInstall: 'Install',
                 storeUninstall: 'Uninstall',
-                
-                // Uploader
                 uploaderTitle: 'Upload Station',
                 uploaderLogoText: 'Home Screen Launcher Logo',
                 uploaderSend: 'Send to Render Server',
-                
-                // Files
+                uploaderWarning: '⚠️ What you upload will be visible to others',
+                download: 'Download',
                 filesTitle: 'Render Server Files',
                 filesEmpty: 'Memory is empty.',
-                
-                // Notepad
                 notepadTitle: 'Notepad',
                 notepadPlaceholder: 'Software notes...',
-                
-                // Media
                 mediaTitle: 'Media Player',
-                
-                // Settings
                 settingsWindow: '⚙️ Settings',
                 menuGet: 'Get HereEmu',
                 menuAppearance: 'Appearance',
@@ -1225,8 +1130,6 @@
                 systemVersion: 'Version',
                 systemReset: '⚠️ Reset all settings',
                 langStatus: '✅ English selected / İngilizce seçili',
-                
-                // Get HereEmu
                 getLabel: '🚀 Get HereEmu',
                 getBtn: 'Open Site',
                 getDesc: 'Visit the HereEmu main page.',
@@ -1234,13 +1137,9 @@
                 getSiteSub: 'Discover HereEmu now',
                 getSiteBtn: 'Open Site',
                 getSiteSkip: 'Skip',
-                
-                // Open Source
                 opensourceLabel: '🔓 Open Source',
                 opensourceDesc: 'HereEmu is open source. View on GitHub.',
                 opensourceBtn: 'Open on GitHub',
-                
-                // Alert / Confirm mesajları
                 targetsCleared: 'All targets cleared.',
                 wallpaperUpdated: 'Wallpaper updated!',
                 wallpaperReset: 'Wallpaper reset to default.',
@@ -1249,7 +1148,7 @@
                 resetConfirm: 'All settings and app installations will be reset. Continue?',
                 resetDone: 'All settings reset.',
                 noTarget: "Please add at least one target with '🎯 Add' button!",
-                startButtonMsg: 'HereEmu v27.0 💪 - Popular Games & Marble Update!',
+                startButtonMsg: 'HereEmu v28.0 💪 - Download added to Harddisk!',
                 noFile: 'No file selected!',
                 uploadSuccess: 'File successfully uploaded to Render server!',
                 uploadError: 'Upload error.',
@@ -1265,7 +1164,6 @@
         }
 
         function updateUILanguage() {
-            // Masaüstü ikonları
             document.getElementById('icon-upload').textContent = getText('iconUpload');
             document.getElementById('icon-harddisk').textContent = getText('iconHarddisk');
             document.getElementById('icon-notepad').textContent = getText('iconNotepad');
@@ -1273,7 +1171,6 @@
             document.getElementById('icon-credits').textContent = getText('iconCredits');
             document.getElementById('icon-settings').textContent = getText('iconSettings');
 
-            // Auto Clicker paneli
             document.getElementById('autoclicker-drag').textContent = getText('autoclickerDrag');
             document.getElementById('autoclicker-interval-label').textContent = getText('autoclickerInterval');
             document.getElementById('autoclicker-add-btn').textContent = getText('autoclickerAdd');
@@ -1281,26 +1178,21 @@
             document.getElementById('clicker-start').textContent = getText('autoclickerStart');
             document.getElementById('clicker-stop').textContent = getText('autoclickerStop');
 
-            // Credits
             document.getElementById('credits-owner-label').textContent = getText('creditsOwner');
             document.getElementById('credits-yt-label').textContent = getText('creditsYt');
             document.getElementById('credits-helper-label').textContent = getText('creditsHelper');
 
-            // Fullscreen dialog
             document.getElementById('fullscreen-dialog-text').textContent = getText('fullscreenText');
             document.getElementById('fullscreen-dialog-no').textContent = getText('fullscreenNo');
             document.getElementById('fullscreen-dialog-yes').textContent = getText('fullscreenYes');
 
-            // Virus dialog
             document.getElementById('virus-dialog-text').textContent = getText('virusText');
             document.getElementById('virus-dialog-no').textContent = getText('virusNo');
             document.getElementById('virus-dialog-yes').textContent = getText('virusYes');
 
-            // Virus screen
             document.getElementById('virus-title').textContent = getText('virusScreenTitle');
             document.getElementById('virus-desc').textContent = getText('virusScreenDesc');
 
-            // OsStore menü
             document.getElementById('store-menu-popular').textContent = getText('storePopular');
             document.getElementById('store-menu-apps').textContent = getText('storeApps');
             document.getElementById('store-menu-games').textContent = getText('storeGames');
@@ -1308,7 +1200,6 @@
             document.getElementById('store-title-popular-apps').textContent = getText('storeTitlePopularApps');
             document.getElementById('store-title-popular-games').textContent = getText('storeTitlePopularGames');
 
-            // Uygulama açıklamaları
             document.getElementById('desc-oschat-pop').textContent = getText('descOschat');
             document.getElementById('desc-oschat').textContent = getText('descOschat');
             document.getElementById('desc-oscodevideo-pop').textContent = getText('descOscodevideo');
@@ -1328,22 +1219,18 @@
             document.getElementById('desc-oswaysurfers').textContent = getText('descOswaysurfers');
             document.getElementById('desc-mystery').textContent = getText('descMystery');
 
-            // Uploader
             document.getElementById('uploader-title').textContent = getText('uploaderTitle');
             document.getElementById('uploader-logo-text').textContent = getText('uploaderLogoText');
             document.getElementById('uploader-send-btn').textContent = getText('uploaderSend');
+            document.getElementById('uploader-warning').textContent = getText('uploaderWarning');
 
-            // Files
             document.getElementById('files-title').textContent = getText('filesTitle');
 
-            // Notepad
             document.getElementById('notepad-title').textContent = getText('notepadTitle');
             document.getElementById('txt-area').placeholder = getText('notepadPlaceholder');
 
-            // Media
             document.getElementById('media-title').textContent = getText('mediaTitle');
 
-            // Settings
             document.getElementById('settings-window-title').textContent = getText('settingsWindow');
             document.getElementById('settings-menu-get-text').textContent = getText('menuGet');
             document.getElementById('settings-menu-appearance-text').textContent = getText('menuAppearance');
@@ -1369,7 +1256,6 @@
             document.getElementById('settings-system-reset-btn').textContent = getText('systemReset');
             document.getElementById('lang-status').textContent = getText('langStatus');
 
-            // Get HereEmu
             document.getElementById('settings-get-label').textContent = getText('getLabel');
             document.getElementById('settings-get-btn').textContent = getText('getBtn');
             document.getElementById('settings-get-desc').textContent = getText('getDesc');
@@ -1378,20 +1264,16 @@
             document.getElementById('get-site-btn').textContent = getText('getSiteBtn');
             document.getElementById('get-site-skip-btn').textContent = getText('getSiteSkip');
 
-            // Open Source
             document.getElementById('settings-opensource-label').textContent = getText('opensourceLabel');
             document.getElementById('settings-opensource-desc').textContent = getText('opensourceDesc');
             document.getElementById('settings-opensource-btn').textContent = getText('opensourceBtn');
 
-            // Dil butonlarını güncelle
             updateLanguageButtons();
             
-            // OsStore butonlarını güncelle (Yükle/Kaldır/Aç)
             for (const key in appDatabase) {
                 syncStoreButtons(key);
             }
             
-            // Yüklü uygulama listesini güncelle
             renderInstalledAppsList();
         }
 
@@ -1400,7 +1282,6 @@
             localStorage.setItem('hereemu_language', lang);
             document.getElementById('language-screen').classList.remove('show');
             document.getElementById('splash-screen').classList.add('hidden');
-            // Dil seçildikten sonra "Siteyi al" ekranını göster
             document.getElementById('get-site-screen').classList.add('show');
             updateUILanguage();
         }
@@ -1431,7 +1312,6 @@
                 currentLanguage = savedLang;
                 document.getElementById('language-screen').classList.remove('show');
                 document.getElementById('splash-screen').classList.add('hidden');
-                // Dil zaten seçiliyse "Siteyi al" ekranını gösterme, direkt masaüstü
                 document.getElementById('get-site-screen').classList.remove('show');
                 updateUILanguage();
                 loadSystemState();
@@ -1443,31 +1323,25 @@
             }
         }
 
-        // Siteyi aç (HereEmu ana sayfası) - YENİ SEKMEDE
         function openGetSite() {
             window.open('https://gethereemu.onrender.com', '_blank');
             document.getElementById('get-site-screen').classList.remove('show');
-            // Masaüstünü göster
             loadSystemState();
         }
 
-        // Siteyi atla
         function skipGetSite() {
             document.getElementById('get-site-screen').classList.remove('show');
             loadSystemState();
         }
 
-        // Açık Kaynak (GitHub) - YENİ SEKMEDE
         function openOpenSource() {
             window.open('https://github.com/HereHacksYT/HereEmu/blob/main/README.md', '_blank');
         }
 
-        // Hata Raporlama
         function reportBug() {
             window.open('mailto:osmanburdacomeback@gmail.com?subject=HereEmu Hata Raporu / Bug Report&body=Lütfen hatayı detaylı açıklayın:%0A%0A1. Ne yapıyordunuz?%0A2. Ne oldu?%0A3. Hata mesajı (varsa):', '_blank');
         }
 
-        // ----- AYARLAR (SETTINGS) -----
         const DEFAULT_WALLPAPER = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920';
 
         function loadSettings() {
@@ -1625,7 +1499,6 @@
             document.getElementById(`settings-menu-${tab}`).classList.add('active');
             document.getElementById(`settings-page-${tab}`).classList.add('active');
         }
-        // ----- AYARLAR SONU -----
 
         function saveSystemState() {
             const installedApps = [];
@@ -2070,10 +1943,37 @@
                     if(file.type.startsWith('audio/')) icon = '🎵';
                     if(file.type.startsWith('video/')) icon = '🎬';
                     if(file.type === 'text/plain') icon = '📄';
-                    li.innerHTML = `${icon} ${file.name}`;
+
+                    const nameSpan = document.createElement('span');
+                    nameSpan.style.flex = '1';
+                    nameSpan.textContent = `${icon} ${file.name}`;
+                    li.appendChild(nameSpan);
+
+                    const dlBtn = document.createElement('button');
+                    dlBtn.textContent = getText('download');
+                    dlBtn.style.cssText = 'padding:4px 10px; background:#28a745; color:white; border:none; border-radius:4px; cursor:pointer; font-size:11px; font-weight:bold;';
+                    dlBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        downloadFile(file.index, file.name);
+                    };
+                    li.appendChild(dlBtn);
+
                     li.onclick = () => openFileFromServer(file.index);
                     list.appendChild(li);
                 });
+            });
+        }
+
+        function downloadFile(index, filename) {
+            fetch(`${SERVER_URL}/api/files/${index}`)
+            .then(res => res.json())
+            .then(file => {
+                const a = document.createElement('a');
+                a.href = file.content;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
             });
         }
 
